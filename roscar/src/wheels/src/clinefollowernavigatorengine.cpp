@@ -193,7 +193,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				fMaxArea = fArea;
 			}
 		}
-		//printf("Found Max Area=%f\n", fMaxArea);
+		printf("Found Max Area=%f\n", fMaxArea);
 		{
 			if (fMaxArea > MAXAREATHRESHOLD && nMaxAreaContourIndex >= 0) 
 			{

@@ -39,7 +39,7 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_fAccumulatedShiftError = 0.f;
 	m_fKp = WHEELPIDMAXSPEED;
 	m_fKi = 0.01f;
-	m_fKd = m_fKp / 4;
+	m_fKd = m_fKp / 2;
 }
 
 bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
@@ -104,7 +104,7 @@ void CWheelDriver::Checklongpause(void)
 {
 	time_t now = time(NULL);
 
-	if (difftime(now, m_LastMsgTime) > 5 && m_bCarStopped == false)
+	if (difftime(now, m_LastMsgTime) > 1 && m_bCarStopped == false)
 	{
 		//_SetSpeedDirection(0, WCLR_STOP);
 		ROS_INFO("Does not receive nagivator cmd_vels for over 5 seconds. Stop the car.");
