@@ -103,7 +103,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 	m_nHeight = InputImage.rows;
 	m_nWidth = InputImage.cols;
 	
-    cv::Rect roi(0, m_nHeight * 3 / 4, m_nWidth, m_nHeight / 4);
+    cv::Rect roi(m_nWidth / 5, m_nHeight * 3 / 4, m_nWidth * 3. / 5., m_nHeight / 4);
     cv::Mat roiImg, erodeElmt, dilateElmt;
     int thVal = IMGTHRESHOLD;
     std::vector<std::vector<cv::Point> > contours;
@@ -193,8 +193,8 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				cv::Point2f center(mu.m10 / mu.m00, mu.m01 / mu.m00); // point in center (x only)   
 				//printf("Find a region: Area=%f, center(%f, %f)\n", fMaxArea, center.x, center.y);
 				
-				nCenterX = (int32_t)center.x;
-				nCenterY = (int32_t)center.y;
+				nCenterX = (int32_t)center.x + m_nWidth / 5;
+				nCenterY = (int32_t)center.y + m_nHeight * 3 / 4;
 				nRet = 1;
 				// here is the center pixel
 				if (IsDebugDisplayImage())
@@ -259,17 +259,8 @@ int32_t CLineFollowerNavigatorEngine::OffsetNavigator(float fXOffset)
 	int32_t nRet = 0;
 	
 	geometry_msgs::Twist vel_msg;
-
-	float fDir = 1.;
-	
-	if (fXOffset > 0)
-		fDir = -1;	// turn left
-	else
-		fDir = 1;	// turn right
-	//if (fabs(fXOffset) < 0.2)
-	//	fDir = 0;
 		
-	vel_msg.angular.z = -(fXOffset);
+	vel_msg.angular.z = (fXOffset);
 	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
 	
 	//vel_msg.angular.z *= fDir;

@@ -11,7 +11,7 @@
 namespace yisys_roswheels
 {
 #define WHEELANGULAR_TOLERANCE (0.4)	
-#define WHEELPIDMAXSPEED (20)
+#define WHEELPIDMAXSPEED (10)
 // it accept several msg and decide how the wheels works.
 // cmd_vel: wheels direction and velocity
 // ???: sign

@@ -38,8 +38,8 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_fLastShiftError = 0.f;
 	m_fAccumulatedShiftError = 0.f;
 	m_fKp = WHEELPIDMAXSPEED / 0.5;
-	m_fKi = 0.00001f;
-	m_fKd = 0.01;
+	m_fKi = 0.0001f;
+	m_fKd = -m_fKp / 4;
 }
 
 bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
@@ -180,6 +180,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	
 	wheels::cmd_set_car_two_wheels_direction_speed srv2;
 
+// fAngular: negative (target shift to left, turn left), or Positive (should turn right)
 	m_fThisShiftError = (fAngular);
 
 	m_fAccumulatedShiftError += m_fThisShiftError;
@@ -193,22 +194,22 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	
 	int nNewRightSpeed, nNewLeftSpeed, nNewRightDirection, nNewLeftDirection;
 	
-	if (nNewSpeed < 0) // right turn
+	if (nNewSpeed < 0) // left turn
 	{		
-		nNewRightSpeed = -nNewSpeed;
+		nNewRightSpeed = -nNewSpeed / 2;
 		nNewRightDirection = CMC_MOTORFORWARD;
 		
 		//nNewLeftSpeed = WHEELPIDMAXSPEED - nNewRightSpeed;
-		nNewLeftSpeed = nNewSpeed;
+		nNewLeftSpeed = nNewSpeed / 2;
 		nNewLeftDirection = CMC_MOTORFORWARD;
 	}
 	else
 	{		
-		nNewLeftSpeed = nNewSpeed;
+		nNewLeftSpeed = nNewSpeed / 2;
 		nNewLeftDirection = CMC_MOTORFORWARD;	
 				
 		//nNewRightSpeed = WHEELPIDMAXSPEED - nNewLeftSpeed;
-		nNewRightSpeed = -nNewSpeed;
+		nNewRightSpeed = -nNewSpeed / 2;
 		nNewRightDirection = CMC_MOTORFORWARD;
 	}
 	if (m_nCurrentUserSpeed == 0)	// users prefer to stop
@@ -242,7 +243,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	srv2.request.nNewRightSpeed = nNewRightSpeed;
 	srv2.request.nNewRightDirection = nNewRightDirection;
 		
-	printf("New two wheels (%f, %f)(Speed, Dir) Left(%d, %d), right(%d, %d)\n", fAngular, nNewSpeed, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
+	printf("New two wheels (%f, %f, %f)(Speed, Dir) Left(%d, %d), right(%d, %d)\n", fAngular, nNewSpeed, fErrorDiff, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
 	if (m_SetTwoWheelsSpeedClient.call(srv2))
 	{
 		//m_nCurrentUserSpeed = nSpeed;
