@@ -1,0 +1,7 @@
+Header header
+int8 nRightWheelHealthyStatus
+int8 nRightWheelDirection
+int8 nLeftWheelDirection
+int8 nRightWheelSpeed
+int8 nLeftWheelSpeed
+int8 nLeftWheelHealthyStatus

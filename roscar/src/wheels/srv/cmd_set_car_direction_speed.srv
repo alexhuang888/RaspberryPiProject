@@ -1,0 +1,6 @@
+int8 nNewDirection
+int8 nNewSpeed
+---
+int8 nLastDirection
+int8 nLastSpeed
+int8 nRetCode

@@ -1,0 +1,5 @@
+int8 nWheelID
+---
+int8 nWheelDirection
+int8 nWheelSpeed
+int8 nRetCode
