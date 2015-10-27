@@ -114,9 +114,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+
 
 ## Declare a C++ library
 # add_library(wheels
@@ -188,12 +186,12 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ../../wiringPi/wiringPi)
 
-add_executable(wheels_status src/wheels_status.cpp)
-target_link_libraries(wheels_status ${catkin_LIBRARIES})
+add_executable(wheels_status src/wheels_status.cpp src/wheelcontroller.cpp)
+target_link_libraries(wheels_status ${catkin_LIBRARIES} wiringPi pthread)
 add_dependencies(wheels_status wheels_generate_messages_cpp)
 
-add_executable(wheels_status_listener src/wheels_status_listener.cpp)
-target_link_libraries(wheels_status_listener ${catkin_LIBRARIES})
+add_executable(wheels_status_listener src/wheels_status_listener.cpp src/wheelcontroller.cpp)
+target_link_libraries(wheels_status_listener ${catkin_LIBRARIES}  wiringPi pthread)
 add_dependencies(wheels_status_listener wheels_generate_messages_cpp)

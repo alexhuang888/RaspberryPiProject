@@ -1,7 +1,8 @@
 Header header
-int8 nRightWheelHealthyStatus
-int8 nRightWheelDirection
-int8 nLeftWheelDirection
-int8 nRightWheelSpeed
-int8 nLeftWheelSpeed
-int8 nLeftWheelHealthyStatus
+uint32 nRightWheelHealthStatus
+uint32 nRightWheelDirection
+uint32 nRightWheelSpeed
+uint32 nLeftWheelHealthStatus
+uint32 nLeftWheelDirection
+uint32 nLeftWheelSpeed
+

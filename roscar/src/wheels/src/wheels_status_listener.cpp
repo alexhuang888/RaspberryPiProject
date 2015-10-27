@@ -3,12 +3,26 @@
 #include "wheels/wheels_status.h"
 #include "wheels/cmd_get_one_wheel_status.h"
 #include "wheels/cmd_set_car_direction_speed.h"
+#include "wheelcontroller.h"
 #include <sstream>
+#include <termios.h>
+int mygetch ( void ) 
+{
+  int ch;
+  struct termios oldt, newt;
 
+  tcgetattr ( STDIN_FILENO, &oldt );
+  newt = oldt;
+  newt.c_lflag &= ~( ICANON | ECHO );
+  tcsetattr ( STDIN_FILENO, TCSANOW, &newt );
+  ch = getchar();
+  tcsetattr ( STDIN_FILENO, TCSANOW, &oldt );
 
+  return ch;
+}
 void wheels_statusCallback(const wheels::wheels_statusConstPtr& msg)
 {
-  ROS_INFO("I heard: [RW_Status:%d]", msg->nRightWheelHealthyStatus);
+  ROS_INFO("I heard: Left[%d, %d, %d] Right[%d, %d, %d]", msg->nLeftWheelDirection, msg->nLeftWheelSpeed, msg->nLeftWheelHealthStatus, msg->nRightWheelDirection, msg->nRightWheelSpeed, msg->nRightWheelHealthStatus);
 }
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -58,32 +72,192 @@ int main(int argc, char **argv)
   
 	ros::ServiceClient client = n.serviceClient<wheels::cmd_get_one_wheel_status>("get_one_wheel_status");
 	wheels::cmd_get_one_wheel_status srv;
-	srv.request.nWheelID = 1;
+	srv.request.nWheelID = CMC_LEFTWHEELID;
 
 	if (client.call(srv))
 	{
-		ROS_INFO("WheelID[%d]: %d, %d, %d", 1, srv.response.nRetCode, srv.response.nWheelDirection, srv.response.nWheelSpeed);
+		ROS_INFO("WheelID[%d] Ret=%d: dir=%d, speed=%d, health=%d", CMC_LEFTWHEELID, srv.response.nRetCode, srv.response.nWheelDirection, srv.response.nWheelSpeed, srv.response.nWheelHealthStatus);
 	}
 	else
 	{
 		ROS_ERROR("Failed to call service get_one_wheel_status");
 	}
-	
+	srv.request.nWheelID = CMC_RIGHTWHEELID;
+
+	if (client.call(srv))
+	{
+		ROS_INFO("WheelID[%d] Ret=%d: dir=%d, speed=%d, health=%d", CMC_RIGHTWHEELID, srv.response.nRetCode, srv.response.nWheelDirection, srv.response.nWheelSpeed, srv.response.nWheelHealthStatus);
+	}
+	else
+	{
+		ROS_ERROR("Failed to call service get_one_wheel_status");
+	}	
 	ros::ServiceClient client2 = n.serviceClient<wheels::cmd_set_car_direction_speed>("set_direction_speed");
 	wheels::cmd_set_car_direction_speed srv2;
-	srv2.request.nNewSpeed = 12;
-	srv2.request.nNewDirection = 34;
-
+	srv2.request.nNewSpeed = 80;
+	srv2.request.nNewDirection = 1;
+	ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
 	if (client2.call(srv2))
 	{
-		ROS_INFO("Last status: %d, %d, %d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+		ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
 	}
 	else
 	{
 		ROS_ERROR("Failed to call service set_direction_speed");
 	}	
-	//ros::spin();
+	if (client.call(srv))
+	{
+		ROS_INFO("WheelID[%d] Ret=%d: dir=%d, speed=%d, health=%d", CMC_LEFTWHEELID, srv.response.nRetCode, srv.response.nWheelDirection, srv.response.nWheelSpeed, srv.response.nWheelHealthStatus);
+	}
+	else
+	{
+		ROS_ERROR("Failed to call service get_one_wheel_status");
+	}
+	srv.request.nWheelID = CMC_RIGHTWHEELID;
 
+	if (client.call(srv))
+	{
+		ROS_INFO("WheelID[%d] Ret=%d: dir=%d, speed=%d, health=%d", CMC_RIGHTWHEELID, srv.response.nRetCode, srv.response.nWheelDirection, srv.response.nWheelSpeed, srv.response.nWheelHealthStatus);
+	}
+	else
+	{
+		ROS_ERROR("Failed to call service get_one_wheel_status");
+	}
 
+	int nInput = 0x0;
+	int nSpeed = 100;
+	int nDirection = 1;
+	printf("Input instruction (u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop\n");
+	while ((nInput = mygetch()) != 27)
+	{
+		switch (nInput)
+		{
+			case 'p':
+				nSpeed = 0;
+				nDirection = 0;
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = nDirection;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}
+				break;				
+			case '+':
+				nSpeed += 5;
+				if (nSpeed > 100)
+					nSpeed = 100;
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = nDirection;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}
+				break;		
+			case '-':
+				nSpeed -= 5;
+				if (nSpeed < 0)
+					nSpeed = 0;
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = nDirection;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}
+				break;
+			case 'u':
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = 1;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}			
+			break;
+			case 'd':
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = 2;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}			
+			break;	
+			case 'l':
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = 3;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}			
+			break;	
+			case 'r':
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = 5;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}			
+			break;	
+			case 'w':
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = 4;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}			
+			break;	
+			case 'z':
+				srv2.request.nNewSpeed = nSpeed;
+				nDirection = srv2.request.nNewDirection = 6;
+				ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+				if (client2.call(srv2))
+				{
+					ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+				}
+				else
+				{
+					ROS_ERROR("Failed to call service set_direction_speed");
+				}			
+			break;	
+		}
+	}
   return 0;
 }

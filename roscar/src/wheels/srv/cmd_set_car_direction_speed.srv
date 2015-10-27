@@ -1,6 +1,6 @@
-int8 nNewDirection
-int8 nNewSpeed
+uint32 nNewDirection
+uint32 nNewSpeed
 ---
-int8 nLastDirection
-int8 nLastSpeed
-int8 nRetCode
+uint32 nLastDirection
+uint32 nLastSpeed
+int32 nRetCode
