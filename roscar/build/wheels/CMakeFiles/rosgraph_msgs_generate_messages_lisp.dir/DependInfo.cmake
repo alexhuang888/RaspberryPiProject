@@ -16,7 +16,10 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
+  "/home/alex/RaspberryPiProject/roscar/devel/include"
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/include"
   "/opt/ros/jade/include"
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/../../wiringPi/wiringPi"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
