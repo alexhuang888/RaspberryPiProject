@@ -192,6 +192,20 @@ _wheels_generate_messages_check_deps_wheels_status/fast:
 .PHONY : _wheels_generate_messages_check_deps_wheels_status/fast
 
 # Convenience name for target.
+wheels/CMakeFiles/camera_navigator.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/camera_navigator.dir/rule
+.PHONY : wheels/CMakeFiles/camera_navigator.dir/rule
+
+# Convenience name for target.
+camera_navigator: wheels/CMakeFiles/camera_navigator.dir/rule
+.PHONY : camera_navigator
+
+# fast build rule for target.
+camera_navigator/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/build
+.PHONY : camera_navigator/fast
+
+# Convenience name for target.
 wheels/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
 .PHONY : wheels/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
@@ -513,6 +527,30 @@ wheels_status_listener/fast:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/build
 .PHONY : wheels_status_listener/fast
 
+src/cameranavigator.o: src/cameranavigator.cpp.o
+.PHONY : src/cameranavigator.o
+
+# target to build an object file
+src/cameranavigator.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o
+.PHONY : src/cameranavigator.cpp.o
+
+src/cameranavigator.i: src/cameranavigator.cpp.i
+.PHONY : src/cameranavigator.i
+
+# target to preprocess a source file
+src/cameranavigator.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.i
+.PHONY : src/cameranavigator.cpp.i
+
+src/cameranavigator.s: src/cameranavigator.cpp.s
+.PHONY : src/cameranavigator.s
+
+# target to generate assembly for a file
+src/cameranavigator.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.s
+.PHONY : src/cameranavigator.cpp.s
+
 src/wheelcontroller.o: src/wheelcontroller.cpp.o
 .PHONY : src/wheelcontroller.o
 
@@ -597,6 +635,7 @@ help:
 	@echo "... _wheels_generate_messages_check_deps_cmd_get_one_wheel_status"
 	@echo "... _wheels_generate_messages_check_deps_cmd_set_car_direction_speed"
 	@echo "... _wheels_generate_messages_check_deps_wheels_status"
+	@echo "... camera_navigator"
 	@echo "... edit_cache"
 	@echo "... install"
 	@echo "... install/local"
@@ -627,6 +666,9 @@ help:
 	@echo "... wheels_genpy"
 	@echo "... wheels_status"
 	@echo "... wheels_status_listener"
+	@echo "... src/cameranavigator.o"
+	@echo "... src/cameranavigator.i"
+	@echo "... src/cameranavigator.s"
 	@echo "... src/wheelcontroller.o"
 	@echo "... src/wheelcontroller.i"
 	@echo "... src/wheelcontroller.s"

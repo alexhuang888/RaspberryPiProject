@@ -280,6 +280,19 @@ _wheels_generate_messages_check_deps_wheels_status/fast:
 .PHONY : _wheels_generate_messages_check_deps_wheels_status/fast
 
 #=============================================================================
+# Target rules for targets named camera_navigator
+
+# Build rule for target.
+camera_navigator: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 camera_navigator
+.PHONY : camera_navigator
+
+# fast build rule for target.
+camera_navigator/fast:
+	$(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/build
+.PHONY : camera_navigator/fast
+
+#=============================================================================
 # Target rules for targets named roscpp_generate_messages_cpp
 
 # Build rule for target.
@@ -601,6 +614,7 @@ help:
 	@echo "... _wheels_generate_messages_check_deps_cmd_get_one_wheel_status"
 	@echo "... _wheels_generate_messages_check_deps_cmd_set_car_direction_speed"
 	@echo "... _wheels_generate_messages_check_deps_wheels_status"
+	@echo "... camera_navigator"
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... roscpp_generate_messages_lisp"

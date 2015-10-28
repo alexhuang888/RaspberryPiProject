@@ -4,8 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp" "/home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o"
-  "/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheels_status_listener.cpp" "/home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o"
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/src/cameranavigator.cpp" "/home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

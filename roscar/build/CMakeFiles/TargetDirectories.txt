@@ -1,6 +1,7 @@
 /home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir
 /home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir
 /home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/_wheels_generate_messages_check_deps_wheels_status.dir
+/home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/camera_navigator.dir
 /home/alex/RaspberryPiProject/roscar/build/CMakeFiles/clean_test_results.dir
 /home/alex/RaspberryPiProject/roscar/build/CMakeFiles/download_extra_data.dir
 /home/alex/RaspberryPiProject/roscar/build/CMakeFiles/doxygen.dir

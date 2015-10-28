@@ -10,7 +10,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   message_generation
 )
-
+find_package(raspicam REQUIRED)
+find_package(OpenCV REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -195,3 +196,7 @@ add_dependencies(wheels_status wheels_generate_messages_cpp)
 add_executable(wheels_status_listener src/wheels_status_listener.cpp src/wheelcontroller.cpp)
 target_link_libraries(wheels_status_listener ${catkin_LIBRARIES}  wiringPi pthread)
 add_dependencies(wheels_status_listener wheels_generate_messages_cpp)
+
+add_executable(camera_navigator src/cameranavigator.cpp)
+target_link_libraries(camera_navigator ${catkin_LIBRARIES}  wiringPi pthread ${raspicam_CV_LIBS})
+add_dependencies(camera_navigator wheels_generate_messages_cpp)
