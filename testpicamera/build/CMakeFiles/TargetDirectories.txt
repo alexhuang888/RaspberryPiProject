@@ -1,0 +1,2 @@
+/home/alex/RaspberryPiProject/testpicamera/build/CMakeFiles/testpicamera.dir
+/home/alex/RaspberryPiProject/testpicamera/build/CMakeFiles/testpicamera_cv.dir

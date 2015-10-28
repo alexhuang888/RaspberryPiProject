@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/testpicamera.dir/testpicamera.cpp.o  -o testpicamera  -L/usr/local/lib -rdynamic -lmmal_core -lmmal_util -lmmal -lraspicam -Wl,-rpath,/usr/local/lib 
