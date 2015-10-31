@@ -9,8 +9,15 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  genmsg 
+  actionlib_msgs 
+  actionlib
+  tf2
+  tf
 )
+# for raspicam controller
 find_package(raspicam REQUIRED)
+# for OpenCV
 find_package(OpenCV REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -59,16 +66,16 @@ add_service_files(
 )
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+add_action_files(
+	FILES
+	set_car_direction_speed.action
+)
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
   std_msgs
+  actionlib_msgs
 )
 
 ################################################
@@ -187,16 +194,20 @@ catkin_package(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-include_directories(include ${catkin_INCLUDE_DIRS} ../../wiringPi/wiringPi)
+include_directories(include ${catkin_INCLUDE_DIRS} ../include ../../wiringPi/wiringPi)
 
 add_executable(wheels_status src/wheels_status.cpp src/wheelcontroller.cpp)
 target_link_libraries(wheels_status ${catkin_LIBRARIES} wiringPi pthread)
 add_dependencies(wheels_status wheels_generate_messages_cpp)
 
-add_executable(wheels_status_listener src/wheels_status_listener.cpp src/wheelcontroller.cpp)
-target_link_libraries(wheels_status_listener ${catkin_LIBRARIES}  wiringPi pthread)
+add_executable(wheels_status_listener src/wheels_status_listener.cpp)
+target_link_libraries(wheels_status_listener ${catkin_LIBRARIES} wiringPi pthread)
 add_dependencies(wheels_status_listener wheels_generate_messages_cpp)
 
 add_executable(camera_navigator src/cameranavigator.cpp)
 target_link_libraries(camera_navigator ${catkin_LIBRARIES}  wiringPi pthread ${raspicam_CV_LIBS})
 add_dependencies(camera_navigator wheels_generate_messages_cpp)
+
+add_executable(wheels_aruco_tracking src/wheels_aruco_tracking.cpp)
+target_link_libraries(wheels_aruco_tracking ${catkin_LIBRARIES})
+add_dependencies(wheels_aruco_tracking wheels_generate_messages_cpp)

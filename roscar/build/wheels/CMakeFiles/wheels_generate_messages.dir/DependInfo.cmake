@@ -21,6 +21,7 @@ SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/include/opencv"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/include"
   "/opt/ros/jade/include"
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/../include"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/../../wiringPi/wiringPi"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

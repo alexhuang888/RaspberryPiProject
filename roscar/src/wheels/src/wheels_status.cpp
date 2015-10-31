@@ -1,9 +1,11 @@
+/*
+ * In this file, we do prepare to use service/client and action to do the job
+ */
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "wheels/wheels_status.h"
-#include "wheels/cmd_get_one_wheel_status.h"
-#include "wheels/cmd_set_car_direction_speed.h"
-#include "wheelcontroller.h"
+
+#include "wheels/wheelcontroller.h"
+#include "wheels/wheelcontrollercallbackhandler.h"
 
 #include <sstream>
 #include <termios.h>
@@ -21,49 +23,106 @@ int mygetch ( void )
 
   return ch;
 }
-static CTwoWheelsController *m_pGlobalCarController;
+CWheelStatusCallbackHandler::CWheelStatusCallbackHandler(CTwoWheelsController *pController, std::string name) : 
+    m_ActionServer(m_nNodeHandle, name, boost::bind(&CWheelStatusCallbackHandler::executeCB, this, _1), false),
+    m_strAction_Name(name)
+{
+	m_pGlobalCarController = pController;
 
-bool fnSetDirectionAndSpeed(wheels::cmd_set_car_direction_speedRequest &req,
-							wheels::cmd_set_car_direction_speedResponse &res)
+    //register the goal and feeback callbacks
+    m_ActionServer.registerGoalCallback(boost::bind(&CWheelStatusCallbackHandler::goalCB, this));
+    m_ActionServer.registerPreemptCallback(boost::bind(&CWheelStatusCallbackHandler::preemptCB, this));
+
+    //subscribe to the data topic of interest
+    //m_SubScriber = m_nNodeHandle.subscribe("/random_number", 1, &CWheelStatusCallbackHandler::analysisCB, this);
+    //m_ActionServer.start();
+    
+	m_WheelStatusPublisher = m_nNodeHandle.advertise<wheels::wheels_status>("wheels_status", 1000);
+
+	m_SetDirectionSpeedService = m_nNodeHandle.advertiseService("set_direction_speed", &CWheelStatusCallbackHandler::cbSetDirectionAndSpeed, this);
+	
+	m_GetOneWheelStatusService = m_nNodeHandle.advertiseService("get_one_wheel_status", &CWheelStatusCallbackHandler::cbGetOneWheelStatus, this);    
+}
+
+CWheelStatusCallbackHandler::~CWheelStatusCallbackHandler()
+{
+	m_pGlobalCarController = NULL;
+}
+
+void CWheelStatusCallbackHandler::PublishWheelsStatus(void)
+{
+	wheels::wheels_status status;
+
+
+	if (m_pGlobalCarController!= NULL)
+	{
+		m_pGlobalCarController->GetWheelStatus(CMC_LEFTWHEELID, status.nLeftWheelDirection, status.nLeftWheelSpeed, status.nLeftWheelHealthStatus);
+		m_pGlobalCarController->GetWheelStatus(CMC_RIGHTWHEELID, status.nRightWheelDirection, status.nRightWheelSpeed, status.nRightWheelHealthStatus);
+		ROS_INFO("Left[%d, %d, %d] Right[%d, %d, %d]", status.nLeftWheelDirection, status.nLeftWheelSpeed, status.nLeftWheelHealthStatus, status.nRightWheelDirection, status.nRightWheelSpeed, status.nRightWheelHealthStatus);
+	}	
+	/**
+	* The publish() function is how you send messages. The parameter
+	* is the message object. The type of this object must agree with the type
+	* given as a template parameter to the advertise<>() call, as was done
+	* in the constructor above.
+	*/
+	m_WheelStatusPublisher.publish(status);	
+}
+int32_t CWheelStatusCallbackHandler::cbSetDirectionAndSpeed(uint32_t nNewDirection, uint32_t nNewSpeed)
+{
+	int32_t nRetCode = -1;
+	
+	if (m_pGlobalCarController != NULL)
+	{
+		//m_pGlobalCarController->GetDirectionSpeed(res.nLastDirection, res.nLastSpeed);
+		
+		switch (nNewDirection)
+		{
+			default:	// stop
+				nRetCode = m_pGlobalCarController->Stop();
+			break;
+			case 1:	//forward
+				nRetCode = m_pGlobalCarController->Forward(nNewSpeed);
+			break;
+			case 2:	//backward
+				nRetCode = m_pGlobalCarController->Backward(nNewSpeed);
+			break;	
+			case 3:	//forward, right turn
+				nRetCode = m_pGlobalCarController->TurnRight(nNewSpeed, CMC_MOTORFORWARD);
+			break;		
+			case 4:	//backward, right turn
+				nRetCode = m_pGlobalCarController->TurnRight(nNewSpeed, CMC_MOTORBACKWARD);
+			break;
+			case 5:	//forward, left turn
+				nRetCode = m_pGlobalCarController->TurnLeft(nNewSpeed, CMC_MOTORFORWARD);
+			break;		
+			case 6:	//backward, left turn
+				nRetCode = m_pGlobalCarController->TurnLeft(nNewSpeed, CMC_MOTORBACKWARD);
+			break;			
+		}
+		ROS_INFO("new request: direction=%d, speed=%d", nNewDirection, nNewSpeed);
+		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
+	}
+	return nRetCode;		
+}
+bool CWheelStatusCallbackHandler::cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_speedRequest &req,
+														wheels::cmd_set_car_direction_speedResponse &res)
 {
 	res.nRetCode = -1;
 	if (m_pGlobalCarController != NULL)
 	{
 		m_pGlobalCarController->GetDirectionSpeed(res.nLastDirection, res.nLastSpeed);
-		
-		switch (req.nNewDirection)
-		{
-			default:	// stop
-				res.nRetCode = m_pGlobalCarController->Stop();
-				break;
-			case 1:	//forward
-				res.nRetCode = m_pGlobalCarController->Forward(req.nNewSpeed);
-			break;
-			case 2:	//backward
-				res.nRetCode = m_pGlobalCarController->Backward(req.nNewSpeed);
-			break;	
-			case 3:	//forward, right turn
-				res.nRetCode = m_pGlobalCarController->TurnRight(req.nNewSpeed, CMC_MOTORFORWARD);
-			break;		
-			case 4:	//backward, right turn
-				res.nRetCode = m_pGlobalCarController->TurnRight(req.nNewSpeed, CMC_MOTORBACKWARD);
-			break;
-			case 5:	//forward, left turn
-				res.nRetCode = m_pGlobalCarController->TurnLeft(req.nNewSpeed, CMC_MOTORFORWARD);
-			break;		
-			case 6:	//backward, left turn
-				res.nRetCode = m_pGlobalCarController->TurnLeft(req.nNewSpeed, CMC_MOTORBACKWARD);
-			break;			
-		}
+		res.nRetCode = cbSetDirectionAndSpeed(req.nNewDirection, req.nNewSpeed);
+
 		ROS_INFO("new request: direction=%d, speed=%d", req.nNewDirection, req.nNewSpeed);
 		ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
 		return true;
 	}
-	return false;
+	return false;		
 }
 
-bool fnGetOneWheelStatus(wheels::cmd_get_one_wheel_statusRequest &req,
-							wheels::cmd_get_one_wheel_statusResponse &res)
+bool CWheelStatusCallbackHandler::cbGetOneWheelStatus(wheels::cmd_get_one_wheel_statusRequest &req,
+														wheels::cmd_get_one_wheel_statusResponse &res)
 {
 	if (m_pGlobalCarController != NULL)
 	{
@@ -74,62 +133,43 @@ bool fnGetOneWheelStatus(wheels::cmd_get_one_wheel_statusRequest &req,
 		return true;
 	}
 	return false;
+}	
+
+void CWheelStatusCallbackHandler::goalCB()
+{
+	// reset helper variables
+
+	// accept the new goal
+	//goal_ = m_ActionServer.acceptNewGoal()->samples;
 }
+
+void CWheelStatusCallbackHandler::preemptCB()
+{
+	ROS_INFO("%s: Preempted", m_strAction_Name.c_str());
+	// set the action state to preempted
+	//as_.setPreempted();
+}
+
+ void CWheelStatusCallbackHandler::executeCB(const wheels::set_car_direction_speedGoalConstPtr &goal)
+  {
+
+  }
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 int main(int argc, char **argv)
 {
 	
-	m_pGlobalCarController = new CTwoWheelsController(5, 6, 2, 3);
-	if (m_pGlobalCarController == NULL)
+	CTwoWheelsController *pGlobalCarController = new CTwoWheelsController(5, 6, 2, 3);
+	if (pGlobalCarController == NULL)
 	{
 		printf("Fail to initialize car controller\n");
 		return 0;
 	}
-  /**
-   * The ros::init() function needs to see argc and argv so that it can perform
-   * any ROS arguments and name remapping that were provided at the command line.
-   * For programmatic remappings you can use a different version of init() which takes
-   * remappings directly, but for most command-line programs, passing argc and argv is
-   * the easiest way to do it.  The third argument to init() is the name of the node.
-   *
-   * You must call one of the versions of ros::init() before using any other
-   * part of the ROS system.
-   */
-  ros::init(argc, argv, "wheels_status");
 
-  /**
-   * NodeHandle is the main access point to communications with the ROS system.
-   * The first NodeHandle constructed will fully initialize this node, and the last
-   * NodeHandle destructed will close down the node.
-   */
-  ros::NodeHandle n;
+	ros::init(argc, argv, "wheels_status");
 
-  /**
-   * The advertise() function is how you tell ROS that you want to
-   * publish on a given topic name. This invokes a call to the ROS
-   * master node, which keeps a registry of who is publishing and who
-   * is subscribing. After this advertise() call is made, the master
-   * node will notify anyone who is trying to subscribe to this topic name,
-   * and they will in turn negotiate a peer-to-peer connection with this
-   * node.  advertise() returns a Publisher object which allows you to
-   * publish messages on that topic through a call to publish().  Once
-   * all copies of the returned Publisher object are destroyed, the topic
-   * will be automatically unadvertised.
-   *
-   * The second parameter to advertise() is the size of the message queue
-   * used for publishing messages.  If messages are published more quickly
-   * than we can send them, the number here specifies how many messages to
-   * buffer up before throwing some away.
-   */
-   
-	// implement a topic "Wheels_status" and message "wheels_status"
-	ros::Publisher wheelsstatus_publisher = n.advertise<wheels::wheels_status>("wheels_status", 1000);
-
-	ros::ServiceServer service1 = n.advertiseService("set_direction_speed", fnSetDirectionAndSpeed);
-	
-	ros::ServiceServer service2 = n.advertiseService("get_one_wheel_status", fnGetOneWheelStatus);
+	CWheelStatusCallbackHandler cbHandler(pGlobalCarController, ros::this_node::getName());
   
 	ros::Rate loop_rate(1);
 
@@ -144,32 +184,17 @@ int main(int argc, char **argv)
 		/**
 		* This is a message object. You stuff it with data, and then publish it.
 		*/
-		wheels::wheels_status status;
-
-
-		if (m_pGlobalCarController!= NULL)
-		{
-			m_pGlobalCarController->GetWheelStatus(CMC_LEFTWHEELID, status.nLeftWheelDirection, status.nLeftWheelSpeed, status.nLeftWheelHealthStatus);
-			m_pGlobalCarController->GetWheelStatus(CMC_RIGHTWHEELID, status.nRightWheelDirection, status.nRightWheelSpeed, status.nRightWheelHealthStatus);
-			ROS_INFO("Left[%d, %d, %d] Right[%d, %d, %d]", status.nLeftWheelDirection, status.nLeftWheelSpeed, status.nLeftWheelHealthStatus, status.nRightWheelDirection, status.nRightWheelSpeed, status.nRightWheelHealthStatus);
-		}	
-		/**
-		* The publish() function is how you send messages. The parameter
-		* is the message object. The type of this object must agree with the type
-		* given as a template parameter to the advertise<>() call, as was done
-		* in the constructor above.
-		*/
-		//wheelsstatus_publisher.publish(status);
+		cbHandler.PublishWheelsStatus();
 
 		ros::spinOnce();
 
 		loop_rate.sleep();
 		++count;
 	}
-	if (m_pGlobalCarController != NULL)
+	if (pGlobalCarController != NULL)
 	{
-		delete m_pGlobalCarController;
-		m_pGlobalCarController = NULL;
+		delete pGlobalCarController;
+		pGlobalCarController = NULL;
 	}
 
 	return 0;

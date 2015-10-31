@@ -8,8 +8,8 @@ wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/Ras
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speedRequest.h
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speedResponse.h
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/wheels_status.h
+wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/wheels/wheelcontroller.h
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/src/cameranavigator.cpp
-wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.h
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /opt/ros/jade/include/XmlRpcDecl.h
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /opt/ros/jade/include/XmlRpcValue.h
 wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o: /opt/ros/jade/include/ros/advertise_options.h

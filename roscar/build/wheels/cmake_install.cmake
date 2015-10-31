@@ -44,6 +44,22 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheels/action" TYPE FILE FILES "/home/alex/RaspberryPiProject/roscar/src/wheels/action/set_car_direction_speed.action")
+ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+
+IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheels/msg" TYPE FILE FILES
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedAction.msg"
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionGoal.msg"
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg"
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg"
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedGoal.msg"
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedResult.msg"
+    "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg"
+    )
+ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+
+IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheels/cmake" TYPE FILE FILES "/home/alex/RaspberryPiProject/roscar/build/wheels/catkin_generated/installspace/wheels-msg-paths.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

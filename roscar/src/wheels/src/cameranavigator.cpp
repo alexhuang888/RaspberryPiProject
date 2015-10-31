@@ -3,7 +3,7 @@
 #include "wheels/wheels_status.h"
 #include "wheels/cmd_get_one_wheel_status.h"
 #include "wheels/cmd_set_car_direction_speed.h"
-#include "wheelcontroller.h"
+#include "wheels/wheelcontroller.h"
 #include "raspicam/raspicam_cv.h"
 #include "opencv2/imgproc/imgproc.hpp"
 using namespace std; 

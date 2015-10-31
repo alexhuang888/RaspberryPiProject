@@ -4,7 +4,6 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp" "/home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheels_status_listener.cpp" "/home/alex/RaspberryPiProject/roscar/build/wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
@@ -27,6 +26,7 @@ SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/include/opencv"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/include"
   "/opt/ros/jade/include"
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/../include"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/../../wiringPi/wiringPi"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

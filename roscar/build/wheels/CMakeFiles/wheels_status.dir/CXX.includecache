@@ -6,3 +6,23 @@
 
 #IncludeRegexTransform: 
 
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/wheels/wheelcontroller.h
+stdint.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/wheels/stdint.h
+map
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/wheels/map
+
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp
+stdlib.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/stdlib.h
+wheels/wheelcontroller.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheels/wheelcontroller.h
+wiringPi.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wiringPi.h
+softPwm.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/softPwm.h
+
+/usr/local/include/softPwm.h
+
+/usr/local/include/wiringPi.h
+

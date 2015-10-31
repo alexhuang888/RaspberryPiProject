@@ -1,6 +1,6 @@
 #include "stdlib.h"
 
-#include "wheelcontroller.h"
+#include "wheels/wheelcontroller.h"
 
 #include "wiringPi.h"
 #include "softPwm.h"

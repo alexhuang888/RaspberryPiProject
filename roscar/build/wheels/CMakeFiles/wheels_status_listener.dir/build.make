@@ -72,50 +72,30 @@ wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o.pr
 
 wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o.provides.build: wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o
 
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o: wheels/CMakeFiles/wheels_status_listener.dir/flags.make
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o"
-	cd /home/alex/RaspberryPiProject/roscar/build/wheels && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o -c /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp
-
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.i"
-	cd /home/alex/RaspberryPiProject/roscar/build/wheels && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp > CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.i
-
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.s"
-	cd /home/alex/RaspberryPiProject/roscar/build/wheels && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelcontroller.cpp -o CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.s
-
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.requires:
-.PHONY : wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.requires
-
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.provides: wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.requires
-	$(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.provides.build
-.PHONY : wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.provides
-
-wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.provides.build: wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o
-
 # Object files for target wheels_status_listener
 wheels_status_listener_OBJECTS = \
-"CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o" \
-"CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o"
+"CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o"
 
 # External object files for target wheels_status_listener
 wheels_status_listener_EXTERNAL_OBJECTS =
 
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o
-/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: wheels/CMakeFiles/wheels_status_listener.dir/build.make
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libtf.so
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libtf2_ros.so
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libactionlib.so
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libmessage_filters.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libroscpp.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /usr/lib/arm-linux-gnueabihf/libboost_signals.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libxmlrpcpp.so
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libtf2.so
+/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libroscpp_serialization.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/librosconsole.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/librosconsole_log4cxx.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/librosconsole_backend_interface.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /usr/lib/liblog4cxx.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /usr/lib/arm-linux-gnueabihf/libboost_regex.so
-/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libxmlrpcpp.so
-/home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libroscpp_serialization.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/librostime.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /usr/lib/arm-linux-gnueabihf/libboost_date_time.so
 /home/alex/RaspberryPiProject/roscar/devel/lib/wheels/wheels_status_listener: /opt/ros/jade/lib/libcpp_common.so
@@ -132,7 +112,6 @@ wheels/CMakeFiles/wheels_status_listener.dir/build: /home/alex/RaspberryPiProjec
 .PHONY : wheels/CMakeFiles/wheels_status_listener.dir/build
 
 wheels/CMakeFiles/wheels_status_listener.dir/requires: wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o.requires
-wheels/CMakeFiles/wheels_status_listener.dir/requires: wheels/CMakeFiles/wheels_status_listener.dir/src/wheelcontroller.cpp.o.requires
 .PHONY : wheels/CMakeFiles/wheels_status_listener.dir/requires
 
 wheels/CMakeFiles/wheels_status_listener.dir/clean:
