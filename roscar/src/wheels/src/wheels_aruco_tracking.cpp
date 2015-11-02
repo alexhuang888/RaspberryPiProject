@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 
 	ros::NodeHandle node;
 
-	ros::Publisher wheels_vel = node.advertise<geometry_msgs::Twist>("wheels/cmd_vel", 10);
+	ros::Publisher wheels_vel = node.advertise<geometry_msgs::Twist>("wheels_cmd_vel", 10);
 	
 	tf2_ros::Buffer tfBuffer;
 	tf2_ros::TransformListener tfListener(tfBuffer);
@@ -23,8 +23,28 @@ int main(int argc, char **argv)
 	{
 		geometry_msgs::TransformStamped transformStamped;
 		try{
-			transformStamped = tfBuffer.lookupTransform("camera1", "board1",
-			ros::Time(0));
+			ros::Time now = ros::Time::now();
+			if (tfBuffer.canTransform("camera1", "board1", now, ros::Duration(3.0)))
+			{
+				transformStamped = tfBuffer.lookupTransform("camera1", "board1",
+				now);
+				
+				geometry_msgs::Twist vel_msg;
+
+				vel_msg.angular.z = atan2(transformStamped.transform.translation.x,
+									transformStamped.transform.translation.z);
+				vel_msg.linear.x = sqrt(pow(transformStamped.transform.translation.x, 2) +
+									pow(transformStamped.transform.translation.z, 2));
+				wheels_vel.publish(vel_msg);
+				ROS_INFO("T(%f,%f,%f) R(%f,%f,%f,%f)", transformStamped.transform.translation.x, transformStamped.transform.translation.y, 
+													transformStamped.transform.translation.z,
+													transformStamped.transform.rotation.x,
+													transformStamped.transform.rotation.y,
+													transformStamped.transform.rotation.z,
+													transformStamped.transform.rotation.w);
+													
+				ROS_INFO("vel_msg:angular:%f, linear:%f", vel_msg.angular.z, vel_msg.linear.x);				
+			}
 		}
 		catch (tf2::TransformException &ex) {
 			ROS_WARN("%s",ex.what());
@@ -32,15 +52,7 @@ int main(int argc, char **argv)
 			continue;
 		}
 
-		geometry_msgs::Twist vel_msg;
 
-		vel_msg.angular.z = 4.0 * atan2(transformStamped.transform.translation.y,
-							transformStamped.transform.translation.x);
-		vel_msg.linear.x = 0.5 * sqrt(pow(transformStamped.transform.translation.x, 2) +
-							pow(transformStamped.transform.translation.y, 2));
-		wheels_vel.publish(vel_msg);
-
-		ROS_INFO("vel_msg:angular:%f, linear:%f", vel_msg.angular.z, vel_msg.linear.x);
 		rate.sleep();
 	}
 

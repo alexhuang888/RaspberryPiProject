@@ -211,3 +211,7 @@ add_dependencies(camera_navigator wheels_generate_messages_cpp)
 add_executable(wheels_aruco_tracking src/wheels_aruco_tracking.cpp)
 target_link_libraries(wheels_aruco_tracking ${catkin_LIBRARIES})
 add_dependencies(wheels_aruco_tracking wheels_generate_messages_cpp)
+
+add_executable(arucomarker_navigator src/arucomarker_navigator.cpp)
+target_link_libraries(arucomarker_navigator ${catkin_LIBRARIES})
+add_dependencies(arucomarker_navigator wheels_generate_messages_cpp)

@@ -631,6 +631,19 @@ actionlib_msgs_generate_messages_py/fast:
 .PHONY : actionlib_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named arucomarker_navigator
+
+# Build rule for target.
+arucomarker_navigator: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 arucomarker_navigator
+.PHONY : arucomarker_navigator
+
+# fast build rule for target.
+arucomarker_navigator/fast:
+	$(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/build
+.PHONY : arucomarker_navigator/fast
+
+#=============================================================================
 # Target rules for targets named camera_navigator
 
 # Build rule for target.
@@ -1057,6 +1070,7 @@ help:
 	@echo "... actionlib_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_py"
+	@echo "... arucomarker_navigator"
 	@echo "... camera_navigator"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"

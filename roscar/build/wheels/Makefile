@@ -402,6 +402,20 @@ actionlib_msgs_generate_messages_py/fast:
 .PHONY : actionlib_msgs_generate_messages_py/fast
 
 # Convenience name for target.
+wheels/CMakeFiles/arucomarker_navigator.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/arucomarker_navigator.dir/rule
+.PHONY : wheels/CMakeFiles/arucomarker_navigator.dir/rule
+
+# Convenience name for target.
+arucomarker_navigator: wheels/CMakeFiles/arucomarker_navigator.dir/rule
+.PHONY : arucomarker_navigator
+
+# fast build rule for target.
+arucomarker_navigator/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/build
+.PHONY : arucomarker_navigator/fast
+
+# Convenience name for target.
 wheels/CMakeFiles/camera_navigator.dir/rule:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/camera_navigator.dir/rule
 .PHONY : wheels/CMakeFiles/camera_navigator.dir/rule
@@ -807,6 +821,30 @@ wheels_status_listener/fast:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/build
 .PHONY : wheels_status_listener/fast
 
+src/arucomarker_navigator.o: src/arucomarker_navigator.cpp.o
+.PHONY : src/arucomarker_navigator.o
+
+# target to build an object file
+src/arucomarker_navigator.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/src/arucomarker_navigator.cpp.o
+.PHONY : src/arucomarker_navigator.cpp.o
+
+src/arucomarker_navigator.i: src/arucomarker_navigator.cpp.i
+.PHONY : src/arucomarker_navigator.i
+
+# target to preprocess a source file
+src/arucomarker_navigator.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/src/arucomarker_navigator.cpp.i
+.PHONY : src/arucomarker_navigator.cpp.i
+
+src/arucomarker_navigator.s: src/arucomarker_navigator.cpp.s
+.PHONY : src/arucomarker_navigator.s
+
+# target to generate assembly for a file
+src/arucomarker_navigator.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/src/arucomarker_navigator.cpp.s
+.PHONY : src/arucomarker_navigator.cpp.s
+
 src/cameranavigator.o: src/cameranavigator.cpp.o
 .PHONY : src/cameranavigator.o
 
@@ -951,6 +989,7 @@ help:
 	@echo "... actionlib_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_py"
+	@echo "... arucomarker_navigator"
 	@echo "... camera_navigator"
 	@echo "... edit_cache"
 	@echo "... geometry_msgs_generate_messages_cpp"
@@ -987,6 +1026,9 @@ help:
 	@echo "... wheels_genpy"
 	@echo "... wheels_status"
 	@echo "... wheels_status_listener"
+	@echo "... src/arucomarker_navigator.o"
+	@echo "... src/arucomarker_navigator.i"
+	@echo "... src/arucomarker_navigator.s"
 	@echo "... src/cameranavigator.o"
 	@echo "... src/cameranavigator.i"
 	@echo "... src/cameranavigator.s"

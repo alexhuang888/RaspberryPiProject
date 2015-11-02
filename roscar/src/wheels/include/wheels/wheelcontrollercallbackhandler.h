@@ -9,7 +9,7 @@ class CTwoWheelsController;
 class CWheelStatusCallbackHandler
 {
 public:
-	CWheelStatusCallbackHandler(CTwoWheelsController *pController, std::string name);
+	CWheelStatusCallbackHandler(std::string name);
 	virtual ~CWheelStatusCallbackHandler();
 	
 	bool cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_speedRequest &req,

@@ -254,6 +254,7 @@ SET(CMAKE_DEPEND_INFO_FILES
   "wheels/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/DependInfo.cmake"
   "wheels/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/DependInfo.cmake"
   "wheels/CMakeFiles/actionlib_msgs_generate_messages_py.dir/DependInfo.cmake"
+  "wheels/CMakeFiles/arucomarker_navigator.dir/DependInfo.cmake"
   "wheels/CMakeFiles/camera_navigator.dir/DependInfo.cmake"
   "wheels/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/DependInfo.cmake"
   "wheels/CMakeFiles/geometry_msgs_generate_messages_eus.dir/DependInfo.cmake"

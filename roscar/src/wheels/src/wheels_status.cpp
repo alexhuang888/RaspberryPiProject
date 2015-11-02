@@ -23,11 +23,11 @@ int mygetch ( void )
 
   return ch;
 }
-CWheelStatusCallbackHandler::CWheelStatusCallbackHandler(CTwoWheelsController *pController, std::string name) : 
+CWheelStatusCallbackHandler::CWheelStatusCallbackHandler(std::string name) : 
     m_ActionServer(m_nNodeHandle, name, boost::bind(&CWheelStatusCallbackHandler::executeCB, this, _1), false),
     m_strAction_Name(name)
 {
-	m_pGlobalCarController = pController;
+	m_pGlobalCarController = new CTwoWheelsController(5, 6, 2, 3);;
 
     //register the goal and feeback callbacks
     m_ActionServer.registerGoalCallback(boost::bind(&CWheelStatusCallbackHandler::goalCB, this));
@@ -46,6 +46,8 @@ CWheelStatusCallbackHandler::CWheelStatusCallbackHandler(CTwoWheelsController *p
 
 CWheelStatusCallbackHandler::~CWheelStatusCallbackHandler()
 {
+	if (m_pGlobalCarController != NULL)
+		delete m_pGlobalCarController;
 	m_pGlobalCarController = NULL;
 }
 
@@ -101,6 +103,7 @@ int32_t CWheelStatusCallbackHandler::cbSetDirectionAndSpeed(uint32_t nNewDirecti
 			break;			
 		}
 		ROS_INFO("new request: direction=%d, speed=%d", nNewDirection, nNewSpeed);
+		PublishWheelsStatus();
 		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
 	}
 	return nRetCode;		
@@ -159,31 +162,19 @@ void CWheelStatusCallbackHandler::preemptCB()
  */
 int main(int argc, char **argv)
 {
-	
-	CTwoWheelsController *pGlobalCarController = new CTwoWheelsController(5, 6, 2, 3);
-	if (pGlobalCarController == NULL)
-	{
-		printf("Fail to initialize car controller\n");
-		return 0;
-	}
-
 	ros::init(argc, argv, "wheels_status");
 
-	CWheelStatusCallbackHandler cbHandler(pGlobalCarController, ros::this_node::getName());
+	CWheelStatusCallbackHandler cbHandler(ros::this_node::getName());
   
+	ros::spin();
+	/*
 	ros::Rate loop_rate(1);
 
-  /**
-   * A count of how many messages we have sent. This is used to create
-   * a unique string for each message.
-   */
+
 	int count = 0;
 	
 	while (ros::ok())
 	{
-		/**
-		* This is a message object. You stuff it with data, and then publish it.
-		*/
 		cbHandler.PublishWheelsStatus();
 
 		ros::spinOnce();
@@ -191,11 +182,7 @@ int main(int argc, char **argv)
 		loop_rate.sleep();
 		++count;
 	}
-	if (pGlobalCarController != NULL)
-	{
-		delete pGlobalCarController;
-		pGlobalCarController = NULL;
-	}
+	*/
 
 	return 0;
 }
