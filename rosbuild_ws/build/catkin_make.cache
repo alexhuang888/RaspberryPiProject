@@ -1,0 +1,2 @@
+lsd_slam_core:lsd_slam_viewer
+-DCATKIN_DEVEL_PREFIX=/home/alex/RaspberryPiProject/rosbuild_ws/devel -DCMAKE_INSTALL_PREFIX=/home/alex/RaspberryPiProject/rosbuild_ws/install -G Unix Makefiles

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/alex/RaspberryPiProject/rosbuild_ws/install/setup.sh
