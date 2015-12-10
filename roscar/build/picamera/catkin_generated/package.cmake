@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "picamera")
-set(picamera_MAINTAINER "alex <alex@todo.todo>")
-set(picamera_DEPRECATED "")
-set(picamera_VERSION "0.0.0")
-set(picamera_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
-set(picamera_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
-set(picamera_BUILDTOOL_DEPENDS "catkin")
