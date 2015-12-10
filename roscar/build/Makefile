@@ -397,6 +397,19 @@ std_msgs_generate_messages_py/fast:
 .PHONY : std_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status
+
+# Build rule for target.
+_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status
+.PHONY : _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status
+
+# fast build rule for target.
+_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status/fast:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build
+.PHONY : _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status/fast
+
+#=============================================================================
 # Target rules for targets named _wheels_generate_messages_check_deps_cmd_get_one_wheel_status
 
 # Build rule for target.
@@ -421,6 +434,32 @@ _wheels_generate_messages_check_deps_cmd_set_car_direction_speed: cmake_check_bu
 _wheels_generate_messages_check_deps_cmd_set_car_direction_speed/fast:
 	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/build
 .PHONY : _wheels_generate_messages_check_deps_cmd_set_car_direction_speed/fast
+
+#=============================================================================
+# Target rules for targets named _wheels_generate_messages_check_deps_cmd_set_navigator_engine
+
+# Build rule for target.
+_wheels_generate_messages_check_deps_cmd_set_navigator_engine: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _wheels_generate_messages_check_deps_cmd_set_navigator_engine
+.PHONY : _wheels_generate_messages_check_deps_cmd_set_navigator_engine
+
+# fast build rule for target.
+_wheels_generate_messages_check_deps_cmd_set_navigator_engine/fast:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build
+.PHONY : _wheels_generate_messages_check_deps_cmd_set_navigator_engine/fast
+
+#=============================================================================
+# Target rules for targets named _wheels_generate_messages_check_deps_navigator_engine_status
+
+# Build rule for target.
+_wheels_generate_messages_check_deps_navigator_engine_status: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _wheels_generate_messages_check_deps_navigator_engine_status
+.PHONY : _wheels_generate_messages_check_deps_navigator_engine_status
+
+# fast build rule for target.
+_wheels_generate_messages_check_deps_navigator_engine_status/fast:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build
+.PHONY : _wheels_generate_messages_check_deps_navigator_engine_status/fast
 
 #=============================================================================
 # Target rules for targets named _wheels_generate_messages_check_deps_set_car_direction_speedAction
@@ -631,32 +670,6 @@ actionlib_msgs_generate_messages_py/fast:
 .PHONY : actionlib_msgs_generate_messages_py/fast
 
 #=============================================================================
-# Target rules for targets named arucomarker_navigator
-
-# Build rule for target.
-arucomarker_navigator: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 arucomarker_navigator
-.PHONY : arucomarker_navigator
-
-# fast build rule for target.
-arucomarker_navigator/fast:
-	$(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/build
-.PHONY : arucomarker_navigator/fast
-
-#=============================================================================
-# Target rules for targets named camera_navigator
-
-# Build rule for target.
-camera_navigator: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 camera_navigator
-.PHONY : camera_navigator
-
-# fast build rule for target.
-camera_navigator/fast:
-	$(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/build
-.PHONY : camera_navigator/fast
-
-#=============================================================================
 # Target rules for targets named geometry_msgs_generate_messages_cpp
 
 # Build rule for target.
@@ -865,17 +878,69 @@ tf_generate_messages_py/fast:
 .PHONY : tf_generate_messages_py/fast
 
 #=============================================================================
-# Target rules for targets named wheels_aruco_tracking
+# Target rules for targets named wheel_controller
 
 # Build rule for target.
-wheels_aruco_tracking: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 wheels_aruco_tracking
-.PHONY : wheels_aruco_tracking
+wheel_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 wheel_controller
+.PHONY : wheel_controller
 
 # fast build rule for target.
-wheels_aruco_tracking/fast:
-	$(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/build
-.PHONY : wheels_aruco_tracking/fast
+wheel_controller/fast:
+	$(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/build
+.PHONY : wheel_controller/fast
+
+#=============================================================================
+# Target rules for targets named wheel_driver
+
+# Build rule for target.
+wheel_driver: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 wheel_driver
+.PHONY : wheel_driver
+
+# fast build rule for target.
+wheel_driver/fast:
+	$(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/build
+.PHONY : wheel_driver/fast
+
+#=============================================================================
+# Target rules for targets named wheel_manual_console
+
+# Build rule for target.
+wheel_manual_console: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 wheel_manual_console
+.PHONY : wheel_manual_console
+
+# fast build rule for target.
+wheel_manual_console/fast:
+	$(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/build
+.PHONY : wheel_manual_console/fast
+
+#=============================================================================
+# Target rules for targets named wheel_navigator
+
+# Build rule for target.
+wheel_navigator: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 wheel_navigator
+.PHONY : wheel_navigator
+
+# fast build rule for target.
+wheel_navigator/fast:
+	$(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/build
+.PHONY : wheel_navigator/fast
+
+#=============================================================================
+# Target rules for targets named wheel_status_console
+
+# Build rule for target.
+wheel_status_console: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 wheel_status_console
+.PHONY : wheel_status_console
+
+# fast build rule for target.
+wheel_status_console/fast:
+	$(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/build
+.PHONY : wheel_status_console/fast
 
 #=============================================================================
 # Target rules for targets named wheels_gencpp
@@ -994,32 +1059,6 @@ wheels_genpy/fast:
 	$(MAKE) -f wheels/CMakeFiles/wheels_genpy.dir/build.make wheels/CMakeFiles/wheels_genpy.dir/build
 .PHONY : wheels_genpy/fast
 
-#=============================================================================
-# Target rules for targets named wheels_status
-
-# Build rule for target.
-wheels_status: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 wheels_status
-.PHONY : wheels_status
-
-# fast build rule for target.
-wheels_status/fast:
-	$(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/build
-.PHONY : wheels_status/fast
-
-#=============================================================================
-# Target rules for targets named wheels_status_listener
-
-# Build rule for target.
-wheels_status_listener: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 wheels_status_listener
-.PHONY : wheels_status_listener
-
-# fast build rule for target.
-wheels_status_listener/fast:
-	$(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/build
-.PHONY : wheels_status_listener/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1052,8 +1091,11 @@ help:
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_py"
+	@echo "... _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status"
 	@echo "... _wheels_generate_messages_check_deps_cmd_get_one_wheel_status"
 	@echo "... _wheels_generate_messages_check_deps_cmd_set_car_direction_speed"
+	@echo "... _wheels_generate_messages_check_deps_cmd_set_navigator_engine"
+	@echo "... _wheels_generate_messages_check_deps_navigator_engine_status"
 	@echo "... _wheels_generate_messages_check_deps_set_car_direction_speedAction"
 	@echo "... _wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback"
 	@echo "... _wheels_generate_messages_check_deps_set_car_direction_speedActionGoal"
@@ -1070,8 +1112,6 @@ help:
 	@echo "... actionlib_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_py"
-	@echo "... arucomarker_navigator"
-	@echo "... camera_navigator"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_lisp"
@@ -1088,7 +1128,11 @@ help:
 	@echo "... tf_generate_messages_eus"
 	@echo "... tf_generate_messages_lisp"
 	@echo "... tf_generate_messages_py"
-	@echo "... wheels_aruco_tracking"
+	@echo "... wheel_controller"
+	@echo "... wheel_driver"
+	@echo "... wheel_manual_console"
+	@echo "... wheel_navigator"
+	@echo "... wheel_status_console"
 	@echo "... wheels_gencpp"
 	@echo "... wheels_generate_messages"
 	@echo "... wheels_generate_messages_cpp"
@@ -1098,8 +1142,6 @@ help:
 	@echo "... wheels_geneus"
 	@echo "... wheels_genlisp"
 	@echo "... wheels_genpy"
-	@echo "... wheels_status"
-	@echo "... wheels_status_listener"
 .PHONY : help
 
 

@@ -53,8 +53,11 @@ wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/ro
 wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedResult.h
 wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/wheels_status.h
 wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedActionFeedback.h
+wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h
 wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h
+wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h
 wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h
+wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h
 
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedFeedback.h: /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedFeedback.h: /home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg
@@ -133,21 +136,45 @@ wheels/CMakeFiles/wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/ro
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating C++ code from wheels/set_car_direction_speedActionFeedback.msg"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/include/wheels -e /opt/ros/jade/share/gencpp/cmake/..
 
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h: /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h: /home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h: /opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h: /opt/ros/jade/share/gencpp/cmake/../msg.h.template
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating C++ code from wheels/navigator_engine_status.msg"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/include/wheels -e /opt/ros/jade/share/gencpp/cmake/..
+
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h: /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h: /opt/ros/jade/share/gencpp/cmake/../msg.h.template
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h: /opt/ros/jade/share/gencpp/cmake/../srv.h.template
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating C++ code from wheels/cmd_set_car_direction_speed.srv"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/include/wheels -e /opt/ros/jade/share/gencpp/cmake/..
+
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h: /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h: /opt/ros/jade/share/gencpp/cmake/../msg.h.template
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h: /opt/ros/jade/share/gencpp/cmake/../srv.h.template
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_11)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating C++ code from wheels/cmd_get_navigator_engine_status.srv"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/include/wheels -e /opt/ros/jade/share/gencpp/cmake/..
 
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h: /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h: /opt/ros/jade/share/gencpp/cmake/../msg.h.template
 /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h: /opt/ros/jade/share/gencpp/cmake/../srv.h.template
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating C++ code from wheels/cmd_get_one_wheel_status.srv"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/include/wheels -e /opt/ros/jade/share/gencpp/cmake/..
+
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h: /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h: /opt/ros/jade/share/gencpp/cmake/../msg.h.template
+/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h: /opt/ros/jade/share/gencpp/cmake/../srv.h.template
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_13)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating C++ code from wheels/cmd_set_navigator_engine.srv"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/include/wheels -e /opt/ros/jade/share/gencpp/cmake/..
 
 wheels_generate_messages_cpp: wheels/CMakeFiles/wheels_generate_messages_cpp
 wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedFeedback.h
@@ -158,8 +185,11 @@ wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include
 wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedResult.h
 wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/wheels_status.h
 wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedActionFeedback.h
+wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h
 wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h
+wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h
 wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h
+wheels_generate_messages_cpp: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h
 wheels_generate_messages_cpp: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/build.make
 .PHONY : wheels_generate_messages_cpp
 

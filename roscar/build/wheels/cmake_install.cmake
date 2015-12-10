@@ -12,7 +12,7 @@ IF(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     STRING(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   ELSE(BUILD_TYPE)
-    SET(CMAKE_INSTALL_CONFIG_NAME "")
+    SET(CMAKE_INSTALL_CONFIG_NAME "Debug")
   ENDIF(BUILD_TYPE)
   MESSAGE(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 ENDIF(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
@@ -33,13 +33,18 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheels/msg" TYPE FILE FILES "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/wheels_status.msg")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheels/msg" TYPE FILE FILES
+    "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/wheels_status.msg"
+    "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg"
+    )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheels/srv" TYPE FILE FILES
     "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv"
     "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv"
+    "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv"
+    "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

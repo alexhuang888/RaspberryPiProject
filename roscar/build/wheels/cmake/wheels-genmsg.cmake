@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "wheels: 8 messages, 2 services")
+message(STATUS "wheels: 9 messages, 4 services")
 
 set(MSG_I_FLAGS "-Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg;-Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg;-Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg;-Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg")
 
@@ -29,6 +29,11 @@ add_custom_target(_wheels_generate_messages_check_deps_${_filename}
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg" NAME_WE)
 add_custom_target(_wheels_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "wheels" "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg" "actionlib_msgs/GoalStatus:actionlib_msgs/GoalID:wheels/set_car_direction_speedResult:std_msgs/Header"
+)
+
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv" NAME_WE)
+add_custom_target(_wheels_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "wheels" "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv" ""
 )
 
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedResult.msg" NAME_WE)
@@ -64,6 +69,16 @@ add_custom_target(_wheels_generate_messages_check_deps_${_filename}
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg" NAME_WE)
 add_custom_target(_wheels_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "wheels" "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg" "wheels/set_car_direction_speedFeedback:actionlib_msgs/GoalStatus:actionlib_msgs/GoalID:std_msgs/Header"
+)
+
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv" NAME_WE)
+add_custom_target(_wheels_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "wheels" "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv" ""
+)
+
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg" NAME_WE)
+add_custom_target(_wheels_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "wheels" "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg" "std_msgs/Header"
 )
 
 #
@@ -120,6 +135,12 @@ _generate_msg_cpp(wheels
   "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/wheels
 )
+_generate_msg_cpp(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/wheels
+)
 
 ### Generating Services
 _generate_srv_cpp(wheels
@@ -129,7 +150,19 @@ _generate_srv_cpp(wheels
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/wheels
 )
 _generate_srv_cpp(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/wheels
+)
+_generate_srv_cpp(wheels
   "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/wheels
+)
+_generate_srv_cpp(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/wheels
@@ -153,6 +186,8 @@ get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/sha
 add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedAction.msg" NAME_WE)
@@ -166,6 +201,10 @@ add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_de
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/wheels_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg" NAME_WE)
+add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_cpp _wheels_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -225,6 +264,12 @@ _generate_msg_eus(wheels
   "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/wheels
 )
+_generate_msg_eus(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/wheels
+)
 
 ### Generating Services
 _generate_srv_eus(wheels
@@ -234,7 +279,19 @@ _generate_srv_eus(wheels
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/wheels
 )
 _generate_srv_eus(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/wheels
+)
+_generate_srv_eus(wheels
   "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/wheels
+)
+_generate_srv_eus(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/wheels
@@ -258,6 +315,8 @@ get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/sha
 add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedAction.msg" NAME_WE)
@@ -271,6 +330,10 @@ add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_de
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/wheels_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg" NAME_WE)
+add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_eus _wheels_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -330,6 +393,12 @@ _generate_msg_lisp(wheels
   "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/wheels
 )
+_generate_msg_lisp(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/wheels
+)
 
 ### Generating Services
 _generate_srv_lisp(wheels
@@ -339,7 +408,19 @@ _generate_srv_lisp(wheels
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/wheels
 )
 _generate_srv_lisp(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/wheels
+)
+_generate_srv_lisp(wheels
   "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/wheels
+)
+_generate_srv_lisp(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/wheels
@@ -363,6 +444,8 @@ get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/sha
 add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedAction.msg" NAME_WE)
@@ -376,6 +459,10 @@ add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_d
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/wheels_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg" NAME_WE)
+add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_lisp _wheels_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -435,6 +522,12 @@ _generate_msg_py(wheels
   "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/jade/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/wheels
 )
+_generate_msg_py(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/wheels
+)
 
 ### Generating Services
 _generate_srv_py(wheels
@@ -444,7 +537,19 @@ _generate_srv_py(wheels
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/wheels
 )
 _generate_srv_py(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/wheels
+)
+_generate_srv_py(wheels
   "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/wheels
+)
+_generate_srv_py(wheels
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/wheels
@@ -468,6 +573,8 @@ get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/sha
 add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedResult.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedAction.msg" NAME_WE)
@@ -481,6 +588,10 @@ add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_dep
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/wheels_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg" NAME_WE)
+add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv" NAME_WE)
+add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg" NAME_WE)
 add_dependencies(wheels_generate_messages_py _wheels_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

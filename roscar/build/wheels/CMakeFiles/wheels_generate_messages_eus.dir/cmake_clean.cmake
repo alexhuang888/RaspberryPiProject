@@ -8,8 +8,11 @@ FILE(REMOVE_RECURSE
   "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/msg/set_car_direction_speedResult.l"
   "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/msg/wheels_status.l"
   "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/msg/set_car_direction_speedActionFeedback.l"
+  "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/msg/navigator_engine_status.l"
   "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/srv/cmd_set_car_direction_speed.l"
+  "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/srv/cmd_get_navigator_engine_status.l"
   "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/srv/cmd_get_one_wheel_status.l"
+  "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/srv/cmd_set_navigator_engine.l"
   "/home/alex/RaspberryPiProject/roscar/devel/share/roseus/ros/wheels/manifest.l"
 )
 

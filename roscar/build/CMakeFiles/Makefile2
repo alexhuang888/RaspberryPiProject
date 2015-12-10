@@ -230,7 +230,7 @@ gtest/preinstall:
 gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  3
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  1
 	@echo "Built target gtest"
 .PHONY : gtest/CMakeFiles/gtest.dir/all
 
@@ -261,7 +261,7 @@ clean: gtest/CMakeFiles/gtest.dir/clean
 gtest/CMakeFiles/gtest_main.dir/all: gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  4
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  2
 	@echo "Built target gtest_main"
 .PHONY : gtest/CMakeFiles/gtest_main.dir/all
 
@@ -687,17 +687,20 @@ clean: picamera/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 # Directory level rules for directory wheels
 
 # Convenience name for "all" pass in the directory.
-wheels/all: wheels/CMakeFiles/arucomarker_navigator.dir/all
-wheels/all: wheels/CMakeFiles/camera_navigator.dir/all
-wheels/all: wheels/CMakeFiles/wheels_aruco_tracking.dir/all
+wheels/all: wheels/CMakeFiles/wheel_controller.dir/all
+wheels/all: wheels/CMakeFiles/wheel_driver.dir/all
+wheels/all: wheels/CMakeFiles/wheel_manual_console.dir/all
+wheels/all: wheels/CMakeFiles/wheel_navigator.dir/all
+wheels/all: wheels/CMakeFiles/wheel_status_console.dir/all
 wheels/all: wheels/CMakeFiles/wheels_generate_messages.dir/all
-wheels/all: wheels/CMakeFiles/wheels_status.dir/all
-wheels/all: wheels/CMakeFiles/wheels_status_listener.dir/all
 .PHONY : wheels/all
 
 # Convenience name for "clean" pass in the directory.
+wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/clean
 wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/clean
 wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/clean
+wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/clean
+wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/clean
 wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/clean
 wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback.dir/clean
 wheels/clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/clean
@@ -714,8 +717,6 @@ wheels/clean: wheels/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/clean
 wheels/clean: wheels/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/clean
 wheels/clean: wheels/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/clean
 wheels/clean: wheels/CMakeFiles/actionlib_msgs_generate_messages_py.dir/clean
-wheels/clean: wheels/CMakeFiles/arucomarker_navigator.dir/clean
-wheels/clean: wheels/CMakeFiles/camera_navigator.dir/clean
 wheels/clean: wheels/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
 wheels/clean: wheels/CMakeFiles/geometry_msgs_generate_messages_eus.dir/clean
 wheels/clean: wheels/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
@@ -732,7 +733,11 @@ wheels/clean: wheels/CMakeFiles/tf_generate_messages_cpp.dir/clean
 wheels/clean: wheels/CMakeFiles/tf_generate_messages_eus.dir/clean
 wheels/clean: wheels/CMakeFiles/tf_generate_messages_lisp.dir/clean
 wheels/clean: wheels/CMakeFiles/tf_generate_messages_py.dir/clean
-wheels/clean: wheels/CMakeFiles/wheels_aruco_tracking.dir/clean
+wheels/clean: wheels/CMakeFiles/wheel_controller.dir/clean
+wheels/clean: wheels/CMakeFiles/wheel_driver.dir/clean
+wheels/clean: wheels/CMakeFiles/wheel_manual_console.dir/clean
+wheels/clean: wheels/CMakeFiles/wheel_navigator.dir/clean
+wheels/clean: wheels/CMakeFiles/wheel_status_console.dir/clean
 wheels/clean: wheels/CMakeFiles/wheels_gencpp.dir/clean
 wheels/clean: wheels/CMakeFiles/wheels_generate_messages.dir/clean
 wheels/clean: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/clean
@@ -742,13 +747,42 @@ wheels/clean: wheels/CMakeFiles/wheels_generate_messages_py.dir/clean
 wheels/clean: wheels/CMakeFiles/wheels_geneus.dir/clean
 wheels/clean: wheels/CMakeFiles/wheels_genlisp.dir/clean
 wheels/clean: wheels/CMakeFiles/wheels_genpy.dir/clean
-wheels/clean: wheels/CMakeFiles/wheels_status.dir/clean
-wheels/clean: wheels/CMakeFiles/wheels_status_listener.dir/clean
 .PHONY : wheels/clean
 
 # Convenience name for "preinstall" pass in the directory.
 wheels/preinstall:
 .PHONY : wheels/preinstall
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 
+	@echo "Built target _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status"
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule
+
+# Convenience name for target.
+_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule
+.PHONY : _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status
+
+# clean rule for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/clean
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/clean
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir
@@ -810,6 +844,68 @@ wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_spe
 
 # clean rule for target.
 clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 
+	@echo "Built target _wheels_generate_messages_check_deps_cmd_set_navigator_engine"
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule
+
+# Convenience name for target.
+_wheels_generate_messages_check_deps_cmd_set_navigator_engine: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule
+.PHONY : _wheels_generate_messages_check_deps_cmd_set_navigator_engine
+
+# clean rule for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/clean
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 
+	@echo "Built target _wheels_generate_messages_check_deps_navigator_engine_status"
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule
+
+# Convenience name for target.
+_wheels_generate_messages_check_deps_navigator_engine_status: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule
+.PHONY : _wheels_generate_messages_check_deps_navigator_engine_status
+
+# clean rule for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/clean
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -1309,76 +1405,6 @@ clean: wheels/CMakeFiles/actionlib_msgs_generate_messages_py.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target wheels/CMakeFiles/arucomarker_navigator.dir
-
-# All Build rule for target.
-wheels/CMakeFiles/arucomarker_navigator.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
-	$(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/depend
-	$(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  1
-	@echo "Built target arucomarker_navigator"
-.PHONY : wheels/CMakeFiles/arucomarker_navigator.dir/all
-
-# Include target in all.
-all: wheels/CMakeFiles/arucomarker_navigator.dir/all
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-wheels/CMakeFiles/arucomarker_navigator.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 11
-	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/arucomarker_navigator.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
-.PHONY : wheels/CMakeFiles/arucomarker_navigator.dir/rule
-
-# Convenience name for target.
-arucomarker_navigator: wheels/CMakeFiles/arucomarker_navigator.dir/rule
-.PHONY : arucomarker_navigator
-
-# clean rule for target.
-wheels/CMakeFiles/arucomarker_navigator.dir/clean:
-	$(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/clean
-.PHONY : wheels/CMakeFiles/arucomarker_navigator.dir/clean
-
-# clean rule for target.
-clean: wheels/CMakeFiles/arucomarker_navigator.dir/clean
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target wheels/CMakeFiles/camera_navigator.dir
-
-# All Build rule for target.
-wheels/CMakeFiles/camera_navigator.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
-	$(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/depend
-	$(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  2
-	@echo "Built target camera_navigator"
-.PHONY : wheels/CMakeFiles/camera_navigator.dir/all
-
-# Include target in all.
-all: wheels/CMakeFiles/camera_navigator.dir/all
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-wheels/CMakeFiles/camera_navigator.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 11
-	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/camera_navigator.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
-.PHONY : wheels/CMakeFiles/camera_navigator.dir/rule
-
-# Convenience name for target.
-camera_navigator: wheels/CMakeFiles/camera_navigator.dir/rule
-.PHONY : camera_navigator
-
-# clean rule for target.
-wheels/CMakeFiles/camera_navigator.dir/clean:
-	$(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/clean
-.PHONY : wheels/CMakeFiles/camera_navigator.dir/clean
-
-# clean rule for target.
-clean: wheels/CMakeFiles/camera_navigator.dir/clean
-.PHONY : clean
-
-#=============================================================================
 # Target rules for target wheels/CMakeFiles/geometry_msgs_generate_messages_cpp.dir
 
 # All Build rule for target.
@@ -1875,38 +1901,178 @@ clean: wheels/CMakeFiles/tf_generate_messages_py.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target wheels/CMakeFiles/wheels_aruco_tracking.dir
+# Target rules for target wheels/CMakeFiles/wheel_controller.dir
 
 # All Build rule for target.
-wheels/CMakeFiles/wheels_aruco_tracking.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
-	$(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/depend
-	$(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  5
-	@echo "Built target wheels_aruco_tracking"
-.PHONY : wheels/CMakeFiles/wheels_aruco_tracking.dir/all
+wheels/CMakeFiles/wheel_controller.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
+	$(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  3 4 5
+	@echo "Built target wheel_controller"
+.PHONY : wheels/CMakeFiles/wheel_controller.dir/all
 
 # Include target in all.
-all: wheels/CMakeFiles/wheels_aruco_tracking.dir/all
+all: wheels/CMakeFiles/wheel_controller.dir/all
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-wheels/CMakeFiles/wheels_aruco_tracking.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 11
-	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_aruco_tracking.dir/all
+wheels/CMakeFiles/wheel_controller.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 16
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_controller.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
-.PHONY : wheels/CMakeFiles/wheels_aruco_tracking.dir/rule
+.PHONY : wheels/CMakeFiles/wheel_controller.dir/rule
 
 # Convenience name for target.
-wheels_aruco_tracking: wheels/CMakeFiles/wheels_aruco_tracking.dir/rule
-.PHONY : wheels_aruco_tracking
+wheel_controller: wheels/CMakeFiles/wheel_controller.dir/rule
+.PHONY : wheel_controller
 
 # clean rule for target.
-wheels/CMakeFiles/wheels_aruco_tracking.dir/clean:
-	$(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/clean
-.PHONY : wheels/CMakeFiles/wheels_aruco_tracking.dir/clean
+wheels/CMakeFiles/wheel_controller.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/clean
+.PHONY : wheels/CMakeFiles/wheel_controller.dir/clean
 
 # clean rule for target.
-clean: wheels/CMakeFiles/wheels_aruco_tracking.dir/clean
+clean: wheels/CMakeFiles/wheel_controller.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/wheel_driver.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/wheel_driver.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
+	$(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  6 7
+	@echo "Built target wheel_driver"
+.PHONY : wheels/CMakeFiles/wheel_driver.dir/all
+
+# Include target in all.
+all: wheels/CMakeFiles/wheel_driver.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/wheel_driver.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 15
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_driver.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/wheel_driver.dir/rule
+
+# Convenience name for target.
+wheel_driver: wheels/CMakeFiles/wheel_driver.dir/rule
+.PHONY : wheel_driver
+
+# clean rule for target.
+wheels/CMakeFiles/wheel_driver.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/clean
+.PHONY : wheels/CMakeFiles/wheel_driver.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/wheel_driver.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/wheel_manual_console.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/wheel_manual_console.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
+	$(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  8 9
+	@echo "Built target wheel_manual_console"
+.PHONY : wheels/CMakeFiles/wheel_manual_console.dir/all
+
+# Include target in all.
+all: wheels/CMakeFiles/wheel_manual_console.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/wheel_manual_console.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 15
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_manual_console.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/wheel_manual_console.dir/rule
+
+# Convenience name for target.
+wheel_manual_console: wheels/CMakeFiles/wheel_manual_console.dir/rule
+.PHONY : wheel_manual_console
+
+# clean rule for target.
+wheels/CMakeFiles/wheel_manual_console.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/clean
+.PHONY : wheels/CMakeFiles/wheel_manual_console.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/wheel_manual_console.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/wheel_navigator.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/wheel_navigator.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
+	$(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  10 11 12 13
+	@echo "Built target wheel_navigator"
+.PHONY : wheels/CMakeFiles/wheel_navigator.dir/all
+
+# Include target in all.
+all: wheels/CMakeFiles/wheel_navigator.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/wheel_navigator.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 17
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_navigator.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/wheel_navigator.dir/rule
+
+# Convenience name for target.
+wheel_navigator: wheels/CMakeFiles/wheel_navigator.dir/rule
+.PHONY : wheel_navigator
+
+# clean rule for target.
+wheels/CMakeFiles/wheel_navigator.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/clean
+.PHONY : wheels/CMakeFiles/wheel_navigator.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/wheel_navigator.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target wheels/CMakeFiles/wheel_status_console.dir
+
+# All Build rule for target.
+wheels/CMakeFiles/wheel_status_console.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
+	$(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/depend
+	$(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  14 15
+	@echo "Built target wheel_status_console"
+.PHONY : wheels/CMakeFiles/wheel_status_console.dir/all
+
+# Include target in all.
+all: wheels/CMakeFiles/wheel_status_console.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+wheels/CMakeFiles/wheel_status_console.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 15
+	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_status_console.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
+.PHONY : wheels/CMakeFiles/wheel_status_console.dir/rule
+
+# Convenience name for target.
+wheel_status_console: wheels/CMakeFiles/wheel_status_console.dir/rule
+.PHONY : wheel_status_console
+
+# clean rule for target.
+wheels/CMakeFiles/wheel_status_console.dir/clean:
+	$(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/clean
+.PHONY : wheels/CMakeFiles/wheel_status_console.dir/clean
+
+# clean rule for target.
+clean: wheels/CMakeFiles/wheel_status_console.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -1922,7 +2088,7 @@ wheels/CMakeFiles/wheels_gencpp.dir/all: wheels/CMakeFiles/wheels_generate_messa
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 13
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_gencpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_gencpp.dir/rule
@@ -1944,10 +2110,10 @@ clean: wheels/CMakeFiles/wheels_gencpp.dir/clean
 # Target rules for target wheels/CMakeFiles/wheels_generate_messages.dir
 
 # All Build rule for target.
-wheels/CMakeFiles/wheels_generate_messages.dir/all: wheels/CMakeFiles/wheels_generate_messages_py.dir/all
 wheels/CMakeFiles/wheels_generate_messages.dir/all: wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all
 wheels/CMakeFiles/wheels_generate_messages.dir/all: wheels/CMakeFiles/wheels_generate_messages_eus.dir/all
 wheels/CMakeFiles/wheels_generate_messages.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
+wheels/CMakeFiles/wheels_generate_messages.dir/all: wheels/CMakeFiles/wheels_generate_messages_py.dir/all
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages.dir/build.make wheels/CMakeFiles/wheels_generate_messages.dir/depend
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages.dir/build.make wheels/CMakeFiles/wheels_generate_messages.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 
@@ -1960,7 +2126,7 @@ all: wheels/CMakeFiles/wheels_generate_messages.dir/all
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 43
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 55
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_generate_messages.dir/rule
@@ -1984,25 +2150,28 @@ clean: wheels/CMakeFiles/wheels_generate_messages.dir/clean
 # All Build rule for target.
 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: picamera/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedGoal.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_wheels_status.dir/all
 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_cpp.dir/build.make wheels/CMakeFiles/wheels_generate_messages_cpp.dir/depend
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_cpp.dir/build.make wheels/CMakeFiles/wheels_generate_messages_cpp.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  6 7 8 9 10 11 12 13 14 15
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  16 17 18 19 20 21 22 23 24 25 26 27 28
 	@echo "Built target wheels_generate_messages_cpp"
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 13
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_cpp.dir/rule
@@ -2026,25 +2195,28 @@ clean: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/clean
 # All Build rule for target.
 wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: picamera/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
 wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedGoal.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
 wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_wheels_status.dir/all
 wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_eus.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_eus.dir/build.make wheels/CMakeFiles/wheels_generate_messages_eus.dir/depend
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_eus.dir/build.make wheels/CMakeFiles/wheels_generate_messages_eus.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  16 17 18 19 20 21 22 23 24 25 26
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  29 30 31 32 33 34 35 36 37 38 39 40 41 42
 	@echo "Built target wheels_generate_messages_eus"
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 14
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_eus.dir/rule
@@ -2066,27 +2238,30 @@ clean: wheels/CMakeFiles/wheels_generate_messages_eus.dir/clean
 # Target rules for target wheels/CMakeFiles/wheels_generate_messages_lisp.dir
 
 # All Build rule for target.
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/all
 wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: picamera/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
 wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedGoal.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
 wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_wheels_status.dir/all
 wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_lisp.dir/build.make wheels/CMakeFiles/wheels_generate_messages_lisp.dir/depend
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_lisp.dir/build.make wheels/CMakeFiles/wheels_generate_messages_lisp.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  27 28 29 30 31 32 33 34 35 36
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  43 44 45 46 47 48 49 50 51 52 53 54 55
 	@echo "Built target wheels_generate_messages_lisp"
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 13
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_lisp.dir/rule
@@ -2110,25 +2285,28 @@ clean: wheels/CMakeFiles/wheels_generate_messages_lisp.dir/clean
 # All Build rule for target.
 wheels/CMakeFiles/wheels_generate_messages_py.dir/all: picamera/CMakeFiles/std_msgs_generate_messages_py.dir/all
 wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/actionlib_msgs_generate_messages_py.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
 wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedGoal.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionGoal.dir/all
 wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_wheels_status.dir/all
 wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback.dir/all
-wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedFeedback.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedResult.dir/all
+wheels/CMakeFiles/wheels_generate_messages_py.dir/all: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/all
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_py.dir/build.make wheels/CMakeFiles/wheels_generate_messages_py.dir/depend
 	$(MAKE) -f wheels/CMakeFiles/wheels_generate_messages_py.dir/build.make wheels/CMakeFiles/wheels_generate_messages_py.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  37 38 39 40 41 42 43 44 45 46 47 48
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  56 57 58 59 60 61 62 63 64 65 66 67 68 69 70
 	@echo "Built target wheels_generate_messages_py"
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 15
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_generate_messages_py.dir/rule
@@ -2159,7 +2337,7 @@ wheels/CMakeFiles/wheels_geneus.dir/all: wheels/CMakeFiles/wheels_generate_messa
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 14
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_geneus.dir/rule
@@ -2190,7 +2368,7 @@ wheels/CMakeFiles/wheels_genlisp.dir/all: wheels/CMakeFiles/wheels_generate_mess
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 13
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_genlisp.dir/rule
@@ -2221,7 +2399,7 @@ wheels/CMakeFiles/wheels_genpy.dir/all: wheels/CMakeFiles/wheels_generate_messag
 
 # Build rule for subdir invocation for target.
 wheels/CMakeFiles/wheels_genpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 15
 	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_genpy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
 .PHONY : wheels/CMakeFiles/wheels_genpy.dir/rule
@@ -2237,76 +2415,6 @@ wheels/CMakeFiles/wheels_genpy.dir/clean:
 
 # clean rule for target.
 clean: wheels/CMakeFiles/wheels_genpy.dir/clean
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target wheels/CMakeFiles/wheels_status.dir
-
-# All Build rule for target.
-wheels/CMakeFiles/wheels_status.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
-	$(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/depend
-	$(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  49 50
-	@echo "Built target wheels_status"
-.PHONY : wheels/CMakeFiles/wheels_status.dir/all
-
-# Include target in all.
-all: wheels/CMakeFiles/wheels_status.dir/all
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-wheels/CMakeFiles/wheels_status.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 12
-	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_status.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
-.PHONY : wheels/CMakeFiles/wheels_status.dir/rule
-
-# Convenience name for target.
-wheels_status: wheels/CMakeFiles/wheels_status.dir/rule
-.PHONY : wheels_status
-
-# clean rule for target.
-wheels/CMakeFiles/wheels_status.dir/clean:
-	$(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/clean
-.PHONY : wheels/CMakeFiles/wheels_status.dir/clean
-
-# clean rule for target.
-clean: wheels/CMakeFiles/wheels_status.dir/clean
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target wheels/CMakeFiles/wheels_status_listener.dir
-
-# All Build rule for target.
-wheels/CMakeFiles/wheels_status_listener.dir/all: wheels/CMakeFiles/wheels_generate_messages_cpp.dir/all
-	$(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/depend
-	$(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles  51
-	@echo "Built target wheels_status_listener"
-.PHONY : wheels/CMakeFiles/wheels_status_listener.dir/all
-
-# Include target in all.
-all: wheels/CMakeFiles/wheels_status_listener.dir/all
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-wheels/CMakeFiles/wheels_status_listener.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 11
-	$(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_status_listener.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/roscar/build/CMakeFiles 0
-.PHONY : wheels/CMakeFiles/wheels_status_listener.dir/rule
-
-# Convenience name for target.
-wheels_status_listener: wheels/CMakeFiles/wheels_status_listener.dir/rule
-.PHONY : wheels_status_listener
-
-# clean rule for target.
-wheels/CMakeFiles/wheels_status_listener.dir/clean:
-	$(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/clean
-.PHONY : wheels/CMakeFiles/wheels_status_listener.dir/clean
-
-# clean rule for target.
-clean: wheels/CMakeFiles/wheels_status_listener.dir/clean
 .PHONY : clean
 
 #=============================================================================

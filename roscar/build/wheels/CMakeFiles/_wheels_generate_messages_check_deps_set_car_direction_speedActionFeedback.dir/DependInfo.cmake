@@ -17,12 +17,12 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/home/alex/RaspberryPiProject/roscar/devel/include"
-  "/usr/local/include"
   "/usr/include/opencv"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/include"
   "/opt/ros/jade/include"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/../include"
   "/home/alex/RaspberryPiProject/roscar/src/wheels/../../wiringPi/wiringPi"
+  "/home/alex/RaspberryPiProject/roscar/src/wheels/src"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

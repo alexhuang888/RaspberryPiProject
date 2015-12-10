@@ -53,8 +53,11 @@ wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/r
 wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedResult.lisp
 wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/wheels_status.lisp
 wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedActionFeedback.lisp
+wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/navigator_engine_status.lisp
 wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_car_direction_speed.lisp
+wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_navigator_engine_status.lisp
 wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_one_wheel_status.lisp
+wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_navigator_engine.lisp
 
 /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedFeedback.lisp: /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py
 /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedFeedback.lisp: /home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedFeedback.msg
@@ -125,17 +128,36 @@ wheels/CMakeFiles/wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/r
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Lisp code from wheels/set_car_direction_speedActionFeedback.msg"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg
 
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/navigator_engine_status.lisp: /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/navigator_engine_status.lisp: /home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/navigator_engine_status.lisp: /opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Lisp code from wheels/navigator_engine_status.msg"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg
+
 /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_car_direction_speed.lisp: /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py
 /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_car_direction_speed.lisp: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Lisp code from wheels/cmd_set_car_direction_speed.srv"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv
 
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_navigator_engine_status.lisp: /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_navigator_engine_status.lisp: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_11)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Lisp code from wheels/cmd_get_navigator_engine_status.srv"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv
+
 /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_one_wheel_status.lisp: /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py
 /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_one_wheel_status.lisp: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Lisp code from wheels/cmd_get_one_wheel_status.srv"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv
+
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_navigator_engine.lisp: /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py
+/home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_navigator_engine.lisp: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_13)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Lisp code from wheels/cmd_set_navigator_engine.srv"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv
 
 wheels_generate_messages_lisp: wheels/CMakeFiles/wheels_generate_messages_lisp
 wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedFeedback.lisp
@@ -146,8 +168,11 @@ wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/
 wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedResult.lisp
 wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/wheels_status.lisp
 wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/set_car_direction_speedActionFeedback.lisp
+wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/msg/navigator_engine_status.lisp
 wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_car_direction_speed.lisp
+wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_navigator_engine_status.lisp
 wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_get_one_wheel_status.lisp
+wheels_generate_messages_lisp: /home/alex/RaspberryPiProject/roscar/devel/share/common-lisp/ros/wheels/srv/cmd_set_navigator_engine.lisp
 wheels_generate_messages_lisp: wheels/CMakeFiles/wheels_generate_messages_lisp.dir/build.make
 .PHONY : wheels_generate_messages_lisp
 

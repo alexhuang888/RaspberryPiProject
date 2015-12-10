@@ -1,196 +1,157 @@
-#include "stdlib.h"
+/*
+ * In this file, we do prepare to use service/client and action to do the job
+ */
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "wheelmotorengine.h"
+#include "wheelcontroller.h"
+#include "stdint.h"
 
-#include "wheels/wheelcontroller.h"
-
-#include "wiringPi.h"
-#include "softPwm.h"
-
-#define RPI_GPIO_LOW LOW
-#define RPI_GPIO_HIGH HIGH
-
-#define FULLSPEED (100)
-#define HALFSPEED (50)
-#define LOWSPEED (50)
-
-// include gpio library
-
-// implment all modules
-CL298NMotorController::~CL298NMotorController()
+namespace yisys_roswheels
 {
-	if (m_bInitialized)
+
+CWheelController::CWheelController(std::string name) : 
+    //m_ActionServer(m_nNodeHandle, name, boost::bind(&CWheelController::executeCB, this, _1), false),
+    m_ActionServer(m_nNodeHandle, name, false),
+    m_strAction_Name(name)
+{
+	// here, we would like to access GPIO Pin from parameter server, or from default value
+	int nLA = 5, nLB = 6, nRA = 2, nRB = 3;
+	
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINLA, nLA, 5);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINLB, nLB, 6);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINRA, nRA, 2);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINRB, nRB, 3);
+	
+	m_pGlobalCarController = new CTwoWheelsController(nLA, nLB, nRA, nRB);
+
+    //register the goal and feeback callbacks
+    m_ActionServer.registerGoalCallback(boost::bind(&CWheelController::goalCB, this));
+    m_ActionServer.registerPreemptCallback(boost::bind(&CWheelController::preemptCB, this));
+
+    //subscribe to the data topic of interest
+    //m_SubScriber = m_nNodeHandle.subscribe("/random_number", 1, &CWheelController::analysisCB, this);
+    //m_ActionServer.start();
+    
+	m_WheelStatusPublisher = m_nNodeHandle.advertise<wheels::wheels_status>("wheels_status", 1000);
+
+	m_SetDirectionSpeedService = m_nNodeHandle.advertiseService("set_direction_speed", &CWheelController::cbSetDirectionAndSpeed, this);
+	
+	m_GetOneWheelStatusService = m_nNodeHandle.advertiseService("get_one_wheel_status", &CWheelController::cbGetOneWheelStatus, this);    
+}
+
+CWheelController::~CWheelController()
+{
+	if (m_pGlobalCarController != NULL)
+		delete m_pGlobalCarController;
+	m_pGlobalCarController = NULL;
+}
+
+void CWheelController::PublishWheelsStatus(void)
+{
+	wheels::wheels_status status;
+
+	if (m_pGlobalCarController!= NULL)
 	{
-		pinMode(m_nForwardPinID, OUTPUT);
-		pinMode(m_nBackwardPinID, OUTPUT);		
-		softPwmWrite(m_nForwardPinID, RPI_GPIO_LOW);	
-		softPwmWrite(m_nBackwardPinID, RPI_GPIO_LOW);		
-	}
-	m_bInitialized = false;
-}
-
-int32_t CL298NMotorController::Initialize(void)
-{
-	wiringPiSetupGpio();
-	
-	pinMode(m_nForwardPinID, OUTPUT);
-	pinMode(m_nBackwardPinID, OUTPUT);
-	pullUpDnControl(m_nForwardPinID, PUD_OFF);
-	pullUpDnControl(m_nBackwardPinID, PUD_OFF);
-	softPwmCreate(m_nForwardPinID, 0, FULLSPEED);
-	softPwmCreate(m_nBackwardPinID, 0, FULLSPEED);	
-	m_nDirection = CMC_MOTORIDLE;
-	m_nSpeed = 0;		
-	m_nHealthyStatus = 1;	// good condition
-	m_bInitialized = true;
-	return 1;
-}
-
-
-int32_t CL298NMotorController::SetSpeedAndDirection(uint32_t nNewSpeed, uint32_t nNewDirection)
-{
-	switch (nNewDirection)
-	{
-		case CMC_MOTORFORWARD:
-			softPwmWrite(m_nForwardPinID, nNewSpeed);	
-			softPwmWrite(m_nBackwardPinID, RPI_GPIO_LOW);				
-		break;
-		case CMC_MOTORBACKWARD:
-			softPwmWrite(m_nBackwardPinID, nNewSpeed);	
-			softPwmWrite(m_nForwardPinID, RPI_GPIO_LOW);			
-		break;
-	}
-	m_nDirection = nNewSpeed == 0 ? CMC_MOTORIDLE : nNewDirection;
-	m_nSpeed = nNewSpeed;
-	return 1;
-}
-	
-int32_t CL298NMotorController::Reset(void)
-{
-	pinMode(m_nForwardPinID, OUTPUT);
-	pinMode(m_nBackwardPinID, OUTPUT);
-	pullUpDnControl(m_nForwardPinID, PUD_OFF);
-	pullUpDnControl(m_nBackwardPinID, PUD_OFF);
-	softPwmWrite(m_nForwardPinID, RPI_GPIO_LOW);	
-	softPwmWrite(m_nBackwardPinID, RPI_GPIO_LOW);	
-	
-	m_nDirection = CMC_MOTORIDLE;
-	m_nSpeed = 0;			
-	return 1;
-}
-
-void CL298NMotorController::GetGPIOPinID(uint32_t &nForwardPinID, uint32_t &nBackwardPinID)
-{
-	nForwardPinID = m_nForwardPinID;
-	nBackwardPinID = m_nBackwardPinID;
-}
-
-int32_t CTwoWheelsController::GetWheelStatus(uint32_t nWheelID, uint32_t &nDirection, uint32_t &nSpeed, uint32_t &nHealthStatus)
-{
-	if (m_Motors[nWheelID] != NULL)
-	{
-		nDirection = m_Motors[nWheelID]->GetDirection();
-		nSpeed = m_Motors[nWheelID]->GetSpeed();
-		nHealthStatus = m_Motors[nWheelID]->GetHealthyStatus();
-		
-		return 1;
-	}
-	return 0;
-}
-/// car wheels controller
-CTwoWheelsController::CTwoWheelsController(uint32_t nLeftForwardPin, uint32_t nLeftBackwardPin, uint32_t nRightForwardPin, uint32_t nRightBackwardPin)
-{
-	// create two new motors
-	CL298NMotorController *pMotor = NULL;
-	
-	pMotor = new CL298NMotorController(nLeftForwardPin, nLeftBackwardPin);
-	
-	if (pMotor != NULL)
-	{
-		m_Motors.insert(pair<uint32_t, CL298NMotorController*>(CMC_LEFTWHEELID, pMotor));
-		pMotor->Initialize();
-	}
-	pMotor = new CL298NMotorController(nRightForwardPin, nRightBackwardPin);
-	
-	if (pMotor != NULL)
-	{
-		m_Motors.insert(pair<uint32_t, CL298NMotorController*>(CMC_RIGHTWHEELID, pMotor));
-		pMotor->Initialize();
+		m_pGlobalCarController->GetWheelStatus(CMC_LEFTWHEELID, status.nLeftWheelDirection, status.nLeftWheelSpeed, status.nLeftWheelHealthStatus);
+		m_pGlobalCarController->GetWheelStatus(CMC_RIGHTWHEELID, status.nRightWheelDirection, status.nRightWheelSpeed, status.nRightWheelHealthStatus);
+		//ROS_INFO("Left[%d, %d, %d] Right[%d, %d, %d]", status.nLeftWheelDirection, status.nLeftWheelSpeed, status.nLeftWheelHealthStatus, status.nRightWheelDirection, status.nRightWheelSpeed, status.nRightWheelHealthStatus);
 	}	
-	
-	m_nDirection = 0;
-	m_nSpeed = 0;
+	/**
+	* The publish() function is how you send messages. The parameter
+	* is the message object. The type of this object must agree with the type
+	* given as a template parameter to the advertise<>() call, as was done
+	* in the constructor above.
+	*/
+	m_WheelStatusPublisher.publish(status);	
 }
-
-CTwoWheelsController::~CTwoWheelsController()
+int32_t CWheelController::cbSetDirectionAndSpeed(uint32_t nNewDirection, uint32_t nNewSpeed)
 {
-	map<int32_t, CL298NMotorController*>::iterator it;
+	int32_t nRetCode = -1;
 	
-	for (it = m_Motors.begin(); it != m_Motors.end(); it++)
+	if (m_pGlobalCarController != NULL)
 	{
-		delete (it->second);
-	}
-	m_Motors.clear();
-}
+		//m_pGlobalCarController->GetDirectionSpeed(res.nLastDirection, res.nLastSpeed);
 		
-int32_t CTwoWheelsController::GetTotalMotors(void)
-{
-	return m_Motors.size();
+		switch (nNewDirection)
+		{
+			default:	// stop
+			case WCLR_STOP:
+				nRetCode = m_pGlobalCarController->Stop();
+			break;
+			case WCLR_FORWARD:	//forward
+				nRetCode = m_pGlobalCarController->Forward(nNewSpeed);
+			break;
+			case WCLR_BACKWARD:	//backward
+				nRetCode = m_pGlobalCarController->Backward(nNewSpeed);
+			break;	
+			case WCLR_FORWARDRIGHTTURN:	//forward, right turn
+				nRetCode = m_pGlobalCarController->TurnRight(nNewSpeed, CMC_MOTORFORWARD);
+			break;		
+			case WCLR_BACKWARDRIGHTTURN:	//backward, right turn
+				nRetCode = m_pGlobalCarController->TurnRight(nNewSpeed, CMC_MOTORBACKWARD);
+			break;
+			case WCLR_FORWARDLEFTTURN:	//forward, left turn
+				nRetCode = m_pGlobalCarController->TurnLeft(nNewSpeed, CMC_MOTORFORWARD);
+			break;		
+			case WCLR_BACKWARDLEFTTURN:	//backward, left turn
+				nRetCode = m_pGlobalCarController->TurnLeft(nNewSpeed, CMC_MOTORBACKWARD);
+			break;			
+		}
+		//ROS_INFO("new request: direction=%d, speed=%d", nNewDirection, nNewSpeed);
+		PublishWheelsStatus();
+		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
+	}
+	return nRetCode;		
 }
-int32_t CTwoWheelsController::Forward(uint32_t nSpeed)
+bool CWheelController::cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_speedRequest &req,
+														wheels::cmd_set_car_direction_speedResponse &res)
 {
-	m_Motors[CMC_LEFTWHEELID]->SetSpeedAndDirection(nSpeed, CMC_MOTORFORWARD);
-	m_Motors[CMC_RIGHTWHEELID]->SetSpeedAndDirection(nSpeed, CMC_MOTORFORWARD);
-	
-	m_nDirection = 1;
-	m_nSpeed = nSpeed;
-	return 1;
-}
-int32_t CTwoWheelsController::Backward(uint32_t nSpeed)
-{
-	m_Motors[CMC_LEFTWHEELID]->SetSpeedAndDirection(nSpeed, CMC_MOTORBACKWARD);
-	m_Motors[CMC_RIGHTWHEELID]->SetSpeedAndDirection(nSpeed, CMC_MOTORBACKWARD);
+	res.nRetCode = -1;
+	if (m_pGlobalCarController != NULL)
+	{
+		m_pGlobalCarController->GetDirectionSpeed(res.nLastDirection, res.nLastSpeed);
+		res.nRetCode = cbSetDirectionAndSpeed(req.nNewDirection, req.nNewSpeed);
 
-	m_nDirection = 2;
-	m_nSpeed = nSpeed;
-	return 1;	
+		//ROS_INFO("new request: direction=%d, speed=%d", req.nNewDirection, req.nNewSpeed);
+		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
+		return true;
+	}
+	return false;		
 }
-int32_t CTwoWheelsController::TurnRight(uint32_t nSpeed, uint32_t nForwardBackward)
+
+bool CWheelController::cbGetOneWheelStatus(wheels::cmd_get_one_wheel_statusRequest &req,
+														wheels::cmd_get_one_wheel_statusResponse &res)
 {
-	m_Motors[CMC_LEFTWHEELID]->SetSpeedAndDirection(nSpeed, nForwardBackward);
-	m_Motors[CMC_RIGHTWHEELID]->SetSpeedAndDirection(0, CMC_MOTORFORWARD);
-	m_nDirection = nForwardBackward == CMC_MOTORFORWARD ? 3 : 4;
-	m_nSpeed = nSpeed;	
-	return 1;		
-}
-int32_t CTwoWheelsController::TurnLeft(uint32_t nSpeed, uint32_t nForwardBackward)
+	if (m_pGlobalCarController != NULL)
+	{
+		res.nRetCode = m_pGlobalCarController->GetWheelStatus(req.nWheelID, res.nWheelDirection, res.nWheelSpeed, res.nWheelHealthStatus);
+		
+		//ROS_INFO("request: wheelID=%d", req.nWheelID);
+		//ROS_INFO("sending back response: RetCode=%d, WheelDirection=%d, wheel Speed=%d wheel healthStatus=%d", res.nRetCode, res.nWheelDirection, res.nWheelSpeed, res.nWheelHealthStatus);
+		return true;
+	}
+	return false;
+}	
+
+void CWheelController::goalCB()
 {
-	m_Motors[CMC_LEFTWHEELID]->SetSpeedAndDirection(0, CMC_MOTORFORWARD);
-	m_Motors[CMC_RIGHTWHEELID]->SetSpeedAndDirection(nSpeed, nForwardBackward);
-	
-	m_nDirection = nForwardBackward == CMC_MOTORFORWARD ? 5 : 6;
-	m_nSpeed = nSpeed;	
-	return 1;		
+	// reset helper variables
+
+	// accept the new goal
+	//goal_ = m_ActionServer.acceptNewGoal()->samples;
 }
-	
-int32_t CTwoWheelsController::Stop(void)
+
+void CWheelController::preemptCB()
 {
-	m_Motors[CMC_LEFTWHEELID]->SetSpeedAndDirection(0, CMC_MOTORFORWARD);
-	m_Motors[CMC_RIGHTWHEELID]->SetSpeedAndDirection(0, CMC_MOTORFORWARD);
-	
-	//m_nDirection = nForwardBackward == CMC_MOTORFORWARD ? 3 : 4;
-	m_nSpeed = 0;	
-	return 1;		
+	//ROS_INFO("%s: Preempted", m_strAction_Name.c_str());
+	// set the action state to preempted
+	//as_.setPreempted();
 }
-int32_t CTwoWheelsController::Reset(void)
+
+void CWheelController::executeCB(const wheels::set_car_direction_speedGoalConstPtr &goal)
 {
-	m_Motors[CMC_LEFTWHEELID]->Reset();
-	m_Motors[CMC_RIGHTWHEELID]->Reset();
-	//m_nDirection = nForwardBackward == CMC_MOTORFORWARD ? 3 : 4;
-	m_nDirection = 0;
-	m_nSpeed = 0;	
-	return 1;		
+
 }
-	
-CL298NMotorController &CTwoWheelsController::GetMotorControllers(uint32_t nWheelID)
-{
-	return *(m_Motors[nWheelID]);
-}
+};  
+

@@ -5,22 +5,25 @@ project(wheels)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-  message_generation
-  genmsg 
-  actionlib_msgs 
-  actionlib
-  tf2
-  tf
+	cv_bridge
+	roscpp
+	roslib
+	rospy
+	std_msgs
+	sensor_msgs
+	message_generation
+	genmsg 
+	actionlib_msgs 
+	actionlib
+	tf2
+	tf
 )
 # for raspicam controller
-find_package(raspicam REQUIRED)
+#find_package(raspicam REQUIRED)
 # for OpenCV
 find_package(OpenCV REQUIRED)
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -56,6 +59,7 @@ find_package(OpenCV REQUIRED)
 add_message_files(
 	FILES
 	wheels_status.msg
+	navigator_engine_status.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -63,6 +67,8 @@ add_service_files(
 	FILES
 	cmd_get_one_wheel_status.srv
 	cmd_set_car_direction_speed.srv
+	cmd_get_navigator_engine_status.srv
+	cmd_set_navigator_engine.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -194,24 +200,36 @@ catkin_package(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-include_directories(include ${catkin_INCLUDE_DIRS} ../include ../../wiringPi/wiringPi)
+include_directories(
+	include 
+	${catkin_INCLUDE_DIRS}
+	../include 
+	../../wiringPi/wiringPi
+	${PROJECT_SOURCE_DIR}/src
+	${Boost_INCLUDE_DIRS}
+	)
 
-add_executable(wheels_status src/wheels_status.cpp src/wheelcontroller.cpp)
-target_link_libraries(wheels_status ${catkin_LIBRARIES} wiringPi pthread)
-add_dependencies(wheels_status wheels_generate_messages_cpp)
+#to display wheel status
+add_executable(wheel_status_console src/wheelstatusconsole.cpp src/wheelstatusconsolenode.cpp)
+target_link_libraries(wheel_status_console ${catkin_LIBRARIES})
+add_dependencies(wheel_status_console wheels_generate_messages_cpp)
 
-add_executable(wheels_status_listener src/wheels_status_listener.cpp)
-target_link_libraries(wheels_status_listener ${catkin_LIBRARIES} wiringPi pthread)
-add_dependencies(wheels_status_listener wheels_generate_messages_cpp)
+# the driver of the robot-car, it will listen to cmd_vel and send message to motor controller
+add_executable(wheel_driver src/wheeldriver.cpp src/wheeldrivernode.cpp)
+target_link_libraries(wheel_driver ${catkin_LIBRARIES})
+add_dependencies(wheel_driver wheels_generate_messages_cpp)
 
-add_executable(camera_navigator src/cameranavigator.cpp)
-target_link_libraries(camera_navigator ${catkin_LIBRARIES}  wiringPi pthread ${raspicam_CV_LIBS})
-add_dependencies(camera_navigator wheels_generate_messages_cpp)
+# motor controller, will listen to message then call motor controller.
+add_executable(wheel_controller src/wheelmotorengine.cpp src/wheelcontroller.cpp src/wheelcontrollernode.cpp)
+target_link_libraries(wheel_controller ${catkin_LIBRARIES} wiringPi pthread)
+add_dependencies(wheel_controller wheels_generate_messages_cpp)
 
-add_executable(wheels_aruco_tracking src/wheels_aruco_tracking.cpp)
-target_link_libraries(wheels_aruco_tracking ${catkin_LIBRARIES})
-add_dependencies(wheels_aruco_tracking wheels_generate_messages_cpp)
+# navigator engine, will get image from image_raw, process them, then convert to wheel_cmd_vel msg
+add_executable(wheel_navigator src/wheelnavigatornode.cpp src/wheelnavigator.cpp src/clinefollowernavigatorengine.cpp src/cnavigatorenginebase.cpp)
+target_link_libraries(wheel_navigator ${catkin_LIBRARIES})
+add_dependencies(wheel_navigator wheels_generate_messages_cpp)
 
-add_executable(arucomarker_navigator src/arucomarker_navigator.cpp)
-target_link_libraries(arucomarker_navigator ${catkin_LIBRARIES})
-add_dependencies(arucomarker_navigator wheels_generate_messages_cpp)
+# the manual override console of the robot-car, it will listen to cmd_vel and send message to motor controller
+add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
+target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
+add_dependencies(wheel_manual_console wheels_generate_messages_cpp)

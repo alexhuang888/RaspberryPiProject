@@ -8,8 +8,11 @@ FILE(REMOVE_RECURSE
   "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedResult.h"
   "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/wheels_status.h"
   "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedActionFeedback.h"
+  "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/navigator_engine_status.h"
   "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_car_direction_speed.h"
+  "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_navigator_engine_status.h"
   "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_get_one_wheel_status.h"
+  "/home/alex/RaspberryPiProject/roscar/devel/include/wheels/cmd_set_navigator_engine.h"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -8,6 +8,8 @@
   :components ((:file "_package")
     (:file "wheels_status" :depends-on ("_package_wheels_status"))
     (:file "_package_wheels_status" :depends-on ("_package"))
+    (:file "navigator_engine_status" :depends-on ("_package_navigator_engine_status"))
+    (:file "_package_navigator_engine_status" :depends-on ("_package"))
     (:file "set_car_direction_speedGoal" :depends-on ("_package_set_car_direction_speedGoal"))
     (:file "_package_set_car_direction_speedGoal" :depends-on ("_package"))
     (:file "set_car_direction_speedFeedback" :depends-on ("_package_set_car_direction_speedFeedback"))

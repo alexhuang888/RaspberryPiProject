@@ -150,6 +150,20 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule
+
+# Convenience name for target.
+_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/rule
+.PHONY : _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status
+
+# fast build rule for target.
+_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_navigator_engine_status.dir/build
+.PHONY : _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status/fast
+
+# Convenience name for target.
 wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/rule:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/rule
 .PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_get_one_wheel_status.dir/rule
@@ -176,6 +190,34 @@ _wheels_generate_messages_check_deps_cmd_set_car_direction_speed: wheels/CMakeFi
 _wheels_generate_messages_check_deps_cmd_set_car_direction_speed/fast:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_car_direction_speed.dir/build
 .PHONY : _wheels_generate_messages_check_deps_cmd_set_car_direction_speed/fast
+
+# Convenience name for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule
+
+# Convenience name for target.
+_wheels_generate_messages_check_deps_cmd_set_navigator_engine: wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/rule
+.PHONY : _wheels_generate_messages_check_deps_cmd_set_navigator_engine
+
+# fast build rule for target.
+_wheels_generate_messages_check_deps_cmd_set_navigator_engine/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_cmd_set_navigator_engine.dir/build
+.PHONY : _wheels_generate_messages_check_deps_cmd_set_navigator_engine/fast
+
+# Convenience name for target.
+wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule
+.PHONY : wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule
+
+# Convenience name for target.
+_wheels_generate_messages_check_deps_navigator_engine_status: wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/rule
+.PHONY : _wheels_generate_messages_check_deps_navigator_engine_status
+
+# fast build rule for target.
+_wheels_generate_messages_check_deps_navigator_engine_status/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build.make wheels/CMakeFiles/_wheels_generate_messages_check_deps_navigator_engine_status.dir/build
+.PHONY : _wheels_generate_messages_check_deps_navigator_engine_status/fast
 
 # Convenience name for target.
 wheels/CMakeFiles/_wheels_generate_messages_check_deps_set_car_direction_speedAction.dir/rule:
@@ -402,34 +444,6 @@ actionlib_msgs_generate_messages_py/fast:
 .PHONY : actionlib_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-wheels/CMakeFiles/arucomarker_navigator.dir/rule:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/arucomarker_navigator.dir/rule
-.PHONY : wheels/CMakeFiles/arucomarker_navigator.dir/rule
-
-# Convenience name for target.
-arucomarker_navigator: wheels/CMakeFiles/arucomarker_navigator.dir/rule
-.PHONY : arucomarker_navigator
-
-# fast build rule for target.
-arucomarker_navigator/fast:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/build
-.PHONY : arucomarker_navigator/fast
-
-# Convenience name for target.
-wheels/CMakeFiles/camera_navigator.dir/rule:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/camera_navigator.dir/rule
-.PHONY : wheels/CMakeFiles/camera_navigator.dir/rule
-
-# Convenience name for target.
-camera_navigator: wheels/CMakeFiles/camera_navigator.dir/rule
-.PHONY : camera_navigator
-
-# fast build rule for target.
-camera_navigator/fast:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/build
-.PHONY : camera_navigator/fast
-
-# Convenience name for target.
 wheels/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
 .PHONY : wheels/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
@@ -654,18 +668,74 @@ tf_generate_messages_py/fast:
 .PHONY : tf_generate_messages_py/fast
 
 # Convenience name for target.
-wheels/CMakeFiles/wheels_aruco_tracking.dir/rule:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_aruco_tracking.dir/rule
-.PHONY : wheels/CMakeFiles/wheels_aruco_tracking.dir/rule
+wheels/CMakeFiles/wheel_controller.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_controller.dir/rule
+.PHONY : wheels/CMakeFiles/wheel_controller.dir/rule
 
 # Convenience name for target.
-wheels_aruco_tracking: wheels/CMakeFiles/wheels_aruco_tracking.dir/rule
-.PHONY : wheels_aruco_tracking
+wheel_controller: wheels/CMakeFiles/wheel_controller.dir/rule
+.PHONY : wheel_controller
 
 # fast build rule for target.
-wheels_aruco_tracking/fast:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/build
-.PHONY : wheels_aruco_tracking/fast
+wheel_controller/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/build
+.PHONY : wheel_controller/fast
+
+# Convenience name for target.
+wheels/CMakeFiles/wheel_driver.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_driver.dir/rule
+.PHONY : wheels/CMakeFiles/wheel_driver.dir/rule
+
+# Convenience name for target.
+wheel_driver: wheels/CMakeFiles/wheel_driver.dir/rule
+.PHONY : wheel_driver
+
+# fast build rule for target.
+wheel_driver/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/build
+.PHONY : wheel_driver/fast
+
+# Convenience name for target.
+wheels/CMakeFiles/wheel_manual_console.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_manual_console.dir/rule
+.PHONY : wheels/CMakeFiles/wheel_manual_console.dir/rule
+
+# Convenience name for target.
+wheel_manual_console: wheels/CMakeFiles/wheel_manual_console.dir/rule
+.PHONY : wheel_manual_console
+
+# fast build rule for target.
+wheel_manual_console/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/build
+.PHONY : wheel_manual_console/fast
+
+# Convenience name for target.
+wheels/CMakeFiles/wheel_navigator.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_navigator.dir/rule
+.PHONY : wheels/CMakeFiles/wheel_navigator.dir/rule
+
+# Convenience name for target.
+wheel_navigator: wheels/CMakeFiles/wheel_navigator.dir/rule
+.PHONY : wheel_navigator
+
+# fast build rule for target.
+wheel_navigator/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/build
+.PHONY : wheel_navigator/fast
+
+# Convenience name for target.
+wheels/CMakeFiles/wheel_status_console.dir/rule:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheel_status_console.dir/rule
+.PHONY : wheels/CMakeFiles/wheel_status_console.dir/rule
+
+# Convenience name for target.
+wheel_status_console: wheels/CMakeFiles/wheel_status_console.dir/rule
+.PHONY : wheel_status_console
+
+# fast build rule for target.
+wheel_status_console/fast:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/build
+.PHONY : wheel_status_console/fast
 
 # Convenience name for target.
 wheels/CMakeFiles/wheels_gencpp.dir/rule:
@@ -793,88 +863,60 @@ wheels_genpy/fast:
 	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_genpy.dir/build.make wheels/CMakeFiles/wheels_genpy.dir/build
 .PHONY : wheels_genpy/fast
 
-# Convenience name for target.
-wheels/CMakeFiles/wheels_status.dir/rule:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_status.dir/rule
-.PHONY : wheels/CMakeFiles/wheels_status.dir/rule
-
-# Convenience name for target.
-wheels_status: wheels/CMakeFiles/wheels_status.dir/rule
-.PHONY : wheels_status
-
-# fast build rule for target.
-wheels_status/fast:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/build
-.PHONY : wheels_status/fast
-
-# Convenience name for target.
-wheels/CMakeFiles/wheels_status_listener.dir/rule:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f CMakeFiles/Makefile2 wheels/CMakeFiles/wheels_status_listener.dir/rule
-.PHONY : wheels/CMakeFiles/wheels_status_listener.dir/rule
-
-# Convenience name for target.
-wheels_status_listener: wheels/CMakeFiles/wheels_status_listener.dir/rule
-.PHONY : wheels_status_listener
-
-# fast build rule for target.
-wheels_status_listener/fast:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/build
-.PHONY : wheels_status_listener/fast
-
-src/arucomarker_navigator.o: src/arucomarker_navigator.cpp.o
-.PHONY : src/arucomarker_navigator.o
+src/clinefollowernavigatorengine.o: src/clinefollowernavigatorengine.cpp.o
+.PHONY : src/clinefollowernavigatorengine.o
 
 # target to build an object file
-src/arucomarker_navigator.cpp.o:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/src/arucomarker_navigator.cpp.o
-.PHONY : src/arucomarker_navigator.cpp.o
+src/clinefollowernavigatorengine.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/clinefollowernavigatorengine.cpp.o
+.PHONY : src/clinefollowernavigatorengine.cpp.o
 
-src/arucomarker_navigator.i: src/arucomarker_navigator.cpp.i
-.PHONY : src/arucomarker_navigator.i
+src/clinefollowernavigatorengine.i: src/clinefollowernavigatorengine.cpp.i
+.PHONY : src/clinefollowernavigatorengine.i
 
 # target to preprocess a source file
-src/arucomarker_navigator.cpp.i:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/src/arucomarker_navigator.cpp.i
-.PHONY : src/arucomarker_navigator.cpp.i
+src/clinefollowernavigatorengine.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/clinefollowernavigatorengine.cpp.i
+.PHONY : src/clinefollowernavigatorengine.cpp.i
 
-src/arucomarker_navigator.s: src/arucomarker_navigator.cpp.s
-.PHONY : src/arucomarker_navigator.s
+src/clinefollowernavigatorengine.s: src/clinefollowernavigatorengine.cpp.s
+.PHONY : src/clinefollowernavigatorengine.s
 
 # target to generate assembly for a file
-src/arucomarker_navigator.cpp.s:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/arucomarker_navigator.dir/build.make wheels/CMakeFiles/arucomarker_navigator.dir/src/arucomarker_navigator.cpp.s
-.PHONY : src/arucomarker_navigator.cpp.s
+src/clinefollowernavigatorengine.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/clinefollowernavigatorengine.cpp.s
+.PHONY : src/clinefollowernavigatorengine.cpp.s
 
-src/cameranavigator.o: src/cameranavigator.cpp.o
-.PHONY : src/cameranavigator.o
+src/cnavigatorenginebase.o: src/cnavigatorenginebase.cpp.o
+.PHONY : src/cnavigatorenginebase.o
 
 # target to build an object file
-src/cameranavigator.cpp.o:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.o
-.PHONY : src/cameranavigator.cpp.o
+src/cnavigatorenginebase.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/cnavigatorenginebase.cpp.o
+.PHONY : src/cnavigatorenginebase.cpp.o
 
-src/cameranavigator.i: src/cameranavigator.cpp.i
-.PHONY : src/cameranavigator.i
+src/cnavigatorenginebase.i: src/cnavigatorenginebase.cpp.i
+.PHONY : src/cnavigatorenginebase.i
 
 # target to preprocess a source file
-src/cameranavigator.cpp.i:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.i
-.PHONY : src/cameranavigator.cpp.i
+src/cnavigatorenginebase.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/cnavigatorenginebase.cpp.i
+.PHONY : src/cnavigatorenginebase.cpp.i
 
-src/cameranavigator.s: src/cameranavigator.cpp.s
-.PHONY : src/cameranavigator.s
+src/cnavigatorenginebase.s: src/cnavigatorenginebase.cpp.s
+.PHONY : src/cnavigatorenginebase.s
 
 # target to generate assembly for a file
-src/cameranavigator.cpp.s:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/camera_navigator.dir/build.make wheels/CMakeFiles/camera_navigator.dir/src/cameranavigator.cpp.s
-.PHONY : src/cameranavigator.cpp.s
+src/cnavigatorenginebase.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/cnavigatorenginebase.cpp.s
+.PHONY : src/cnavigatorenginebase.cpp.s
 
 src/wheelcontroller.o: src/wheelcontroller.cpp.o
 .PHONY : src/wheelcontroller.o
 
 # target to build an object file
 src/wheelcontroller.cpp.o:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/src/wheelcontroller.cpp.o
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelcontroller.cpp.o
 .PHONY : src/wheelcontroller.cpp.o
 
 src/wheelcontroller.i: src/wheelcontroller.cpp.i
@@ -882,7 +924,7 @@ src/wheelcontroller.i: src/wheelcontroller.cpp.i
 
 # target to preprocess a source file
 src/wheelcontroller.cpp.i:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/src/wheelcontroller.cpp.i
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelcontroller.cpp.i
 .PHONY : src/wheelcontroller.cpp.i
 
 src/wheelcontroller.s: src/wheelcontroller.cpp.s
@@ -890,80 +932,227 @@ src/wheelcontroller.s: src/wheelcontroller.cpp.s
 
 # target to generate assembly for a file
 src/wheelcontroller.cpp.s:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/src/wheelcontroller.cpp.s
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelcontroller.cpp.s
 .PHONY : src/wheelcontroller.cpp.s
 
-src/wheels_aruco_tracking.o: src/wheels_aruco_tracking.cpp.o
-.PHONY : src/wheels_aruco_tracking.o
+src/wheelcontrollernode.o: src/wheelcontrollernode.cpp.o
+.PHONY : src/wheelcontrollernode.o
 
 # target to build an object file
-src/wheels_aruco_tracking.cpp.o:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/src/wheels_aruco_tracking.cpp.o
-.PHONY : src/wheels_aruco_tracking.cpp.o
+src/wheelcontrollernode.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelcontrollernode.cpp.o
+.PHONY : src/wheelcontrollernode.cpp.o
 
-src/wheels_aruco_tracking.i: src/wheels_aruco_tracking.cpp.i
-.PHONY : src/wheels_aruco_tracking.i
+src/wheelcontrollernode.i: src/wheelcontrollernode.cpp.i
+.PHONY : src/wheelcontrollernode.i
 
 # target to preprocess a source file
-src/wheels_aruco_tracking.cpp.i:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/src/wheels_aruco_tracking.cpp.i
-.PHONY : src/wheels_aruco_tracking.cpp.i
+src/wheelcontrollernode.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelcontrollernode.cpp.i
+.PHONY : src/wheelcontrollernode.cpp.i
 
-src/wheels_aruco_tracking.s: src/wheels_aruco_tracking.cpp.s
-.PHONY : src/wheels_aruco_tracking.s
+src/wheelcontrollernode.s: src/wheelcontrollernode.cpp.s
+.PHONY : src/wheelcontrollernode.s
 
 # target to generate assembly for a file
-src/wheels_aruco_tracking.cpp.s:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_aruco_tracking.dir/build.make wheels/CMakeFiles/wheels_aruco_tracking.dir/src/wheels_aruco_tracking.cpp.s
-.PHONY : src/wheels_aruco_tracking.cpp.s
+src/wheelcontrollernode.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelcontrollernode.cpp.s
+.PHONY : src/wheelcontrollernode.cpp.s
 
-src/wheels_status.o: src/wheels_status.cpp.o
-.PHONY : src/wheels_status.o
+src/wheeldriver.o: src/wheeldriver.cpp.o
+.PHONY : src/wheeldriver.o
 
 # target to build an object file
-src/wheels_status.cpp.o:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/src/wheels_status.cpp.o
-.PHONY : src/wheels_status.cpp.o
+src/wheeldriver.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/src/wheeldriver.cpp.o
+.PHONY : src/wheeldriver.cpp.o
 
-src/wheels_status.i: src/wheels_status.cpp.i
-.PHONY : src/wheels_status.i
+src/wheeldriver.i: src/wheeldriver.cpp.i
+.PHONY : src/wheeldriver.i
 
 # target to preprocess a source file
-src/wheels_status.cpp.i:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/src/wheels_status.cpp.i
-.PHONY : src/wheels_status.cpp.i
+src/wheeldriver.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.i
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/src/wheeldriver.cpp.i
+.PHONY : src/wheeldriver.cpp.i
 
-src/wheels_status.s: src/wheels_status.cpp.s
-.PHONY : src/wheels_status.s
+src/wheeldriver.s: src/wheeldriver.cpp.s
+.PHONY : src/wheeldriver.s
 
 # target to generate assembly for a file
-src/wheels_status.cpp.s:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status.dir/build.make wheels/CMakeFiles/wheels_status.dir/src/wheels_status.cpp.s
-.PHONY : src/wheels_status.cpp.s
+src/wheeldriver.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.s
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/src/wheeldriver.cpp.s
+.PHONY : src/wheeldriver.cpp.s
 
-src/wheels_status_listener.o: src/wheels_status_listener.cpp.o
-.PHONY : src/wheels_status_listener.o
+src/wheeldrivernode.o: src/wheeldrivernode.cpp.o
+.PHONY : src/wheeldrivernode.o
 
 # target to build an object file
-src/wheels_status_listener.cpp.o:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.o
-.PHONY : src/wheels_status_listener.cpp.o
+src/wheeldrivernode.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/src/wheeldrivernode.cpp.o
+.PHONY : src/wheeldrivernode.cpp.o
 
-src/wheels_status_listener.i: src/wheels_status_listener.cpp.i
-.PHONY : src/wheels_status_listener.i
+src/wheeldrivernode.i: src/wheeldrivernode.cpp.i
+.PHONY : src/wheeldrivernode.i
 
 # target to preprocess a source file
-src/wheels_status_listener.cpp.i:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.i
-.PHONY : src/wheels_status_listener.cpp.i
+src/wheeldrivernode.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/src/wheeldrivernode.cpp.i
+.PHONY : src/wheeldrivernode.cpp.i
 
-src/wheels_status_listener.s: src/wheels_status_listener.cpp.s
-.PHONY : src/wheels_status_listener.s
+src/wheeldrivernode.s: src/wheeldrivernode.cpp.s
+.PHONY : src/wheeldrivernode.s
 
 # target to generate assembly for a file
-src/wheels_status_listener.cpp.s:
-	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheels_status_listener.dir/build.make wheels/CMakeFiles/wheels_status_listener.dir/src/wheels_status_listener.cpp.s
-.PHONY : src/wheels_status_listener.cpp.s
+src/wheeldrivernode.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_driver.dir/build.make wheels/CMakeFiles/wheel_driver.dir/src/wheeldrivernode.cpp.s
+.PHONY : src/wheeldrivernode.cpp.s
+
+src/wheelmanualconsole.o: src/wheelmanualconsole.cpp.o
+.PHONY : src/wheelmanualconsole.o
+
+# target to build an object file
+src/wheelmanualconsole.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/src/wheelmanualconsole.cpp.o
+.PHONY : src/wheelmanualconsole.cpp.o
+
+src/wheelmanualconsole.i: src/wheelmanualconsole.cpp.i
+.PHONY : src/wheelmanualconsole.i
+
+# target to preprocess a source file
+src/wheelmanualconsole.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/src/wheelmanualconsole.cpp.i
+.PHONY : src/wheelmanualconsole.cpp.i
+
+src/wheelmanualconsole.s: src/wheelmanualconsole.cpp.s
+.PHONY : src/wheelmanualconsole.s
+
+# target to generate assembly for a file
+src/wheelmanualconsole.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_manual_console.dir/build.make wheels/CMakeFiles/wheel_manual_console.dir/src/wheelmanualconsole.cpp.s
+.PHONY : src/wheelmanualconsole.cpp.s
+
+src/wheelmotorengine.o: src/wheelmotorengine.cpp.o
+.PHONY : src/wheelmotorengine.o
+
+# target to build an object file
+src/wheelmotorengine.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelmotorengine.cpp.o
+.PHONY : src/wheelmotorengine.cpp.o
+
+src/wheelmotorengine.i: src/wheelmotorengine.cpp.i
+.PHONY : src/wheelmotorengine.i
+
+# target to preprocess a source file
+src/wheelmotorengine.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelmotorengine.cpp.i
+.PHONY : src/wheelmotorengine.cpp.i
+
+src/wheelmotorengine.s: src/wheelmotorengine.cpp.s
+.PHONY : src/wheelmotorengine.s
+
+# target to generate assembly for a file
+src/wheelmotorengine.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_controller.dir/build.make wheels/CMakeFiles/wheel_controller.dir/src/wheelmotorengine.cpp.s
+.PHONY : src/wheelmotorengine.cpp.s
+
+src/wheelnavigator.o: src/wheelnavigator.cpp.o
+.PHONY : src/wheelnavigator.o
+
+# target to build an object file
+src/wheelnavigator.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/wheelnavigator.cpp.o
+.PHONY : src/wheelnavigator.cpp.o
+
+src/wheelnavigator.i: src/wheelnavigator.cpp.i
+.PHONY : src/wheelnavigator.i
+
+# target to preprocess a source file
+src/wheelnavigator.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/wheelnavigator.cpp.i
+.PHONY : src/wheelnavigator.cpp.i
+
+src/wheelnavigator.s: src/wheelnavigator.cpp.s
+.PHONY : src/wheelnavigator.s
+
+# target to generate assembly for a file
+src/wheelnavigator.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/wheelnavigator.cpp.s
+.PHONY : src/wheelnavigator.cpp.s
+
+src/wheelnavigatornode.o: src/wheelnavigatornode.cpp.o
+.PHONY : src/wheelnavigatornode.o
+
+# target to build an object file
+src/wheelnavigatornode.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/wheelnavigatornode.cpp.o
+.PHONY : src/wheelnavigatornode.cpp.o
+
+src/wheelnavigatornode.i: src/wheelnavigatornode.cpp.i
+.PHONY : src/wheelnavigatornode.i
+
+# target to preprocess a source file
+src/wheelnavigatornode.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/wheelnavigatornode.cpp.i
+.PHONY : src/wheelnavigatornode.cpp.i
+
+src/wheelnavigatornode.s: src/wheelnavigatornode.cpp.s
+.PHONY : src/wheelnavigatornode.s
+
+# target to generate assembly for a file
+src/wheelnavigatornode.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_navigator.dir/build.make wheels/CMakeFiles/wheel_navigator.dir/src/wheelnavigatornode.cpp.s
+.PHONY : src/wheelnavigatornode.cpp.s
+
+src/wheelstatusconsole.o: src/wheelstatusconsole.cpp.o
+.PHONY : src/wheelstatusconsole.o
+
+# target to build an object file
+src/wheelstatusconsole.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/src/wheelstatusconsole.cpp.o
+.PHONY : src/wheelstatusconsole.cpp.o
+
+src/wheelstatusconsole.i: src/wheelstatusconsole.cpp.i
+.PHONY : src/wheelstatusconsole.i
+
+# target to preprocess a source file
+src/wheelstatusconsole.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/src/wheelstatusconsole.cpp.i
+.PHONY : src/wheelstatusconsole.cpp.i
+
+src/wheelstatusconsole.s: src/wheelstatusconsole.cpp.s
+.PHONY : src/wheelstatusconsole.s
+
+# target to generate assembly for a file
+src/wheelstatusconsole.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/src/wheelstatusconsole.cpp.s
+.PHONY : src/wheelstatusconsole.cpp.s
+
+src/wheelstatusconsolenode.o: src/wheelstatusconsolenode.cpp.o
+.PHONY : src/wheelstatusconsolenode.o
+
+# target to build an object file
+src/wheelstatusconsolenode.cpp.o:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/src/wheelstatusconsolenode.cpp.o
+.PHONY : src/wheelstatusconsolenode.cpp.o
+
+src/wheelstatusconsolenode.i: src/wheelstatusconsolenode.cpp.i
+.PHONY : src/wheelstatusconsolenode.i
+
+# target to preprocess a source file
+src/wheelstatusconsolenode.cpp.i:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/src/wheelstatusconsolenode.cpp.i
+.PHONY : src/wheelstatusconsolenode.cpp.i
+
+src/wheelstatusconsolenode.s: src/wheelstatusconsolenode.cpp.s
+.PHONY : src/wheelstatusconsolenode.s
+
+# target to generate assembly for a file
+src/wheelstatusconsolenode.cpp.s:
+	cd /home/alex/RaspberryPiProject/roscar/build && $(MAKE) -f wheels/CMakeFiles/wheel_status_console.dir/build.make wheels/CMakeFiles/wheel_status_console.dir/src/wheelstatusconsolenode.cpp.s
+.PHONY : src/wheelstatusconsolenode.cpp.s
 
 # Help Target
 help:
@@ -971,8 +1160,11 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... _wheels_generate_messages_check_deps_cmd_get_navigator_engine_status"
 	@echo "... _wheels_generate_messages_check_deps_cmd_get_one_wheel_status"
 	@echo "... _wheels_generate_messages_check_deps_cmd_set_car_direction_speed"
+	@echo "... _wheels_generate_messages_check_deps_cmd_set_navigator_engine"
+	@echo "... _wheels_generate_messages_check_deps_navigator_engine_status"
 	@echo "... _wheels_generate_messages_check_deps_set_car_direction_speedAction"
 	@echo "... _wheels_generate_messages_check_deps_set_car_direction_speedActionFeedback"
 	@echo "... _wheels_generate_messages_check_deps_set_car_direction_speedActionGoal"
@@ -989,8 +1181,6 @@ help:
 	@echo "... actionlib_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_py"
-	@echo "... arucomarker_navigator"
-	@echo "... camera_navigator"
 	@echo "... edit_cache"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
@@ -1014,7 +1204,11 @@ help:
 	@echo "... tf_generate_messages_eus"
 	@echo "... tf_generate_messages_lisp"
 	@echo "... tf_generate_messages_py"
-	@echo "... wheels_aruco_tracking"
+	@echo "... wheel_controller"
+	@echo "... wheel_driver"
+	@echo "... wheel_manual_console"
+	@echo "... wheel_navigator"
+	@echo "... wheel_status_console"
 	@echo "... wheels_gencpp"
 	@echo "... wheels_generate_messages"
 	@echo "... wheels_generate_messages_cpp"
@@ -1024,26 +1218,42 @@ help:
 	@echo "... wheels_geneus"
 	@echo "... wheels_genlisp"
 	@echo "... wheels_genpy"
-	@echo "... wheels_status"
-	@echo "... wheels_status_listener"
-	@echo "... src/arucomarker_navigator.o"
-	@echo "... src/arucomarker_navigator.i"
-	@echo "... src/arucomarker_navigator.s"
-	@echo "... src/cameranavigator.o"
-	@echo "... src/cameranavigator.i"
-	@echo "... src/cameranavigator.s"
+	@echo "... src/clinefollowernavigatorengine.o"
+	@echo "... src/clinefollowernavigatorengine.i"
+	@echo "... src/clinefollowernavigatorengine.s"
+	@echo "... src/cnavigatorenginebase.o"
+	@echo "... src/cnavigatorenginebase.i"
+	@echo "... src/cnavigatorenginebase.s"
 	@echo "... src/wheelcontroller.o"
 	@echo "... src/wheelcontroller.i"
 	@echo "... src/wheelcontroller.s"
-	@echo "... src/wheels_aruco_tracking.o"
-	@echo "... src/wheels_aruco_tracking.i"
-	@echo "... src/wheels_aruco_tracking.s"
-	@echo "... src/wheels_status.o"
-	@echo "... src/wheels_status.i"
-	@echo "... src/wheels_status.s"
-	@echo "... src/wheels_status_listener.o"
-	@echo "... src/wheels_status_listener.i"
-	@echo "... src/wheels_status_listener.s"
+	@echo "... src/wheelcontrollernode.o"
+	@echo "... src/wheelcontrollernode.i"
+	@echo "... src/wheelcontrollernode.s"
+	@echo "... src/wheeldriver.o"
+	@echo "... src/wheeldriver.i"
+	@echo "... src/wheeldriver.s"
+	@echo "... src/wheeldrivernode.o"
+	@echo "... src/wheeldrivernode.i"
+	@echo "... src/wheeldrivernode.s"
+	@echo "... src/wheelmanualconsole.o"
+	@echo "... src/wheelmanualconsole.i"
+	@echo "... src/wheelmanualconsole.s"
+	@echo "... src/wheelmotorengine.o"
+	@echo "... src/wheelmotorengine.i"
+	@echo "... src/wheelmotorengine.s"
+	@echo "... src/wheelnavigator.o"
+	@echo "... src/wheelnavigator.i"
+	@echo "... src/wheelnavigator.s"
+	@echo "... src/wheelnavigatornode.o"
+	@echo "... src/wheelnavigatornode.i"
+	@echo "... src/wheelnavigatornode.s"
+	@echo "... src/wheelstatusconsole.o"
+	@echo "... src/wheelstatusconsole.i"
+	@echo "... src/wheelstatusconsole.s"
+	@echo "... src/wheelstatusconsolenode.o"
+	@echo "... src/wheelstatusconsolenode.i"
+	@echo "... src/wheelstatusconsolenode.s"
 .PHONY : help
 
 

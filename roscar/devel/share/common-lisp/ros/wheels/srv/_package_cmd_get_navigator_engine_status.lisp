@@ -1,0 +1,8 @@
+(cl:in-package wheels-srv)
+(cl:export '(NACTIVEENGINEID-VAL
+          NACTIVEENGINEID
+          STRACTIVEENGINEDESCRIPTION-VAL
+          STRACTIVEENGINEDESCRIPTION
+          NRETCODE-VAL
+          NRETCODE
+))

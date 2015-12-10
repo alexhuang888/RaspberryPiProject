@@ -8,8 +8,11 @@ FILE(REMOVE_RECURSE
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedResult.py"
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_wheels_status.py"
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedActionFeedback.py"
+  "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py"
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py"
+  "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py"
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py"
+  "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py"
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py"
   "/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py"
 )

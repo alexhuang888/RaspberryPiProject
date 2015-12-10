@@ -53,8 +53,11 @@ wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/ros
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedResult.py
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_wheels_status.py
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedActionFeedback.py
+wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py
+wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py
+wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py
 wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py
 
@@ -127,17 +130,36 @@ wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/ros
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python from MSG wheels/set_car_direction_speedActionFeedback"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg/set_car_direction_speedActionFeedback.msg -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg
 
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py: /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/genmsg_py.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py: /home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py: /opt/ros/jade/share/std_msgs/cmake/../msg/Header.msg
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python from MSG wheels/navigator_engine_status"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/alex/RaspberryPiProject/roscar/src/wheels/msg/navigator_engine_status.msg -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg
+
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py: /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python code from SRV wheels/cmd_set_car_direction_speed"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_car_direction_speed.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv
 
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py: /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_11)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python code from SRV wheels/cmd_get_navigator_engine_status"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_navigator_engine_status.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv
+
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py: /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python code from SRV wheels/cmd_get_one_wheel_status"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_get_one_wheel_status.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv
+
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py: /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py: /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_13)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python code from SRV wheels/cmd_set_navigator_engine"
+	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/alex/RaspberryPiProject/roscar/src/wheels/srv/cmd_set_navigator_engine.srv -Iwheels:/home/alex/RaspberryPiProject/roscar/src/wheels/msg -Iwheels:/home/alex/RaspberryPiProject/roscar/devel/share/wheels/msg -Istd_msgs:/opt/ros/jade/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/jade/share/actionlib_msgs/cmake/../msg -p wheels -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv
 
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/genmsg_py.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedFeedback.py
@@ -148,9 +170,12 @@ wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/ros
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedResult.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_wheels_status.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedActionFeedback.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_11)
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_14)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python msg __init__.py for wheels"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg --initpy
 
@@ -163,9 +188,12 @@ wheels/CMakeFiles/wheels_generate_messages_py: /home/alex/RaspberryPiProject/ros
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedResult.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_wheels_status.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedActionFeedback.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py
 /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_12)
+/home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/roscar/build/CMakeFiles $(CMAKE_PROGRESS_15)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating Python srv __init__.py for wheels"
 	cd /home/alex/RaspberryPiProject/roscar/build/wheels && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/jade/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv --initpy
 
@@ -178,8 +206,11 @@ wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/pyth
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedResult.py
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_wheels_status.py
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_set_car_direction_speedActionFeedback.py
+wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/_navigator_engine_status.py
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_car_direction_speed.py
+wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_navigator_engine_status.py
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_get_one_wheel_status.py
+wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/_cmd_set_navigator_engine.py
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/msg/__init__.py
 wheels_generate_messages_py: /home/alex/RaspberryPiProject/roscar/devel/lib/python2.7/dist-packages/wheels/srv/__init__.py
 wheels_generate_messages_py: wheels/CMakeFiles/wheels_generate_messages_py.dir/build.make
