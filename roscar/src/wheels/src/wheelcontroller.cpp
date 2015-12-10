@@ -112,7 +112,7 @@ bool CWheelController::cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_spee
 	{
 		m_pGlobalCarController->GetDirectionSpeed(res.nLastDirection, res.nLastSpeed);
 		res.nRetCode = cbSetDirectionAndSpeed(req.nNewDirection, req.nNewSpeed);
-
+		m_pGlobalCarController->GetDirectionSpeed(res.nNewDirection, res.nNewSpeed);
 		//ROS_INFO("new request: direction=%d, speed=%d", req.nNewDirection, req.nNewSpeed);
 		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
 		return true;

@@ -47,7 +47,7 @@ public:
 protected:
 	CNavigatorCallback *m_pNavigatorCB;
 };
-
+#define _CNEWIS_DEFAULT_LINEARSPEED (0.1)
 class CNavigatorEngineWithImageSource : public CNavigatorEngineBase
 {
 public:

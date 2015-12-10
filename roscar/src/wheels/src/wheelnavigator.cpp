@@ -1,5 +1,6 @@
 #include "wheelnavigator.h"
 #include "clinefollowernavigatorengine.h"
+#include "clanedetectornavigatorengine.h"
 #include "wheels/navigator_engine_status.h"
 #include "wheels/wheels_status.h"
 namespace yisys_roswheels
@@ -34,6 +35,8 @@ int32_t CWheelNavigator::Init(void)
 {
 	// line follower engine
 	CLineFollowerNavigatorEngine *pLineFollowerEngine = NULL;
+	CLaneDetectorNavigatorEngine *pLaneDetectorEngine = NULL;
+	
 	int32_t nRet = 0;
 	
 	pLineFollowerEngine = new CLineFollowerNavigatorEngine;
@@ -46,6 +49,15 @@ int32_t CWheelNavigator::Init(void)
 		
 	m_EnginePool.insert(EnginePoolPairType(pLineFollowerEngine->GetEngineID(), pLineFollowerEngine));
 	
+	pLaneDetectorEngine = new CLaneDetectorNavigatorEngine;
+	if (pLaneDetectorEngine == NULL)
+		goto err_out;
+	if (pLaneDetectorEngine->SetNavigatorCallback(this) <= 0)
+	{
+		printf("WheelNavigator: Fail to set navigator pointer to lane detector\n");
+	}
+		
+	m_EnginePool.insert(EnginePoolPairType(pLaneDetectorEngine->GetEngineID(), pLaneDetectorEngine));	
 	nRet = 1;
 	
 err_out:
@@ -67,14 +79,15 @@ int32_t CWheelNavigator::SetTrackingEngine(uint32_t nEngineID)
 		goto err_out; 
 	}
 
-	m_ActiveEngineID = nEngineID;
-	m_pTrackingEngine = m_EnginePool.at(m_ActiveEngineID);
+	m_pTrackingEngine = m_EnginePool.at(nEngineID);
+	m_ActiveEngineID = m_pTrackingEngine->GetEngineID();
 	if (m_pTrackingEngine != NULL)
 	{
 		m_pTrackingEngine->Start();
 	}
 	
 	PublishEngineStatus();
+	nRet = 1;
 err_out:
 	return nRet;
 }

@@ -225,11 +225,11 @@ target_link_libraries(wheel_controller ${catkin_LIBRARIES} wiringPi pthread)
 add_dependencies(wheel_controller wheels_generate_messages_cpp)
 
 # navigator engine, will get image from image_raw, process them, then convert to wheel_cmd_vel msg
-add_executable(wheel_navigator src/wheelnavigatornode.cpp src/wheelnavigator.cpp src/clinefollowernavigatorengine.cpp src/cnavigatorenginebase.cpp)
+add_executable(wheel_navigator src/wheelnavigatornode.cpp src/wheelnavigator.cpp src/myutil.cpp src/clinefollowernavigatorengine.cpp src/clanedetectornavigatorengine.cpp src/cnavigatorenginebase.cpp)
 target_link_libraries(wheel_navigator ${catkin_LIBRARIES})
 add_dependencies(wheel_navigator wheels_generate_messages_cpp)
 
 # the manual override console of the robot-car, it will listen to cmd_vel and send message to motor controller
-add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
-target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
-add_dependencies(wheel_manual_console wheels_generate_messages_cpp)
+#add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
+#target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
+#add_dependencies(wheel_manual_console wheels_generate_messages_cpp)

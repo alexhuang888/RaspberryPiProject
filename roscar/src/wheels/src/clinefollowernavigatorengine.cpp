@@ -253,13 +253,13 @@ int32_t CLineFollowerNavigatorEngine::OffsetNavigator(float fXOffset)
 		fDir = 1;	// turn right
 	else
 		fDir = -1;	// turn left
-	if (fabs(fXOffset) < 0.2)
-		fDir = 0;
+	//if (fabs(fXOffset) < 0.2)
+	//	fDir = 0;
 		
-	vel_msg.angular.z = fabs(fXOffset);
-	vel_msg.linear.x = 0.3;
+	vel_msg.angular.z = (fXOffset);
+	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
 	
-	vel_msg.angular.z *= fDir;
+	//vel_msg.angular.z *= fDir;
 	
 /*		
 	if (fabs(fXOffset) > 0.2 && fabs(fXOffset) < 0.4)	// If the offset is more than 30% on either side from the center of the image

@@ -10,7 +10,7 @@
 #pragma once
 namespace yisys_roswheels
 {
-#define WHEELANGULAR_TOLERANCE (5)	
+#define WHEELANGULAR_TOLERANCE (0.1)	
 // it accept several msg and decide how the wheels works.
 // cmd_vel: wheels direction and velocity
 // ???: sign
@@ -50,6 +50,7 @@ protected:
 	int32_t m_nCurrentUserSpeed;
 	int32_t m_nCurrentUserDirection;
 	bool m_bManualStop;	// true: to prevent the car to run dis-regarding any input cmd_vels
+	bool m_bManualOverrideMode;	// true: only keyboard can do the driving, or navigator engine will do the job.
 };
 };
 #endif

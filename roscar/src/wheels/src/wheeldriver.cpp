@@ -6,6 +6,7 @@
 #include "wheels/cmd_get_navigator_engine_status.h"
 #include "wheels/cmd_set_navigator_engine.h"
 #include "clinefollowernavigatorengine.h"
+#include "clanedetectornavigatorengine.h"
 namespace yisys_roswheels
 {
 CWheelDriver::CWheelDriver(std::string nodename) :
@@ -24,7 +25,6 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_bCarStopped = true;
 	m_nCurrentUserSpeed = 0;
 	m_nCurrentUserDirection = WCLR_STOP;
-	
 	m_bManualStop = false;
 }
 
@@ -45,24 +45,29 @@ int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 		nRet = 1;
 		goto err_out;
 	}
-	m_nCurrentUserSpeed = nSpeed;
-	m_nCurrentUserDirection = nDirection;
 	
-	if (m_nCurrentUserSpeed > FULLSPEED)
-		m_nCurrentUserSpeed = FULLSPEED;
-	if (m_nCurrentUserSpeed < 0)
-		m_nCurrentUserSpeed = 0;		
-	srv2.request.nNewSpeed = m_nCurrentUserSpeed;
-	srv2.request.nNewDirection = m_nCurrentUserDirection;
-
+	if (nSpeed > FULLSPEED)
+		nSpeed = FULLSPEED;
+		
+	if (nSpeed < 0)
+		nSpeed = 0;		
+		
+	srv2.request.nNewSpeed = nSpeed;
+	srv2.request.nNewDirection = nDirection;
+	//printf("New Speed=%d, New Dir = %d\n", nSpeed, nDirection);
 	if (m_SetSpeedClient.call(srv2))
 	{
+		m_nCurrentUserSpeed = nSpeed;
+		m_nCurrentUserDirection = nDirection;
+
 		//ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
 		//ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
 		//nRet = 1;
 		//ROS_INFO("Cannot receive cmd_vel, stop the car");
 		if (nSpeed == 0 || m_nCurrentUserDirection == WCLR_STOP)
+		{
 			m_bCarStopped = true;
+		}
 		nRet = 1;
 	}
 	else
@@ -78,7 +83,8 @@ void CWheelDriver::Checklongpause(void)
 
 	if (difftime(now, m_LastMsgTime) > 5 && m_bCarStopped == false)
 	{
-		_SetSpeedDirection(0, WCLR_STOP);
+		//_SetSpeedDirection(0, WCLR_STOP);
+		ROS_INFO("Does not receive nagivator cmd_vels for over 5 seconds. Stop the car.");
 	}
 }
 
@@ -98,44 +104,50 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 
 	float fXOffset = fabs(fAngular);
 
-	if (fabs(fAngular) > WHEELANGULAR_TOLERANCE)
-	{
-		// could be run and turn
-		if (fAngular > 0)
-		{
-			if (fLinear > 0)
-				nNewDirection = WCLR_FORWARDRIGHTTURN;	// turn right
-			else
-				nNewDirection = WCLR_BACKWARDRIGHTTURN;	// turn right
-		}
-		else
-		{
-			if (fLinear > 0)
-				nNewDirection = WCLR_FORWARDLEFTTURN;	// turn left
-			else
-				nNewDirection = WCLR_BACKWARDLEFTTURN;	// turn left
-		}
-
-	}
-	else
-	{
-		// check if forward or backward
-		if (fLinear > 0)
-			nNewDirection = WCLR_FORWARD;	// forward
-		else
-			nNewDirection = WCLR_BACKWARD;	// backward
-
-	}
-
-	nNewSpeed = (fabs(fLinear) * 100.);	// max speed;
-
+	
 	if (fLinear == 0)
 	{
 		nNewDirection = WCLR_STOP;
-		nNewSpeed = 0;
+	}
+	else
+	{
+		if (fabs(fAngular) > WHEELANGULAR_TOLERANCE)
+		{
+			// could be run and turn
+			if (fAngular > 0)
+			{
+				if (fLinear > 0)
+					nNewDirection = WCLR_FORWARDRIGHTTURN;	// turn right
+				else
+					nNewDirection = WCLR_BACKWARDRIGHTTURN;	// turn right
+			}
+			else
+			{
+				if (fLinear > 0)
+					nNewDirection = WCLR_FORWARDLEFTTURN;	// turn left
+				else
+					nNewDirection = WCLR_BACKWARDLEFTTURN;	// turn left
+			}
+		}
+		else
+		{
+			// check if forward or backward
+			if (fLinear > 0)
+				nNewDirection = WCLR_FORWARD;	// forward
+			else
+				nNewDirection = WCLR_BACKWARD;	// backward
+
+		}
 	}
 	
-	nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+	nNewSpeed = (fabs(fLinear) * 100.);	// max speed;
+	//printf("fAngular=%f, fLinear=%f, nNewDirection=%d\n", fAngular, fLinear, nNewDirection);
+	//else
+	{
+		nRet = _SetSpeedDirection(m_nCurrentUserSpeed, nNewDirection);
+	}
+	
+	
 	return nRet;
 }
 
@@ -145,7 +157,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 
 	int32_t nNewSpeed = m_nCurrentUserSpeed;
 	int32_t nNewDirection = m_nCurrentUserDirection;
-	
+	//printf("input=%d\n", nInput);
 	switch (nInput)
 	{
 		case 'k':
@@ -162,7 +174,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 				nNewDirection = WCLR_STOP;
 				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
 				m_bManualStop = true;
-				ROS_INFO("Force to stop. Block all incoming cmd_vels.");
+				//ROS_INFO("Force to stop. Block all incoming cmd_vels.");
 			}
 			break;
 		case 'p':
@@ -171,13 +183,16 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 				nNewSpeed = 0;
 				nNewDirection = WCLR_STOP;
 				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//ROS_INFO("Park the car.");
 			}
 			break;
 		case '+':
 			if (!m_bManualStop)
 			{
+				//printf("Before +, speed=%d, dir=%d\n", nNewSpeed, nNewDirection);
 				nNewSpeed += 5;
 				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//ROS_INFO("Accelerate.");
 			}
 			break;
 		case '-':
@@ -246,7 +261,8 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			else
 			{
 				ROS_INFO("Fail to query navigator engine status");
-			}	
+			}
+			ROS_INFO("Current User Direction=%d, Current User Speed=%d", m_nCurrentUserDirection, m_nCurrentUserSpeed);	
 			break;
 		}
 		case '0':	// disable all navigator engine
@@ -257,14 +273,17 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 				nNewSpeed = 0;
 				nNewDirection = WCLR_STOP;
 				_SetSpeedDirection(nNewSpeed, nNewDirection);
-			}			
+			}
+			//m_bManualStop = true;	
 			engset.request.nNewEngineID = 0;
 			if (m_SetNavigatorEngine.call(engset))
 			{
+				/*
 				ROS_INFO("Active Navigator Engine, ID=%d [%s], Old Navigator Engine ID=%d [%s]", engset.response.nActiveEngineID, 
 																								engset.response.strActiveEngineDescription.c_str(), 
 																								engset.response.nLastEngineID, 
 																								engset.response.strLastEngineDescription.c_str());
+			*/
 			}
 			else
 			{
@@ -279,10 +298,19 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			engset.request.nNewEngineID = WEID_LINEFOLLOWERENGINE;
 			if (m_SetNavigatorEngine.call(engset))
 			{
+				if (engset.response.nRetCode <= 0)
+				{
+					ROS_INFO("fail to set Line follower engine");
+				}
+				else
+				{
+					/*
 				ROS_INFO("Active Navigator Engine, ID=%d [%s], Old Navigator Engine ID=%d [%s]", engset.response.nActiveEngineID, 
 																								engset.response.strActiveEngineDescription.c_str(), 
 																								engset.response.nLastEngineID, 
 																								engset.response.strLastEngineDescription.c_str());
+				*/
+				}
 			}
 			else
 			{
@@ -290,8 +318,39 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			}						
 		}	
 			break;
+		case '2':	// lane detector
+		{
+			wheels::cmd_set_navigator_engine engset;
+			
+			engset.request.nNewEngineID = WEID_LANEDETECTORENGINE;
+			if (m_SetNavigatorEngine.call(engset))
+			{
+				if (engset.response.nRetCode <= 0)
+				{
+					ROS_INFO("fail to set lane detector engine");
+				}
+				else
+				{	
+					/*			
+					ROS_INFO("Active Navigator Engine, ID=%d [%s], Old Navigator Engine ID=%d [%s]", engset.response.nActiveEngineID, 
+																								engset.response.strActiveEngineDescription.c_str(), 
+																								engset.response.nLastEngineID, 
+																								engset.response.strLastEngineDescription.c_str());
+				*/
+				}
+			}
+			else
+			{
+				ROS_INFO("Fail to set navigator engine");
+			}
+			if (m_bManualStop)
+			{
+				ROS_INFO("Manual stop is on");
+			}
+		}	
+			break;			
 		case 'h':
-			printf("Input instruction (0: disable all navigator engine, 1: line-follower, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
+			printf("Input instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
 			break;
 	}
 	
