@@ -13,7 +13,9 @@ SET(SRC
 	myutil.cpp
 	CLaneFinder.cpp
 	opticalflow_ov.cpp
+	clinefollowernavigatorengine.cpp
 	lanedetectortest.cpp
+	
 )
 
 SET(PROJECT_NAME

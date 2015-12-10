@@ -68,11 +68,17 @@ CATKIN_SKIP_TESTING:BOOL=OFF
 //List of ';' separated packages to build
 CATKIN_WHITELIST_PACKAGES:STRING=
 
+//Path to a library.
+CCOLAMD_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libccolamd.so
+
 //Path to a file.
 CHOLMOD_INCLUDE_DIR:PATH=/usr/include/suitesparse
 
 //Path to a library.
 CHOLMOD_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcholmod.so
+
+//Path to a library.
+CHOLMOD_METIS_LIBRARY:FILEPATH=CHOLMOD_METIS_LIBRARY-NOTFOUND
 
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
@@ -230,6 +236,9 @@ CMAKE_USE_RELATIVE_PATHS:BOOL=OFF
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Path to a library.
+COLAMD_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcolamd.so
+
 //Path to a file.
 CSPARSE_INCLUDE_DIR:PATH=/usr/include/suitesparse
 
@@ -286,6 +295,29 @@ OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLU.so
 
 //Path to a file.
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+
+//Value Computed by CMake
+ORB_SLAM_BINARY_DIR:STATIC=/home/alex/RaspberryPiProject/rosbuild_ws/build/ORB_SLAM
+
+//Value Computed by CMake
+ORB_SLAM_SOURCE_DIR:STATIC=/home/alex/RaspberryPiProject/rosbuild_ws/src/ORB_SLAM
+
+//Path where debug 3rdpaty OpenCV dependencies are located
+OpenCV_3RDPARTY_LIB_DIR_DBG:PATH=
+
+//Path where release 3rdpaty OpenCV dependencies are located
+OpenCV_3RDPARTY_LIB_DIR_OPT:PATH=
+
+OpenCV_CONFIG_PATH:FILEPATH=/usr/share/OpenCV
+
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/share/OpenCV
+
+//Path where debug OpenCV libraries are located
+OpenCV_LIB_DIR_DBG:PATH=
+
+//Path where release OpenCV libraries are located
+OpenCV_LIB_DIR_OPT:PATH=
 
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python
@@ -1115,8 +1147,17 @@ _CATKIN_GTEST_INCLUDE:FILEPATH=/usr/include/gtest/gtest.h
 //Path to a file.
 _CATKIN_GTEST_SRC:FILEPATH=/usr/src/gtest/src/gtest.cc
 
+//The directory containing a CMake configuration file for actionlib.
+actionlib_DIR:PATH=/opt/ros/jade/share/actionlib/cmake
+
+//The directory containing a CMake configuration file for actionlib_msgs.
+actionlib_msgs_DIR:PATH=/opt/ros/jade/share/actionlib_msgs/cmake
+
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/jade/share/catkin/cmake
+
+//The directory containing a CMake configuration file for class_loader.
+class_loader_DIR:PATH=/opt/ros/jade/share/class_loader/cmake
 
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/jade/share/cpp_common/cmake
@@ -1173,8 +1214,11 @@ gtest_force_shared_crt:BOOL=OFF
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 
+//The directory containing a CMake configuration file for image_transport.
+image_transport_DIR:PATH=/opt/ros/jade/share/image_transport/cmake
+
 //Path to a library.
-lib:FILEPATH=/opt/ros/jade/lib/libroslib.so
+lib:FILEPATH=/opt/ros/jade/lib/libtf2.so
 
 //Value Computed by CMake
 lsd_slam_core_BINARY_DIR:STATIC=/home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core
@@ -1194,6 +1238,9 @@ lsd_slam_viewer_SOURCE_DIR:STATIC=/home/alex/RaspberryPiProject/rosbuild_ws/src/
 //Dependencies for the target
 lsdslam_LIB_DEPENDS:STATIC=general;openFABMAP;general;g2o_core;general;g2o_stuff;general;csparse;general;cxsparse;general;g2o_solver_csparse;general;g2o_csparse_extension;general;g2o_types_sim3;general;g2o_types_sba;general;X11;general;/opt/ros/jade/lib/libcv_bridge.so;general;/usr/lib/x86_64-linux-gnu/libopencv_videostab.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_video.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_superres.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_stitching.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_photo.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_ocl.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_objdetect.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_ml.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_legacy.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_highgui.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_gpu.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_flann.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_features2d.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_core.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_contrib.so.2.4.8;general;/usr/lib/x86_64-linux-gnu/libopencv_calib3d.so.2.4.8;general;/opt/ros/jade/lib/libdynamic_reconfigure_config_init_mutex.so;general;/opt/ros/jade/lib/librosbag.so;general;/opt/ros/jade/lib/librosbag_storage.so;general;/usr/lib/x86_64-linux-gnu/libboost_program_options.so;general;/opt/ros/jade/lib/libroslz4.so;general;/usr/lib/x86_64-linux-gnu/liblz4.so;general;/opt/ros/jade/lib/libtopic_tools.so;general;/opt/ros/jade/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libboost_signals.so;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so;general;/opt/ros/jade/lib/librosconsole.so;general;/opt/ros/jade/lib/librosconsole_log4cxx.so;general;/opt/ros/jade/lib/librosconsole_backend_interface.so;general;/usr/lib/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so;general;/opt/ros/jade/lib/libxmlrpcpp.so;general;/opt/ros/jade/lib/libroslib.so;general;/opt/ros/jade/lib/libroscpp_serialization.so;general;/opt/ros/jade/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so;general;/opt/ros/jade/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so;
 
+//The directory containing a CMake configuration file for message_filters.
+message_filters_DIR:PATH=/opt/ros/jade/share/message_filters/cmake
+
 //The directory containing a CMake configuration file for message_generation.
 message_generation_DIR:PATH=/opt/ros/jade/share/message_generation/cmake
 
@@ -1208,6 +1255,9 @@ openFABMAP_LIB_DEPENDS:STATIC=general;opencv_highgui;general;opencv_core;general
 
 //Value Computed by CMake
 openFABMAP_SOURCE_DIR:STATIC=/home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap
+
+//The directory containing a CMake configuration file for pluginlib.
+pluginlib_DIR:PATH=/opt/ros/jade/share/pluginlib/cmake
 
 //The directory containing a CMake configuration file for rosbag.
 rosbag_DIR:PATH=/opt/ros/jade/share/rosbag/cmake
@@ -1226,6 +1276,9 @@ roscpp_serialization_DIR:PATH=/opt/ros/jade/share/roscpp_serialization/cmake
 
 //The directory containing a CMake configuration file for roscpp_traits.
 roscpp_traits_DIR:PATH=/opt/ros/jade/share/roscpp_traits/cmake
+
+//The directory containing a CMake configuration file for rosgraph.
+rosgraph_DIR:PATH=/opt/ros/jade/share/rosgraph/cmake
 
 //The directory containing a CMake configuration file for rosgraph_msgs.
 rosgraph_msgs_DIR:PATH=/opt/ros/jade/share/rosgraph_msgs/cmake
@@ -1247,6 +1300,21 @@ sensor_msgs_DIR:PATH=/opt/ros/jade/share/sensor_msgs/cmake
 
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/jade/share/std_msgs/cmake
+
+//The directory containing a CMake configuration file for tf2.
+tf2_DIR:PATH=/opt/ros/jade/share/tf2/cmake
+
+//The directory containing a CMake configuration file for tf2_msgs.
+tf2_msgs_DIR:PATH=/opt/ros/jade/share/tf2_msgs/cmake
+
+//The directory containing a CMake configuration file for tf2_py.
+tf2_py_DIR:PATH=/opt/ros/jade/share/tf2_py/cmake
+
+//The directory containing a CMake configuration file for tf2_ros.
+tf2_ros_DIR:PATH=/opt/ros/jade/share/tf2_ros/cmake
+
+//The directory containing a CMake configuration file for tf.
+tf_DIR:PATH=/opt/ros/jade/share/tf/cmake
 
 //The directory containing a CMake configuration file for topic_tools.
 topic_tools_DIR:PATH=/opt/ros/jade/share/topic_tools/cmake
@@ -1386,7 +1454,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=6
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=7
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1429,6 +1497,8 @@ CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: EIGEN3_INCLUDE_DIR
 EIGEN3_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//Details about finding CHOLMOD
+FIND_PACKAGE_MESSAGE_DETAILS_CHOLMOD:INTERNAL=[/usr/include/suitesparse][/usr/lib/x86_64-linux-gnu/libcholmod.so;/usr/lib/x86_64-linux-gnu/libamd.so;/usr/lib/x86_64-linux-gnu/libcolamd.so;/usr/lib/x86_64-linux-gnu/libcamd.so;/usr/lib/x86_64-linux-gnu/libccolamd.so;/usr/lib/x86_64-linux-gnu/libsuitesparseconfig.a][v()]
 //Details about finding Eigen3
 FIND_PACKAGE_MESSAGE_DETAILS_Eigen3:INTERNAL=[/usr/include/eigen3][TRUE][v(2.91.0)]
 //Details about finding OpenGL
@@ -1466,6 +1536,16 @@ OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
 OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
 OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_3RDPARTY_LIB_DIR_DBG
+OpenCV_3RDPARTY_LIB_DIR_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_3RDPARTY_LIB_DIR_OPT
+OpenCV_3RDPARTY_LIB_DIR_OPT-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CONFIG_PATH
+OpenCV_CONFIG_PATH-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_LIB_DIR_DBG
+OpenCV_LIB_DIR_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_LIB_DIR_OPT
+OpenCV_LIB_DIR_OPT-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //This needs to be in PYTHONPATH when 'setup.py install' is called.

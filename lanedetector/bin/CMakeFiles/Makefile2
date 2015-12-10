@@ -46,14 +46,11 @@ RM = /usr/bin/cmake -E remove -f
 # Escaping for special characters.
 EQUALS = =
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/RaspberryPiProject/lane-vehicle-track
+CMAKE_SOURCE_DIR = /home/alex/RaspberryPiProject/lanedetector
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/RaspberryPiProject/lane-vehicle-track/bin
+CMAKE_BINARY_DIR = /home/alex/RaspberryPiProject/lanedetector/bin
 
 #=============================================================================
 # Target rules for target CMakeFiles/lanedetectortest.dir
@@ -62,7 +59,7 @@ CMAKE_BINARY_DIR = /home/alex/RaspberryPiProject/lane-vehicle-track/bin
 CMakeFiles/lanedetectortest.dir/all:
 	$(MAKE) -f CMakeFiles/lanedetectortest.dir/build.make CMakeFiles/lanedetectortest.dir/depend
 	$(MAKE) -f CMakeFiles/lanedetectortest.dir/build.make CMakeFiles/lanedetectortest.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles  1 2 3 4
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles  1 2 3 4 5
 	@echo "Built target lanedetectortest"
 .PHONY : CMakeFiles/lanedetectortest.dir/all
 
@@ -72,9 +69,9 @@ all: CMakeFiles/lanedetectortest.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/lanedetectortest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/lanedetectortest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles 0
 .PHONY : CMakeFiles/lanedetectortest.dir/rule
 
 # Convenience name for target.

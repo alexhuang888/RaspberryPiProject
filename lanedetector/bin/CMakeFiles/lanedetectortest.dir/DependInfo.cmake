@@ -4,10 +4,11 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alex/RaspberryPiProject/lane-vehicle-track/CLaneFinder.cpp" "/home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o"
-  "/home/alex/RaspberryPiProject/lane-vehicle-track/lanedetectortest.cpp" "/home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o"
-  "/home/alex/RaspberryPiProject/lane-vehicle-track/myutil.cpp" "/home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles/lanedetectortest.dir/myutil.cpp.o"
-  "/home/alex/RaspberryPiProject/lane-vehicle-track/opticalflow_ov.cpp" "/home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o"
+  "/home/alex/RaspberryPiProject/lanedetector/CLaneFinder.cpp" "/home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o"
+  "/home/alex/RaspberryPiProject/lanedetector/clinefollowernavigatorengine.cpp" "/home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o"
+  "/home/alex/RaspberryPiProject/lanedetector/lanedetectortest.cpp" "/home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o"
+  "/home/alex/RaspberryPiProject/lanedetector/myutil.cpp" "/home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles/lanedetectortest.dir/myutil.cpp.o"
+  "/home/alex/RaspberryPiProject/lanedetector/opticalflow_ov.cpp" "/home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

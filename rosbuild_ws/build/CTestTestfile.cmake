@@ -7,3 +7,4 @@
 SUBDIRS(gtest)
 SUBDIRS(lsd_slam_viewer)
 SUBDIRS(lsd_slam_core)
+SUBDIRS(ORB_SLAM)

@@ -119,6 +119,7 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   INCLUDE("/home/alex/RaspberryPiProject/rosbuild_ws/build/gtest/cmake_install.cmake")
   INCLUDE("/home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_viewer/cmake_install.cmake")
   INCLUDE("/home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/cmake_install.cmake")
+  INCLUDE("/home/alex/RaspberryPiProject/rosbuild_ws/build/ORB_SLAM/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

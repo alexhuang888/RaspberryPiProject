@@ -52,32 +52,9 @@ include lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/progress.m
 # Include the compile flags for this target's objects.
 include lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/flags.make
 
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/flags.make
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/rosbuild_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o"
-	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o -c /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp
-
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/openFABMAP.dir/src/FabMap.cpp.i"
-	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp > CMakeFiles/openFABMAP.dir/src/FabMap.cpp.i
-
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/openFABMAP.dir/src/FabMap.cpp.s"
-	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp -o CMakeFiles/openFABMAP.dir/src/FabMap.cpp.s
-
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires:
-.PHONY : lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires
-
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires
-	$(MAKE) -f lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/build.make lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides.build
-.PHONY : lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides
-
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides.build: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o
-
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/flags.make
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/BOWMSCTrainer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/rosbuild_ws/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/rosbuild_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o"
 	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o -c /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/BOWMSCTrainer.cpp
 
@@ -100,7 +77,7 @@ lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.
 
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/flags.make
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/ChowLiuTree.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/rosbuild_ws/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/rosbuild_ws/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o"
 	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o -c /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/ChowLiuTree.cpp
 
@@ -121,18 +98,41 @@ lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cp
 
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o.provides.build: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o
 
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/flags.make
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/rosbuild_ws/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o"
+	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o -c /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp
+
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/openFABMAP.dir/src/FabMap.cpp.i"
+	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp > CMakeFiles/openFABMAP.dir/src/FabMap.cpp.i
+
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/openFABMAP.dir/src/FabMap.cpp.s"
+	cd /home/alex/RaspberryPiProject/rosbuild_ws/build/lsd_slam_core/thirdparty/openFabMap && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/src/FabMap.cpp -o CMakeFiles/openFABMAP.dir/src/FabMap.cpp.s
+
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires:
+.PHONY : lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires
+
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires
+	$(MAKE) -f lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/build.make lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides.build
+.PHONY : lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides
+
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.provides.build: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o
+
 # Object files for target openFABMAP
 openFABMAP_OBJECTS = \
-"CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o" \
 "CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o" \
-"CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o"
+"CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o" \
+"CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o"
 
 # External object files for target openFABMAP
 openFABMAP_EXTERNAL_OBJECTS =
 
-/home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o
 /home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o
 /home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o
+/home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o
 /home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/build.make
 /home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library /home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so"
@@ -142,9 +142,9 @@ openFABMAP_EXTERNAL_OBJECTS =
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/build: /home/alex/RaspberryPiProject/rosbuild_ws/devel/lib/libopenFABMAP.so
 .PHONY : lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/build
 
-lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/requires: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/requires: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/BOWMSCTrainer.cpp.o.requires
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/requires: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/ChowLiuTree.cpp.o.requires
+lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/requires: lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/src/FabMap.cpp.o.requires
 .PHONY : lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/requires
 
 lsd_slam_core/thirdparty/openFabMap/CMakeFiles/openFABMAP.dir/clean:

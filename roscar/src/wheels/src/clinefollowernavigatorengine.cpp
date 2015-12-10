@@ -100,7 +100,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 	m_nHeight = InputImage.rows;
 	m_nWidth = InputImage.cols;
 	
-    cv::Rect roi(0, m_nHeight / 4, m_nWidth, 100);
+    cv::Rect roi(0, m_nHeight * 3 / 4, m_nWidth, m_nHeight / 4);
     cv::Mat roiImg, erodeElmt, dilateElmt;
     int thVal = IMGTHRESHOLD;
     std::vector<std::vector<cv::Point> > contours;
@@ -127,7 +127,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 			//printf("threshold image\n");
 			cv::threshold(roiImg, roiImg, thVal, 255, cv::THRESH_BINARY);
 			//printf("bitwise_not image\n");
-			cv::bitwise_not(roiImg, roiImg); // negative image
+			//cv::bitwise_not(roiImg, roiImg); // negative image
 			
 			erodeElmt = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
 			dilateElmt = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
@@ -205,7 +205,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 					sprintf(szFilename, "roi_image%d.png", nTick);
 					sprintf(szOriFilename, "image%d.png", nTick);
 					try {
-						cv::drawContours(roiImg, contours, s, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
+						cv::drawContours(roiImg, contours, nMaxAreaContourIndex, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
 						cv::imwrite(szFilename, roiImg);
 						//cv::imwrite(szOriFilename, image);
 #if PRESERVEROI

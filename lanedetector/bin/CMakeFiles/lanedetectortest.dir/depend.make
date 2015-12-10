@@ -5,7 +5,11 @@ CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o: ../CLaneFinder.cpp
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o: ../CLaneFinder.h
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o: ../myutil.h
 
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o: ../clinefollowernavigatorengine.cpp
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o: ../clinefollowernavigatorengine.h
+
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: ../CLaneFinder.h
+CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: ../clinefollowernavigatorengine.h
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: ../lanedetectortest.cpp
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: ../myutil.h
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: ../opticalflow_ov.h

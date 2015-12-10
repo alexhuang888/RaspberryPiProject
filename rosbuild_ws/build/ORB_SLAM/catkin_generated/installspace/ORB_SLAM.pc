@@ -1,0 +1,8 @@
+prefix=/home/alex/RaspberryPiProject/rosbuild_ws/install
+
+Name: ORB_SLAM
+Description: Description of ORB_SLAM
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/alex/RaspberryPiProject/rosbuild_ws/install/lib 
+Requires: 

@@ -34,14 +34,11 @@ RM = /usr/bin/cmake -E remove -f
 # Escaping for special characters.
 EQUALS = =
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/RaspberryPiProject/lane-vehicle-track
+CMAKE_SOURCE_DIR = /home/alex/RaspberryPiProject/lanedetector
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/RaspberryPiProject/lane-vehicle-track/bin
+CMAKE_BINARY_DIR = /home/alex/RaspberryPiProject/lanedetector/bin
 
 # Include any dependencies generated for this target.
 include CMakeFiles/lanedetectortest.dir/depend.make
@@ -54,17 +51,17 @@ include CMakeFiles/lanedetectortest.dir/flags.make
 
 CMakeFiles/lanedetectortest.dir/myutil.cpp.o: CMakeFiles/lanedetectortest.dir/flags.make
 CMakeFiles/lanedetectortest.dir/myutil.cpp.o: ../myutil.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/lanedetectortest.dir/myutil.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/myutil.cpp.o -c /home/alex/RaspberryPiProject/lane-vehicle-track/myutil.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/myutil.cpp.o -c /home/alex/RaspberryPiProject/lanedetector/myutil.cpp
 
 CMakeFiles/lanedetectortest.dir/myutil.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lanedetectortest.dir/myutil.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lane-vehicle-track/myutil.cpp > CMakeFiles/lanedetectortest.dir/myutil.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lanedetector/myutil.cpp > CMakeFiles/lanedetectortest.dir/myutil.cpp.i
 
 CMakeFiles/lanedetectortest.dir/myutil.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lanedetectortest.dir/myutil.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lane-vehicle-track/myutil.cpp -o CMakeFiles/lanedetectortest.dir/myutil.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lanedetector/myutil.cpp -o CMakeFiles/lanedetectortest.dir/myutil.cpp.s
 
 CMakeFiles/lanedetectortest.dir/myutil.cpp.o.requires:
 .PHONY : CMakeFiles/lanedetectortest.dir/myutil.cpp.o.requires
@@ -77,17 +74,17 @@ CMakeFiles/lanedetectortest.dir/myutil.cpp.o.provides.build: CMakeFiles/lanedete
 
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o: CMakeFiles/lanedetectortest.dir/flags.make
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o: ../CLaneFinder.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o -c /home/alex/RaspberryPiProject/lane-vehicle-track/CLaneFinder.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o -c /home/alex/RaspberryPiProject/lanedetector/CLaneFinder.cpp
 
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lane-vehicle-track/CLaneFinder.cpp > CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lanedetector/CLaneFinder.cpp > CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.i
 
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lane-vehicle-track/CLaneFinder.cpp -o CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lanedetector/CLaneFinder.cpp -o CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.s
 
 CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o.requires:
 .PHONY : CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o.requires
@@ -100,17 +97,17 @@ CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o.provides.build: CMakeFiles/lan
 
 CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o: CMakeFiles/lanedetectortest.dir/flags.make
 CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o: ../opticalflow_ov.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o -c /home/alex/RaspberryPiProject/lane-vehicle-track/opticalflow_ov.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o -c /home/alex/RaspberryPiProject/lanedetector/opticalflow_ov.cpp
 
 CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lane-vehicle-track/opticalflow_ov.cpp > CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lanedetector/opticalflow_ov.cpp > CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.i
 
 CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lane-vehicle-track/opticalflow_ov.cpp -o CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lanedetector/opticalflow_ov.cpp -o CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.s
 
 CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o.requires:
 .PHONY : CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o.requires
@@ -121,19 +118,42 @@ CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o.provides: CMakeFiles/lanede
 
 CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o.provides.build: CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o
 
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o: CMakeFiles/lanedetectortest.dir/flags.make
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o: ../clinefollowernavigatorengine.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o -c /home/alex/RaspberryPiProject/lanedetector/clinefollowernavigatorengine.cpp
+
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lanedetector/clinefollowernavigatorengine.cpp > CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.i
+
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lanedetector/clinefollowernavigatorengine.cpp -o CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.s
+
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.requires:
+.PHONY : CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.requires
+
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.provides: CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.requires
+	$(MAKE) -f CMakeFiles/lanedetectortest.dir/build.make CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.provides.build
+.PHONY : CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.provides
+
+CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.provides.build: CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o
+
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: CMakeFiles/lanedetectortest.dir/flags.make
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o: ../lanedetectortest.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o -c /home/alex/RaspberryPiProject/lane-vehicle-track/lanedetectortest.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o -c /home/alex/RaspberryPiProject/lanedetector/lanedetectortest.cpp
 
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lane-vehicle-track/lanedetectortest.cpp > CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/alex/RaspberryPiProject/lanedetector/lanedetectortest.cpp > CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.i
 
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lane-vehicle-track/lanedetectortest.cpp -o CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/alex/RaspberryPiProject/lanedetector/lanedetectortest.cpp -o CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.s
 
 CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o.requires:
 .PHONY : CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o.requires
@@ -149,6 +169,7 @@ lanedetectortest_OBJECTS = \
 "CMakeFiles/lanedetectortest.dir/myutil.cpp.o" \
 "CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o" \
 "CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o" \
+"CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o" \
 "CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o"
 
 # External object files for target lanedetectortest
@@ -157,6 +178,7 @@ lanedetectortest_EXTERNAL_OBJECTS =
 lanedetectortest: CMakeFiles/lanedetectortest.dir/myutil.cpp.o
 lanedetectortest: CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o
 lanedetectortest: CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o
+lanedetectortest: CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o
 lanedetectortest: CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o
 lanedetectortest: CMakeFiles/lanedetectortest.dir/build.make
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_videostab.so.2.4.8
@@ -167,6 +189,7 @@ lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_ocl.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_objdetect.so.2.4.8
+lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_nonfree.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_ml.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_legacy.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.2.4.8
@@ -177,10 +200,13 @@ lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_features2d.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_core.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_contrib.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_calib3d.so.2.4.8
+lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_nonfree.so.2.4.8
+lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_ocl.so.2.4.8
+lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_gpu.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.2.4.8
+lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_objdetect.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_legacy.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_video.so.2.4.8
-lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_objdetect.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_ml.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_calib3d.so.2.4.8
 lanedetectortest: /usr/lib/x86_64-linux-gnu/libopencv_features2d.so.2.4.8
@@ -199,6 +225,7 @@ CMakeFiles/lanedetectortest.dir/build: lanedetectortest
 CMakeFiles/lanedetectortest.dir/requires: CMakeFiles/lanedetectortest.dir/myutil.cpp.o.requires
 CMakeFiles/lanedetectortest.dir/requires: CMakeFiles/lanedetectortest.dir/CLaneFinder.cpp.o.requires
 CMakeFiles/lanedetectortest.dir/requires: CMakeFiles/lanedetectortest.dir/opticalflow_ov.cpp.o.requires
+CMakeFiles/lanedetectortest.dir/requires: CMakeFiles/lanedetectortest.dir/clinefollowernavigatorengine.cpp.o.requires
 CMakeFiles/lanedetectortest.dir/requires: CMakeFiles/lanedetectortest.dir/lanedetectortest.cpp.o.requires
 .PHONY : CMakeFiles/lanedetectortest.dir/requires
 
@@ -207,6 +234,6 @@ CMakeFiles/lanedetectortest.dir/clean:
 .PHONY : CMakeFiles/lanedetectortest.dir/clean
 
 CMakeFiles/lanedetectortest.dir/depend:
-	cd /home/alex/RaspberryPiProject/lane-vehicle-track/bin && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/RaspberryPiProject/lane-vehicle-track /home/alex/RaspberryPiProject/lane-vehicle-track /home/alex/RaspberryPiProject/lane-vehicle-track/bin /home/alex/RaspberryPiProject/lane-vehicle-track/bin /home/alex/RaspberryPiProject/lane-vehicle-track/bin/CMakeFiles/lanedetectortest.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alex/RaspberryPiProject/lanedetector/bin && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/RaspberryPiProject/lanedetector /home/alex/RaspberryPiProject/lanedetector /home/alex/RaspberryPiProject/lanedetector/bin /home/alex/RaspberryPiProject/lanedetector/bin /home/alex/RaspberryPiProject/lanedetector/bin/CMakeFiles/lanedetectortest.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/lanedetectortest.dir/depend
 

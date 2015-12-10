@@ -1278,6 +1278,7 @@ lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /home/alex/
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/Sophus/sophus/sim3.hpp
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/Sophus/sophus/so3.hpp
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/Sophus/sophus/sophus.hpp
+lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/thirdparty/openFabMap/include/openfabmap.hpp
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /opt/ros/jade/include/g2o/config.h
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /opt/ros/jade/include/g2o/core/base_binary_edge.h
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/GlobalMapping/FabMap.cpp.o: /opt/ros/jade/include/g2o/core/base_binary_edge.hpp
@@ -2385,6 +2386,8 @@ lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSImageStreamThread.cpp.
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSImageStreamThread.cpp.o: /opt/ros/jade/include/sensor_msgs/image_encodings.h
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSImageStreamThread.cpp.o: /opt/ros/jade/include/std_msgs/Header.h
 
+lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSOutput3DWrapper.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/devel/include/lsd_slam_viewer/keyframeGraphMsg.h
+lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSOutput3DWrapper.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/devel/include/lsd_slam_viewer/keyframeMsg.h
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSOutput3DWrapper.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/src/DataStructures/Frame.h
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSOutput3DWrapper.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/src/DataStructures/FrameMemory.h
 lsd_slam_core/CMakeFiles/lsdslam.dir/src/IOWrapper/ROS/ROSOutput3DWrapper.cpp.o: /home/alex/RaspberryPiProject/rosbuild_ws/src/lsd_slam_core/src/DataStructures/FramePoseStruct.h

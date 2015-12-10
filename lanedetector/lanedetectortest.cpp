@@ -2,6 +2,7 @@
 #include "CLaneFinder.h"
 #include "opencv2/highgui/highgui.hpp"
 #include "opticalflow_ov.h"
+#include "clinefollowernavigatorengine.h"
 
 #define USE_VIDEO 1
 #define TRACK_CAR 0
@@ -34,6 +35,9 @@ int main(int argc, char* argv[])
 	float fLeftWeight = 0.f, fRightWeight = 0.f;
 	CObstacleDetection od;
 	bool bDoCarDetect = false;
+	bool bDoLineFollower = false;
+	CLineFollowerNavigatorEngine linefollower;
+	linefollower.Start();
 	
 	while(key_pressed != 27) 
 	{
@@ -47,6 +51,10 @@ int main(int argc, char* argv[])
 		{
 			bDoCarDetect = !bDoCarDetect;
 		}
+		if (key_pressed == 'l')
+		{
+			bDoLineFollower = !bDoLineFollower;
+		}
 		frame = cvQueryFrame(input_video);
 		if (frame == NULL) 
 		{
@@ -58,6 +66,10 @@ int main(int argc, char* argv[])
 		if (bDoCarDetect)
 		{
 			od.ProcessFrame(frame, fLeftWeight, fRightWeight);
+		}
+		if (bDoLineFollower)
+		{
+			linefollower.ProcessImageData(frame);
 		}
 		key_pressed = cvWaitKey(10);		
 	}
