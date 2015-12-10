@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "ORB_SLAM")
-set(ORB_SLAM_MAINTAINER "alex <alex@todo.todo>")
-set(ORB_SLAM_DEPRECATED "")
-set(ORB_SLAM_VERSION "0.0.0")
-set(ORB_SLAM_BUILD_DEPENDS "cv_bridge" "image_transport" "roscpp" "sensor_msgs" "tf")
-set(ORB_SLAM_RUN_DEPENDS "cv_bridge" "image_transport" "roscpp" "sensor_msgs" "tf")
-set(ORB_SLAM_BUILDTOOL_DEPENDS "catkin")

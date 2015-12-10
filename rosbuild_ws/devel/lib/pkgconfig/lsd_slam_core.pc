@@ -1,8 +1,0 @@
-prefix=/home/alex/RaspberryPiProject/rosbuild_ws/devel
-
-Name: lsd_slam_core
-Description: Description of lsd_slam_core
-Version: 0.0.0
-Cflags: -I/home/alex/RaspberryPiProject/rosbuild_ws/devel/include
-Libs: -L/home/alex/RaspberryPiProject/rosbuild_ws/devel/lib 
-Requires: dynamic_reconfigure

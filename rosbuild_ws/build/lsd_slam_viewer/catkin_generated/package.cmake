@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "lsd_slam_viewer")
-set(lsd_slam_viewer_MAINTAINER "alex <alex@todo.todo>")
-set(lsd_slam_viewer_DEPRECATED "")
-set(lsd_slam_viewer_VERSION "0.0.0")
-set(lsd_slam_viewer_BUILD_DEPENDS "message_generation" "cv_bridge" "dynamic_reconfigure" "rosbag" "roscpp" "roslib" "rospy" "sensor_msgs")
-set(lsd_slam_viewer_RUN_DEPENDS "message_runtime" "cv_bridge" "dynamic_reconfigure" "rosbag" "roscpp" "roslib" "rospy" "sensor_msgs")
-set(lsd_slam_viewer_BUILDTOOL_DEPENDS "catkin")

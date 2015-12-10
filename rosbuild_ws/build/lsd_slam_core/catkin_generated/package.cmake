@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "lsd_slam_core")
-set(lsd_slam_core_MAINTAINER "alex <alex@todo.todo>")
-set(lsd_slam_core_DEPRECATED "")
-set(lsd_slam_core_VERSION "0.0.0")
-set(lsd_slam_core_BUILD_DEPENDS "cv_bridge" "dynamic_reconfigure" "lsd_slam_viewer" "rosbag" "roscpp" "roslib" "rospy" "message_generation" "sensor_msgs")
-set(lsd_slam_core_RUN_DEPENDS "cv_bridge" "dynamic_reconfigure" "lsd_slam_viewer" "rosbag" "roscpp" "roslib" "rospy" "sensor_msgs" "message_runtime")
-set(lsd_slam_core_BUILDTOOL_DEPENDS "catkin")
