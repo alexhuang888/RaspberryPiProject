@@ -29,8 +29,7 @@ CWheelController::CWheelController(std::string name) :
     m_ActionServer.registerGoalCallback(boost::bind(&CWheelController::goalCB, this));
     m_ActionServer.registerPreemptCallback(boost::bind(&CWheelController::preemptCB, this));
 
-    //subscribe to the data topic of interest
-    //m_SubScriber = m_nNodeHandle.subscribe("/random_number", 1, &CWheelController::analysisCB, this);
+
     //m_ActionServer.start();
     
 	m_WheelStatusPublisher = m_nNodeHandle.advertise<wheels::wheels_status>("wheels_status", 1000);
@@ -99,7 +98,7 @@ int32_t CWheelController::cbSetDirectionAndSpeed(uint32_t nNewDirection, uint32_
 			break;			
 		}
 		//ROS_INFO("new request: direction=%d, speed=%d", nNewDirection, nNewSpeed);
-		PublishWheelsStatus();
+		//PublishWheelsStatus();
 		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
 	}
 	return nRetCode;		

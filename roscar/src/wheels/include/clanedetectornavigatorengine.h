@@ -118,7 +118,7 @@ public:
 	virtual int32_t Start(void);
 	virtual int32_t Pause(void);
 	
-	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img);
+	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage);
 	
 	virtual uint32_t GetEngineID(void) { return WEID_LANEDETECTORENGINE; };
 	virtual std::string GetEngineDescription(void) { return WESTR_LANEDETECTORENGINE;} ;	
@@ -145,7 +145,7 @@ protected:
 	CvPoint m_VanishingPoint;
 		
 protected:
-	
+
 	bool m_bPaused;
 };
 };

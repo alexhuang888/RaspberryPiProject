@@ -9,18 +9,7 @@ int main(int argc, char **argv)
 	yisys_roswheels::CWheelDriver WheelDriver(ros::this_node::getName());
 	uint32_t nInput = 0;
 	
-	//ros::spin();
-	ros::Rate loop_rate(10);
-	while (ros::ok())
-	{
-		ros::spinOnce();
-		
-		WheelDriver.Checklongpause();
-		
-		nInput = getchar();
-		
-		WheelDriver.KeyCodeToWheelController(nInput);
-		loop_rate.sleep();
-	}
+	ros::spin();
+
 	return 1;
 }

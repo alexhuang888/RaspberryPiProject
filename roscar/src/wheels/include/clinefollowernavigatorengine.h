@@ -32,7 +32,7 @@ public:
 	virtual int32_t Start(void);
 	virtual int32_t Pause(void);
 	
-	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img);
+	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage);
 	
 	virtual uint32_t GetEngineID(void) { return WEID_LINEFOLLOWERENGINE; };
 	virtual std::string GetEngineDescription(void) { return WESTR_LINEFOLLOWERENGINE;} ;	

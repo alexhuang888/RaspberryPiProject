@@ -6,7 +6,7 @@
 #include "wheels/cmd_get_one_wheel_status.h"
 #include "wheels/cmd_set_car_direction_speed.h"
 #include <geometry_msgs/Twist.h>
-
+#include "wheels/cmd_send_manual_instruction.h"
 #pragma once
 namespace yisys_roswheels
 {
@@ -21,7 +21,8 @@ public:
 	CWheelDriver(std::string nodename);
 	virtual ~CWheelDriver() {};
 	void wheels_CmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg);
-	
+	bool cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
+								wheels::cmd_send_manual_instructionResponse &res);	
 	void Checklongpause(void);
 	
 	// fAngular: angular direction and speed
@@ -44,6 +45,7 @@ protected:
 	ros::ServiceClient m_GetNavigatorEngineStatusClient;
 	ros::ServiceClient m_SetSpeedClient;
 	ros::ServiceClient m_SetNavigatorEngine;
+	ros::ServiceServer m_SendManualInstructionService;
 	ros::Subscriber m_CmdVelSubscriber;
 	time_t m_LastMsgTime;
 	bool m_bCarStopped;
@@ -51,6 +53,7 @@ protected:
 	int32_t m_nCurrentUserDirection;
 	bool m_bManualStop;	// true: to prevent the car to run dis-regarding any input cmd_vels
 	bool m_bManualOverrideMode;	// true: only keyboard can do the driving, or navigator engine will do the job.
+	bool m_bDisplayDebugImage;
 };
 };
 #endif

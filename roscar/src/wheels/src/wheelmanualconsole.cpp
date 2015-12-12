@@ -20,15 +20,22 @@ int mygetch (void)
 
 int main(int argc, char **argv)
 {
-	ros::init(argc, argv, "wheel driver");
-
-	yisys_roswheels::CWheelDriver WheelDriver(ros::this_node::getName());
+	ros::init(argc, argv, "wheel manual instruction");
+	ros::NodeHandle nHandle;
+	
+	ros::ServiceClient sendinstClient = nHandle.serviceClient <wheels::cmd_send_manual_instruction>("send_manual_instruction");
+	wheels::cmd_send_manual_instruction srv;
 	
 	uint32_t nInput = 0;
-	printf("Input instruction (0: disable all navigator engine, 1: line-follower, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
+	//printf("Input instruction (0: disable all navigator engine, 1: line-follower, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
 	while ((nInput = mygetch()) != 27)
 	{
-		WheelDriver.KeyCodeToWheelController(nInput);
+		srv.request.nManualInstruction = nInput;
+		
+		if (sendinstClient.call(srv) == false)
+		{
+			printf("Fail to send manual instruction\n");
+		}
 	}
   return 0;
 }

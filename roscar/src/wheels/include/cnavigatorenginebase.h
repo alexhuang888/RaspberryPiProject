@@ -21,7 +21,7 @@ public:
 class CNavigatorEngineBase
 {
 public:
-	CNavigatorEngineBase() { m_pNavigatorCB = NULL;};
+	CNavigatorEngineBase() { m_pNavigatorCB = NULL;  m_bDebugDisplayImage = false; };
 	virtual ~CNavigatorEngineBase() {m_pNavigatorCB = NULL;};
 	
 	virtual int32_t Init(void) = 0;
@@ -30,7 +30,8 @@ public:
 	
 	virtual uint32_t GetEngineID(void) = 0;
 	virtual std::string GetEngineDescription(void) = 0;
-	
+	void SetDebugDisplayImage(bool bShow) { m_bDebugDisplayImage = bShow; }
+	bool IsDebugDisplayImage(void) { return m_bDebugDisplayImage; }
 	virtual int32_t ProcessCmdVels(const geometry_msgs::Twist &velMsg)
 	{
 		if (m_pNavigatorCB != NULL)
@@ -46,6 +47,7 @@ public:
 	};
 protected:
 	CNavigatorCallback *m_pNavigatorCB;
+	bool m_bDebugDisplayImage;
 };
 #define _CNEWIS_DEFAULT_LINEARSPEED (0.1)
 class CNavigatorEngineWithImageSource : public CNavigatorEngineBase
@@ -62,7 +64,7 @@ public:
 	
 	virtual int32_t setCalibration(std::string file);
 
-	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img) { return 1; };
+	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage) { return 1; };
 
 	// get called on ros-message callbacks
 	virtual void vidCb(const sensor_msgs::ImageConstPtr img);

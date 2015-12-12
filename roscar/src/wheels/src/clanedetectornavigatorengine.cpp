@@ -4,9 +4,9 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <geometry_msgs/PoseStamped.h>
 #include "cv_bridge/cv_bridge.h"
-//#include "CvBridge.h"
 #include "vector"
-
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
 namespace yisys_roswheels
 {
 CLaneDetectorNavigatorEngine::CLaneDetectorNavigatorEngine() :
@@ -63,7 +63,7 @@ int32_t CLaneDetectorNavigatorEngine::Pause(void)
 	return 1;
 }
 
-int32_t CLaneDetectorNavigatorEngine::ProcessImageData(const sensor_msgs::ImageConstPtr img)
+int32_t CLaneDetectorNavigatorEngine::ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage)
 {
 	int nRet = 0;
 	float fAngle = 0.f;
@@ -71,6 +71,9 @@ int32_t CLaneDetectorNavigatorEngine::ProcessImageData(const sensor_msgs::ImageC
 	geometry_msgs::Twist vel_msg;
 	float fDir = 1.;
 	float fAngleRatio = 0;
+	
+	SetDebugDisplayImage(bDisplayImage);// = bDisplayImage;
+	
 	if (m_bPaused == true)
 	{
 		nRet = 1;
@@ -340,20 +343,22 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	
 	lb.x = (rb.y - m_LaneL.b.get()) / m_LaneL.k.get();//temp_frame->width * 0.45f;
 	lb.y = rb.y;//laneL.k.get() * lb.x + laneL.b.get();
-#if DEBUGIMG	
-	cvLine(pWorkingImage, rt, rb, CV_RGB(255, 0, 255), 2);
-	cvLine(pWorkingImage, lt, lb, CV_RGB(255, 0, 255), 2);
-	cvLine(pWorkingImage, lt, rt, CV_RGB(128, 0, 128), 2);
-	cvLine(pWorkingImage, lb, rb, CV_RGB(128, 0, 128), 2);	
-#endif
+	if (IsDebugDisplayImage())	
+	{
+		cvLine(pWorkingImage, rt, rb, CV_RGB(255, 0, 255), 2);
+		cvLine(pWorkingImage, lt, lb, CV_RGB(255, 0, 255), 2);
+		cvLine(pWorkingImage, lt, rt, CV_RGB(128, 0, 128), 2);
+		cvLine(pWorkingImage, lb, rb, CV_RGB(128, 0, 128), 2);	
+	}
 	//CvPoint vanishingPoint;
 	
 	m_VanishingPoint.x = -(m_LaneR.b.get() - m_LaneL.b.get()) / (m_LaneR.k.get() - m_LaneL.k.get());	// x coordinate
 	m_VanishingPoint.y = m_LaneR.k.get() * m_VanishingPoint.x + m_LaneR.b.get();
-#if DEBUGIMG	
-	cvLine(pWorkingImage, cvPoint(m_VanishingPoint.x, 0), 
+	if (IsDebugDisplayImage())
+	{
+		cvLine(pWorkingImage, cvPoint(m_VanishingPoint.x, 0), 
 							cvPoint(m_VanishingPoint.x, pWorkingImage->height), CV_RGB(255, 255, 255), 2);
-#endif		
+	}
 	// find out the turn angle
 	CvPoint pivotT, pivotB;
 
@@ -361,9 +366,10 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	pivotT.y = (lt.y + rt.y) / 2;
 	pivotB.x = (lb.x + rb.x) / 2;
 	pivotB.y = (lb.y + rb.y) / 2;
-#if DEBUGIMG	
-	cvLine(pWorkingImage, pivotT, pivotB, CV_RGB(0, 255, 255), 2);	
-#endif	
+	if (IsDebugDisplayImage())
+	{
+		cvLine(pWorkingImage, pivotT, pivotB, CV_RGB(0, 255, 255), 2);	
+	}
 	// find the angle
 
 	m_fTurnAngle = 90 - atan2(pivotB.y - pivotT.y, pivotB.x - pivotT.x) * 180 / CV_PI;
@@ -442,6 +448,17 @@ int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAng
 	
 	fAngle = m_fTurnAngle;
 	vanishingPoint = m_VanishingPoint;
+	
+	if (IsDebugDisplayImage())
+	{
+		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
+		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
+	}
+	else
+	{
+		cvDestroyWindow("Lane-Detector::Edges");
+		cvDestroyWindow("Lane-Detector::ColorImage");
+	}
 #if DEBUGIMG	
 	cvShowImage("Grey", m_pGreyImage);
 	cvShowImage("Edges", m_pEdgesImage);

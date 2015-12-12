@@ -50,11 +50,7 @@ protected:
 	ros::NodeHandle m_nNodeHandle;
 	actionlib::SimpleActionServer<wheels::set_car_direction_speedAction> m_ActionServer;
 	std::string m_strAction_Name;
-	int m_nData_count, m_nGoal;
-	float sum_, sum_sq_;
-	wheels::set_car_direction_speedFeedback m_Feedback;
-	wheels::set_car_direction_speedActionResult m_Result;
-	ros::Subscriber m_SubScriber;	
+
 };
 };
 #endif

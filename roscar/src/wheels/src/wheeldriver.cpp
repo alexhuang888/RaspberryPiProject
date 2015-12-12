@@ -7,6 +7,7 @@
 #include "wheels/cmd_set_navigator_engine.h"
 #include "clinefollowernavigatorengine.h"
 #include "clanedetectornavigatorengine.h"
+#include "globalinc.h"
 namespace yisys_roswheels
 {
 CWheelDriver::CWheelDriver(std::string nodename) :
@@ -22,10 +23,22 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	
 	m_CmdVelSubscriber = m_nNodeHandle.subscribe<geometry_msgs::Twist>("wheels_cmd_vel", 1000,
 										boost::bind(&CWheelDriver::wheels_CmdVelCallback, this, _1));
+										
+	m_SendManualInstructionService = m_nNodeHandle.advertiseService("send_manual_instruction", &CWheelDriver::cbSendManualInstruction, this);
+										
 	m_bCarStopped = true;
 	m_nCurrentUserSpeed = 0;
 	m_nCurrentUserDirection = WCLR_STOP;
 	m_bManualStop = false;
+	m_bDisplayDebugImage = false;
+}
+
+bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
+							wheels::cmd_send_manual_instructionResponse &res)
+{
+	res.nRetCode = KeyCodeToWheelController(req.nManualInstruction);
+	
+	return true;
 }
 
 void CWheelDriver::wheels_CmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg)
@@ -160,6 +173,12 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 	//printf("input=%d\n", nInput);
 	switch (nInput)
 	{
+		case 'y':	// display debug image
+		{
+			m_bDisplayDebugImage = !m_bDisplayDebugImage;
+			m_nNodeHandle.setParam(WGP_DEBUG_SHOWIMAGE, m_bDisplayDebugImage);
+		}
+			break;
 		case 'k':
 			if (m_bManualStop)
 			{
@@ -174,7 +193,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 				nNewDirection = WCLR_STOP;
 				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
 				m_bManualStop = true;
-				//ROS_INFO("Force to stop. Block all incoming cmd_vels.");
+				ROS_INFO("Force to stop. Block all incoming cmd_vels.");
 			}
 			break;
 		case 'p':
@@ -263,6 +282,22 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 				ROS_INFO("Fail to query navigator engine status");
 			}
 			ROS_INFO("Current User Direction=%d, Current User Speed=%d", m_nCurrentUserDirection, m_nCurrentUserSpeed);	
+			if (m_bManualStop)
+			{
+				ROS_INFO("Manual stop is on");
+			}
+			else
+			{
+				ROS_INFO("Manual stop is off");
+			}			
+			if (m_bDisplayDebugImage)
+			{
+				ROS_INFO("Debug image is on");
+			}
+			else
+			{
+				ROS_INFO("Debug image is off");
+			}			
 			break;
 		}
 		case '0':	// disable all navigator engine
@@ -288,7 +323,11 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			else
 			{
 				ROS_INFO("Fail to set navigator engine");
-			}						
+			}
+			if (m_bDisplayDebugImage)
+				ROS_INFO("Display Debug image.");
+			else
+				ROS_INFO("Hide Debug Image.");
 		}	
 			break;		
 		case '1':	// line follower
@@ -343,10 +382,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				ROS_INFO("Fail to set navigator engine");
 			}
-			if (m_bManualStop)
-			{
-				ROS_INFO("Manual stop is on");
-			}
+
 		}	
 			break;			
 		case 'h':

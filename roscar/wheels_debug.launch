@@ -14,10 +14,14 @@
     </node>
     <node name="viewer" pkg="lsd_slam_viewer" type="viewer" respawn="false" output="screen" />
     -->
-    <node name="wheel_status_console" pkg="wheels" type="wheel_status_console" respawn="false" output="screen" />
-    <node name="wheel_controller" pkg="wheels" type="wheel_controller" respawn="false" output="screen" />
+
+    
     <node name="wheel_navigator" pkg="wheels" type="wheel_navigator" respawn="false" output="screen" launch-prefix="xterm -e gdb --args">
 		<remap from="image" to="/camera1/image_raw" />
     </node>
+    <node name="wheel_status_console" pkg="wheels" type="wheel_status_console" respawn="false" output="screen" launch-prefix="xterm -e"/>
     <node name="wheel_driver" pkg="wheels" type="wheel_driver" respawn="false" output="screen" />
+    <node name="wheel_manual_console" pkg="wheels" type="wheel_manual_console" respawn="false" output="screen" />
+
+    <node name="wheel_controller" pkg="wheels" type="wheel_controller" respawn="false" output="screen" />    
 </launch>

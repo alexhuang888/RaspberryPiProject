@@ -5,7 +5,8 @@
 #include <geometry_msgs/PoseStamped.h>
 #include "cv_bridge/cv_bridge.h"
 #include "vector"
-
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
 namespace yisys_roswheels
 {
 CLineFollowerNavigatorEngine::CLineFollowerNavigatorEngine() :
@@ -35,9 +36,11 @@ int32_t CLineFollowerNavigatorEngine::Pause(void)
 	return 1;
 }
 
-int32_t CLineFollowerNavigatorEngine::ProcessImageData(const sensor_msgs::ImageConstPtr img)
+int32_t CLineFollowerNavigatorEngine::ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage)
 {
 	int nRet = 0;
+	
+	SetDebugDisplayImage(bDisplayImage);
 	
 	if (m_bPaused == true)
 	{
@@ -176,6 +179,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				fMaxArea = fArea;
 			}
 		}
+		printf("Found Max Area=%f\n", fMaxArea);
 		{
 			if (fMaxArea > MAXAREATHRESHOLD && nMaxAreaContourIndex >= 0) 
 			{
@@ -193,7 +197,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				nCenterY = (int32_t)center.y;
 				nRet = 1;
 				// here is the center pixel
-#if 0
+				if (IsDebugDisplayImage())
 				{
 					try {
 						cv::circle(roiImg, center, 5, cv::Scalar(255, 255, 255), -1, 8, 0);
@@ -206,19 +210,24 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 					sprintf(szOriFilename, "image%d.png", nTick);
 					try {
 						cv::drawContours(roiImg, contours, nMaxAreaContourIndex, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
-						cv::imwrite(szFilename, roiImg);
+						//cv::imwrite(szFilename, roiImg);
 						//cv::imwrite(szOriFilename, image);
 #if PRESERVEROI
 						sprintf(szOriROIFilename, "ori_roi_image%d.png", nTick);
 						cv::imwrite(szOriROIFilename, roiImgPreserve);
 #endif						
+						cv::imshow("LineFollower", roiImg);
 					} catch (cv::Exception& e)
 					{
 						const char* err_msg = e.what();
 						std::cout << "exception caught: " << err_msg << std::endl;
 					}
 				}
-#endif				
+				else
+				{
+					cv::destroyWindow("LineFollower");
+				}
+			
 			}
 		}
 #endif

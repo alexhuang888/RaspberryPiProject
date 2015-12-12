@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <fstream>
-
+#include "globalinc.h"
 using namespace cv;
 namespace yisys_roswheels
 {
@@ -94,8 +94,13 @@ void CNavigatorEngineWithImageSource::vidCb(const sensor_msgs::ImageConstPtr img
 	#if 0
 	if (!m_bHaveCalibration)
 		return;
-		#endif
-	ProcessImageData(img);
+	#endif
+	
+	bool bDisplayImage = false;
+	
+	m_nImageBaseNodeHandle.param<bool>(WGP_DEBUG_SHOWIMAGE, bDisplayImage, false);
+	//printf("Show Debug Image=%s\n", bDisplayImage ? "Yes" : "No");
+	ProcessImageData(img, bDisplayImage);
 /*
 	cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::MONO8);
 

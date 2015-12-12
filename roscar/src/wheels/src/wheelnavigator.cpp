@@ -3,6 +3,7 @@
 #include "clanedetectornavigatorengine.h"
 #include "wheels/navigator_engine_status.h"
 #include "wheels/wheels_status.h"
+
 namespace yisys_roswheels
 {
 CWheelNavigator::CWheelNavigator()

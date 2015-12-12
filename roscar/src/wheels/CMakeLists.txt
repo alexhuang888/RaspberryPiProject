@@ -69,6 +69,7 @@ add_service_files(
 	cmd_set_car_direction_speed.srv
 	cmd_get_navigator_engine_status.srv
 	cmd_set_navigator_engine.srv
+	cmd_send_manual_instruction.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -230,6 +231,6 @@ target_link_libraries(wheel_navigator ${catkin_LIBRARIES})
 add_dependencies(wheel_navigator wheels_generate_messages_cpp)
 
 # the manual override console of the robot-car, it will listen to cmd_vel and send message to motor controller
-#add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
-#target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
-#add_dependencies(wheel_manual_console wheels_generate_messages_cpp)
+add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
+target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
+add_dependencies(wheel_manual_console wheels_generate_messages_cpp)
