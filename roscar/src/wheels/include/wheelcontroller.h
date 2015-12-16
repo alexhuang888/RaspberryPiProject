@@ -5,6 +5,7 @@
 #include "wheels/wheels_status.h"
 #include "wheels/cmd_get_one_wheel_status.h"
 #include "wheels/cmd_set_car_direction_speed.h"
+#include "wheels/cmd_set_car_two_wheels_direction_speed.h"
 #include "wheels/set_car_direction_speedAction.h"
 
 
@@ -31,7 +32,11 @@ public:
 	
 	bool cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_speedRequest &req,
 							wheels::cmd_set_car_direction_speedResponse &res);
+
 	
+	bool cbSetTwoWheelsDirectionAndSpeed(wheels::cmd_set_car_two_wheels_direction_speedRequest &req,
+							wheels::cmd_set_car_two_wheels_direction_speedResponse &res);
+								
 	bool cbGetOneWheelStatus(wheels::cmd_get_one_wheel_statusRequest &req,
 								wheels::cmd_get_one_wheel_statusResponse &res);
 								
@@ -46,6 +51,7 @@ protected:
 	CTwoWheelsController *m_pGlobalCarController;
 	ros::Publisher m_WheelStatusPublisher;
 	ros::ServiceServer m_SetDirectionSpeedService;
+	ros::ServiceServer m_SetTwoWheelsDirectionSpeedService;
 	ros::ServiceServer m_GetOneWheelStatusService;
 	ros::NodeHandle m_nNodeHandle;
 	actionlib::SimpleActionServer<wheels::set_car_direction_speedAction> m_ActionServer;

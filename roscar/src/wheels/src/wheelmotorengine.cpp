@@ -188,4 +188,12 @@ CL298NMotorController &CTwoWheelsController::GetMotorControllers(uint32_t nWheel
 {
 	return *(m_Motors[nWheelID]);
 }
+
+int32_t CTwoWheelsController::SetTwoWheelsSpeedDirection(uint32_t LeftSpeed, uint32_t LeftDirection, uint32_t RightSpeed, uint32_t RightDirection)
+{
+	m_Motors[CMC_LEFTWHEELID]->SetSpeedAndDirection(LeftSpeed, LeftDirection);
+	m_Motors[CMC_RIGHTWHEELID]->SetSpeedAndDirection(RightSpeed, RightDirection);
+		
+	return 1;		
+}
 }

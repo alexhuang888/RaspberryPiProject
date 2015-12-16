@@ -15,8 +15,8 @@ namespace yisys_roswheels
 #define RPI_GPIO_HIGH HIGH
 
 #define FULLSPEED (100)
-#define HALFSPEED (50)
-#define LOWSPEED (50)
+#define HALFSPEED ((FULLSPEED / 2))
+#define LOWSPEED (0)
 
 class CL298NMotorController
 {
@@ -73,6 +73,8 @@ public:
 	
 	int32_t Stop(void);
 	int32_t Reset(void);
+	
+	int32_t SetTwoWheelsSpeedDirection(uint32_t LeftSpeed, uint32_t LeftDirection, uint32_t RightSpeed, uint32_t RightDirection);
 	void GetDirectionSpeed(uint32_t &nDirection, uint32_t &nSpeed)
 	{
 		nDirection = m_nDirection;

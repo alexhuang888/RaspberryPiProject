@@ -19,6 +19,8 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	
 	m_SetSpeedClient = m_nNodeHandle.serviceClient <wheels::cmd_set_car_direction_speed>("set_direction_speed");
 	
+	m_SetTwoWheelsSpeedClient = m_nNodeHandle.serviceClient <wheels::cmd_set_car_two_wheels_direction_speed>("set_two_wheels_direction_speed");
+	
 	m_SetNavigatorEngine = m_nNodeHandle.serviceClient <wheels::cmd_set_navigator_engine>("set_navigator_engine");
 	
 	m_CmdVelSubscriber = m_nNodeHandle.subscribe<geometry_msgs::Twist>("wheels_cmd_vel", 1000,
@@ -31,6 +33,13 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_nCurrentUserDirection = WCLR_STOP;
 	m_bManualStop = false;
 	m_bDisplayDebugImage = false;
+	
+	m_fThisShiftError = 0.f;
+	m_fLastShiftError = 0.f;
+	m_fAccumulatedShiftError = 0.f;
+	m_fKp = WHEELPIDMAXSPEED / 0.5;
+	m_fKi = 0.00001f;
+	m_fKd = 0.01;
 }
 
 bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
@@ -47,6 +56,7 @@ void CWheelDriver::wheels_CmdVelCallback(const geometry_msgs::Twist::ConstPtr& m
 	//printf("CWheelDriver: z=%f, x=%f\n", msg->angular.z, msg->linear.x);
 	CmdVelToWheelController(msg->angular.z, msg->linear.x);
 }
+
 int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 {
 	int32_t nRet = 0;
@@ -106,7 +116,7 @@ void CWheelDriver::Checklongpause(void)
 //											when fabs(fAngular) is over tolerance, then it is decide to turn
 // fLinear: linear direction and speed (Positive: forward, negative: backward)
 //			fLinear value: normalized (0..1), mapping from 0 to 100 for wheel speed
-
+/*
 int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 {
 	int32_t nRet = 0;
@@ -163,7 +173,100 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	
 	return nRet;
 }
+*/
+int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
+{
+	int32_t nRet = 0;
+	
+	wheels::cmd_set_car_two_wheels_direction_speed srv2;
 
+	m_fThisShiftError = (fAngular);
+
+	m_fAccumulatedShiftError += m_fThisShiftError;
+	
+	float fErrorDiff = (m_fThisShiftError - m_fLastShiftError);
+	
+	m_fKp = m_nCurrentUserSpeed / 0.5;
+	float nNewSpeed = m_fKp * m_fThisShiftError + m_fKi * m_fAccumulatedShiftError + m_fKd * fErrorDiff;
+	
+	m_fLastShiftError = m_fThisShiftError;
+	
+	int nNewRightSpeed, nNewLeftSpeed, nNewRightDirection, nNewLeftDirection;
+	
+	if (nNewSpeed < 0) // right turn
+	{		
+		nNewRightSpeed = -nNewSpeed;
+		nNewRightDirection = CMC_MOTORFORWARD;
+		
+		//nNewLeftSpeed = WHEELPIDMAXSPEED - nNewRightSpeed;
+		nNewLeftSpeed = nNewSpeed;
+		nNewLeftDirection = CMC_MOTORFORWARD;
+	}
+	else
+	{		
+		nNewLeftSpeed = nNewSpeed;
+		nNewLeftDirection = CMC_MOTORFORWARD;	
+				
+		//nNewRightSpeed = WHEELPIDMAXSPEED - nNewLeftSpeed;
+		nNewRightSpeed = -nNewSpeed;
+		nNewRightDirection = CMC_MOTORFORWARD;
+	}
+	if (m_nCurrentUserSpeed == 0)	// users prefer to stop
+	{
+		nNewRightSpeed = 0;
+		nNewLeftSpeed = 0;		
+	}
+	else
+	{
+		nNewRightSpeed += m_nCurrentUserSpeed;
+		nNewLeftSpeed += m_nCurrentUserSpeed;
+	}
+	if (nNewRightSpeed > FULLSPEED)
+		nNewRightSpeed = FULLSPEED;
+	if (nNewRightSpeed < 0)
+		nNewRightSpeed = 0;
+		
+	if (nNewLeftSpeed > FULLSPEED)
+		nNewLeftSpeed = FULLSPEED;
+	if (nNewLeftSpeed < 0)
+		nNewLeftSpeed = 0;				
+	if (m_bManualStop)
+	{
+		nRet = 1;
+		goto err_out;
+	}
+		
+	srv2.request.nNewLeftSpeed = nNewLeftSpeed;
+	srv2.request.nNewLeftDirection = nNewLeftDirection;
+	
+	srv2.request.nNewRightSpeed = nNewRightSpeed;
+	srv2.request.nNewRightDirection = nNewRightDirection;
+		
+	printf("New two wheels (%f, %f)(Speed, Dir) Left(%d, %d), right(%d, %d)\n", fAngular, nNewSpeed, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
+	if (m_SetTwoWheelsSpeedClient.call(srv2))
+	{
+		//m_nCurrentUserSpeed = nSpeed;
+		//m_nCurrentUserDirection = nDirection;
+
+		//ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
+		//ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
+		//nRet = 1;
+		//ROS_INFO("Cannot receive cmd_vel, stop the car");
+		if (srv2.response.nNewLeftSpeed == 0 && srv2.response.nNewRightSpeed == 0)
+		{
+			m_bCarStopped = true;
+		}
+		nRet = 1;
+	}
+	else
+	{
+		ROS_ERROR("Failed to call service set_two_wheels_direction_speed");
+	}
+err_out:
+
+	
+	return nRet;
+}
 int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 {
 	int32_t nRet = 0;

@@ -71,6 +71,7 @@ add_service_files(
 	cmd_get_navigator_engine_status.srv
 	cmd_set_navigator_engine.srv
 	cmd_send_manual_instruction.srv
+	cmd_set_car_two_wheels_direction_speed.srv
 )
 
 ## Generate actions in the 'action' folder

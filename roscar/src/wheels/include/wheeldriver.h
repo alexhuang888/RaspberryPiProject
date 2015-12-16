@@ -11,6 +11,7 @@
 namespace yisys_roswheels
 {
 #define WHEELANGULAR_TOLERANCE (0.4)	
+#define WHEELPIDMAXSPEED (20)
 // it accept several msg and decide how the wheels works.
 // cmd_vel: wheels direction and velocity
 // ???: sign
@@ -44,6 +45,7 @@ protected:
 	ros::ServiceClient m_GetWheelStatusClient;
 	ros::ServiceClient m_GetNavigatorEngineStatusClient;
 	ros::ServiceClient m_SetSpeedClient;
+	ros::ServiceClient m_SetTwoWheelsSpeedClient;
 	ros::ServiceClient m_SetNavigatorEngine;
 	ros::ServiceServer m_SendManualInstructionService;
 	ros::Subscriber m_CmdVelSubscriber;
@@ -54,6 +56,17 @@ protected:
 	bool m_bManualStop;	// true: to prevent the car to run dis-regarding any input cmd_vels
 	bool m_bManualOverrideMode;	// true: only keyboard can do the driving, or navigator engine will do the job.
 	bool m_bDisplayDebugImage;
+	
+	/*
+	 * PID controller: speed = Kp * shift error + Ki * (accumulated error) + Kd * (d(Shift_Error) / dt)
+	 * Kp is supposed to be FULLSPEED / 0.5 = 200;
+	 */
+	float m_fThisShiftError;
+	float m_fLastShiftError;
+	float m_fAccumulatedShiftError;
+	float m_fKp;
+	float m_fKi;
+	float m_fKd;
 };
 };
 #endif

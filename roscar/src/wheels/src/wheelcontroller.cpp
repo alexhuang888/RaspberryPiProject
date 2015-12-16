@@ -35,6 +35,8 @@ CWheelController::CWheelController(std::string name) :
 	m_WheelStatusPublisher = m_nNodeHandle.advertise<wheels::wheels_status>("wheels_status", 1000);
 
 	m_SetDirectionSpeedService = m_nNodeHandle.advertiseService("set_direction_speed", &CWheelController::cbSetDirectionAndSpeed, this);
+
+	m_SetTwoWheelsDirectionSpeedService = m_nNodeHandle.advertiseService("set_two_wheels_direction_speed", &CWheelController::cbSetTwoWheelsDirectionAndSpeed, this);
 	
 	m_GetOneWheelStatusService = m_nNodeHandle.advertiseService("get_one_wheel_status", &CWheelController::cbGetOneWheelStatus, this);    
 }
@@ -64,6 +66,7 @@ void CWheelController::PublishWheelsStatus(void)
 	*/
 	m_WheelStatusPublisher.publish(status);	
 }
+
 int32_t CWheelController::cbSetDirectionAndSpeed(uint32_t nNewDirection, uint32_t nNewSpeed)
 {
 	int32_t nRetCode = -1;
@@ -103,6 +106,7 @@ int32_t CWheelController::cbSetDirectionAndSpeed(uint32_t nNewDirection, uint32_
 	}
 	return nRetCode;		
 }
+
 bool CWheelController::cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_speedRequest &req,
 														wheels::cmd_set_car_direction_speedResponse &res)
 {
@@ -118,7 +122,26 @@ bool CWheelController::cbSetDirectionAndSpeed(wheels::cmd_set_car_direction_spee
 	}
 	return false;		
 }
+bool CWheelController::cbSetTwoWheelsDirectionAndSpeed(wheels::cmd_set_car_two_wheels_direction_speedRequest &req,
+														wheels::cmd_set_car_two_wheels_direction_speedResponse &res)
+{
+	res.nRetCode = -1;
+	if (m_pGlobalCarController != NULL)
+	{
+		uint32_t nHealthStatus;
+		m_pGlobalCarController->GetWheelStatus(CMC_LEFTWHEELID, res.nLastLeftDirection, res.nLastLeftSpeed, nHealthStatus);
+		m_pGlobalCarController->GetWheelStatus(CMC_RIGHTWHEELID, res.nLastRightDirection, res.nLastRightSpeed, nHealthStatus);
 
+		res.nRetCode = m_pGlobalCarController->SetTwoWheelsSpeedDirection(req.nNewLeftSpeed, req.nNewLeftDirection, req.nNewRightSpeed, req.nNewRightDirection);
+		
+		m_pGlobalCarController->GetWheelStatus(CMC_LEFTWHEELID, res.nNewLeftDirection, res.nNewLeftSpeed, nHealthStatus);
+		m_pGlobalCarController->GetWheelStatus(CMC_RIGHTWHEELID, res.nNewRightDirection, res.nNewRightSpeed, nHealthStatus);
+		//ROS_INFO("new request: direction=%d, speed=%d", req.nNewDirection, req.nNewSpeed);
+		//ROS_INFO("sending back response: Code[%d], lastdirection=%d, lastspeed=%d", res.nRetCode, res.nLastDirection, res.nLastSpeed);
+		return true;
+	}
+	return false;		
+}
 bool CWheelController::cbGetOneWheelStatus(wheels::cmd_get_one_wheel_statusRequest &req,
 														wheels::cmd_get_one_wheel_statusResponse &res)
 {
