@@ -70,7 +70,7 @@ int32_t CLineFollowerNavigatorEngine::ProcessImageData(const sensor_msgs::ImageC
 	
 	if (nRet <= 0)
 	{
-		printf("Fail to find line center\n");
+		//printf("Fail to find line center\n");
 		goto err_out;
 	}
 		
@@ -179,7 +179,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				fMaxArea = fArea;
 			}
 		}
-		printf("Found Max Area=%f\n", fMaxArea);
+		//printf("Found Max Area=%f\n", fMaxArea);
 		{
 			if (fMaxArea > MAXAREATHRESHOLD && nMaxAreaContourIndex >= 0) 
 			{
@@ -216,7 +216,11 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 						sprintf(szOriROIFilename, "ori_roi_image%d.png", nTick);
 						cv::imwrite(szOriROIFilename, roiImgPreserve);
 #endif						
-						cv::imshow("LineFollower", roiImg);
+						//cv::imshow("LineFollower", roiImg);
+						{
+							sensor_msgs::ImagePtr imgmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", roiImg).toImageMsg();
+							PublishDebugImage(imgmsg);
+						}
 					} catch (cv::Exception& e)
 					{
 						const char* err_msg = e.what();
@@ -259,13 +263,13 @@ int32_t CLineFollowerNavigatorEngine::OffsetNavigator(float fXOffset)
 	float fDir = 1.;
 	
 	if (fXOffset > 0)
-		fDir = 1;	// turn right
-	else
 		fDir = -1;	// turn left
+	else
+		fDir = 1;	// turn right
 	//if (fabs(fXOffset) < 0.2)
 	//	fDir = 0;
 		
-	vel_msg.angular.z = (fXOffset);
+	vel_msg.angular.z = -(fXOffset);
 	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
 	
 	//vel_msg.angular.z *= fDir;

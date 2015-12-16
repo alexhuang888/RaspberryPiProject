@@ -10,7 +10,7 @@
 #pragma once
 namespace yisys_roswheels
 {
-#define WHEELANGULAR_TOLERANCE (0.1)	
+#define WHEELANGULAR_TOLERANCE (0.4)	
 // it accept several msg and decide how the wheels works.
 // cmd_vel: wheels direction and velocity
 // ???: sign

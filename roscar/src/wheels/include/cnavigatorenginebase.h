@@ -16,6 +16,7 @@ class CNavigatorCallback
 {
 public:
 	virtual int32_t ProcessCmdVels(const geometry_msgs::Twist &velMsg) = 0;
+	virtual int32_t PublishDebugImage(const sensor_msgs::ImagePtr) = 0;
 };
 // a virtual class for navigator engien
 class CNavigatorEngineBase
@@ -40,6 +41,14 @@ public:
 		}
 		return 0;
 	};
+	virtual int32_t PublishDebugImage(const sensor_msgs::ImagePtr imgptr)
+	{
+		if (m_pNavigatorCB != NULL)
+		{
+			return m_pNavigatorCB->PublishDebugImage(imgptr);
+		}
+		return 0;
+	};	
 	int32_t SetNavigatorCallback(CNavigatorCallback *pCB)
 	{
 		m_pNavigatorCB = pCB;

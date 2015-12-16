@@ -5,8 +5,8 @@
 #include "cnavigatorenginebase.h"
 #include "wheels/cmd_get_navigator_engine_status.h"
 #include "wheels/cmd_set_navigator_engine.h"
-
-
+#include <image_transport/image_transport.h>
+#include <sensor_msgs/image_encodings.h>
 // here, we would like to design a navigator fasade, which can include several
 // navigator, then advertise "wheel_cmd_vel" to wheel driver.
 // among all these navigator, they are:
@@ -45,6 +45,7 @@ public:
 	
 public:
 	virtual int32_t ProcessCmdVels(const geometry_msgs::Twist &velMsg);
+	virtual int32_t PublishDebugImage(const sensor_msgs::ImagePtr);
 protected:
 	EnginePoolType m_EnginePool;
 	uint32_t m_ActiveEngineID;
@@ -55,6 +56,8 @@ protected:
 	ros::ServiceServer m_SetNavigatorEngineService;
 	ros::ServiceServer m_GetNavigatorEngineService;
 	ros::Publisher m_WheelCmdVelPublisher;
+	image_transport::Publisher m_ImageMsgPublisher;
+	image_transport::ImageTransport m_ImageTransport;
 };
 };
 #endif

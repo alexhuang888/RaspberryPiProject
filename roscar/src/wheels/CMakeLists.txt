@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 	actionlib
 	tf2
 	tf
+	image_transport
 )
 # for raspicam controller
 #find_package(raspicam REQUIRED)

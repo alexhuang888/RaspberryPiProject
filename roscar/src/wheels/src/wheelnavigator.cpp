@@ -6,7 +6,7 @@
 
 namespace yisys_roswheels
 {
-CWheelNavigator::CWheelNavigator()
+CWheelNavigator::CWheelNavigator() : m_ImageTransport(m_nNodeHandle)
 {
 	m_ActiveEngineID = 0;
 	m_pTrackingEngine = NULL;
@@ -18,6 +18,8 @@ CWheelNavigator::CWheelNavigator()
 	m_GetNavigatorEngineService = m_nNodeHandle.advertiseService("get_navigator_engine_status", &CWheelNavigator::cbGetEngineStatus, this);    	
 
 	m_WheelCmdVelPublisher = m_nNodeHandle.advertise<geometry_msgs::Twist>("wheels_cmd_vel", 10);
+	
+	m_ImageMsgPublisher = m_ImageTransport.advertise("/wheels/debugimage", 1);
 }
 
 CWheelNavigator::~CWheelNavigator()
@@ -149,5 +151,11 @@ int32_t CWheelNavigator::ProcessCmdVels(const geometry_msgs::Twist &velMsg)
 	//printf("Navigator publish: z=%f, x=%f\n", velMsg.angular.z, velMsg.linear.x);
 	m_WheelCmdVelPublisher.publish(velMsg);
 	return 1;
+}
+
+int32_t CWheelNavigator::PublishDebugImage(const sensor_msgs::ImagePtr imgptr)
+{
+	m_ImageMsgPublisher.publish(imgptr);
+	return 1;	
 }
 }
