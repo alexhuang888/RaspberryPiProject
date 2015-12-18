@@ -37,9 +37,9 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_fThisShiftError = 0.f;
 	m_fLastShiftError = 0.f;
 	m_fAccumulatedShiftError = 0.f;
-	m_fKp = WHEELPIDMAXSPEED / 0.5;
-	m_fKi = 0.0001f;
-	m_fKd = -m_fKp / 4;
+	m_fKp = WHEELPIDMAXSPEED;
+	m_fKi = 0.01f;
+	m_fKd = m_fKp / 4;
 }
 
 bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
@@ -187,7 +187,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	
 	float fErrorDiff = (m_fThisShiftError - m_fLastShiftError);
 	
-	m_fKp = m_nCurrentUserSpeed / 0.5;
+	//m_fKp = m_nCurrentUserSpeed;
 	float nNewSpeed = m_fKp * m_fThisShiftError + m_fKi * m_fAccumulatedShiftError + m_fKd * fErrorDiff;
 	
 	m_fLastShiftError = m_fThisShiftError;
@@ -196,20 +196,20 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	
 	if (nNewSpeed < 0) // left turn
 	{		
-		nNewRightSpeed = -nNewSpeed / 2;
+		nNewRightSpeed = -nNewSpeed;
 		nNewRightDirection = CMC_MOTORFORWARD;
 		
 		//nNewLeftSpeed = WHEELPIDMAXSPEED - nNewRightSpeed;
-		nNewLeftSpeed = nNewSpeed / 2;
+		nNewLeftSpeed = nNewSpeed;
 		nNewLeftDirection = CMC_MOTORFORWARD;
 	}
 	else
 	{		
-		nNewLeftSpeed = nNewSpeed / 2;
+		nNewLeftSpeed = nNewSpeed;
 		nNewLeftDirection = CMC_MOTORFORWARD;	
 				
 		//nNewRightSpeed = WHEELPIDMAXSPEED - nNewLeftSpeed;
-		nNewRightSpeed = -nNewSpeed / 2;
+		nNewRightSpeed = -nNewSpeed;
 		nNewRightDirection = CMC_MOTORFORWARD;
 	}
 	if (m_nCurrentUserSpeed == 0)	// users prefer to stop

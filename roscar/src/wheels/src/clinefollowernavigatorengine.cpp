@@ -102,8 +102,18 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 
 	m_nHeight = InputImage.rows;
 	m_nWidth = InputImage.cols;
-	
-    cv::Rect roi(m_nWidth / 5, m_nHeight * 3 / 4, m_nWidth * 3. / 5., m_nHeight / 4);
+#if 0
+	int nROILeft = m_nWidth / 5;
+	int nROIWidth = m_nWidth * 3 / 5;
+	int nROITop = m_nHeight * 3 / 4;
+	int nROIHeight = m_nHeight / 4;
+#else
+	int nROILeft = 0;
+	int nROIWidth = m_nWidth;
+	int nROITop = m_nHeight * 3 / 4;
+	int nROIHeight = m_nHeight / 4;
+#endif
+    cv::Rect roi(nROILeft, nROITop, nROIWidth, nROIHeight);
     cv::Mat roiImg, erodeElmt, dilateElmt;
     int thVal = IMGTHRESHOLD;
     std::vector<std::vector<cv::Point> > contours;
@@ -117,7 +127,8 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 		try {		
 			InputImage(roi).copyTo(roiImg);
 			#if PRESERVEROI
-				roiImg.copyTo(roiImgPreserve);
+				if (IsDebugDisplayImage())
+					roiImg.copyTo(roiImgPreserve);
 			#endif
 		} catch (cv::Exception& e)
 		{
@@ -128,16 +139,19 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 #if THRESHOLDIMAGE
 		try {
 			//printf("threshold image\n");
+			
+			//cv::blur( roiImg, roiImg, cv::Size( 5, 5 ), cv::Point(-1,-1) );
 			cv::threshold(roiImg, roiImg, thVal, 255, cv::THRESH_BINARY);
 			//printf("bitwise_not image\n");
 			//cv::bitwise_not(roiImg, roiImg); // negative image
-			
+/*			
 			erodeElmt = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
 			dilateElmt = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
 			//printf("erode image\n");
 			cv::erode(roiImg, roiImg, erodeElmt);
 			//printf("dilate image\n");
 			cv::dilate(roiImg, roiImg, dilateElmt); 
+*/
 		}
 		catch (...)
 		{
@@ -162,7 +176,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 #if !TESTROI
 		//printf("findContours image\n");
 		try {
-			cv::findContours(roiImg, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0,0));
+			cv::findContours(roiImg, contours, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, cv::Point(0,0));
 		} catch (...)
 		{
 			printf("Fail to findContours\n");
@@ -193,14 +207,18 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				cv::Point2f center(mu.m10 / mu.m00, mu.m01 / mu.m00); // point in center (x only)   
 				//printf("Find a region: Area=%f, center(%f, %f)\n", fMaxArea, center.x, center.y);
 				
-				nCenterX = (int32_t)center.x + m_nWidth / 5;
-				nCenterY = (int32_t)center.y + m_nHeight * 3 / 4;
+				nCenterX = (int32_t)center.x + nROILeft;
+				nCenterY = (int32_t)center.y + nROITop;
 				nRet = 1;
 				// here is the center pixel
 				if (IsDebugDisplayImage())
 				{
 					try {
+#if PRESERVEROI
+						cv::circle(roiImgPreserve, center, 5, cv::Scalar(255, 255, 255), -1, 8, 0);
+#else						
 						cv::circle(roiImg, center, 5, cv::Scalar(255, 255, 255), -1, 8, 0);
+#endif
 					} catch (cv::Exception& e)
 					{
 						const char* err_msg = e.what();
@@ -209,18 +227,27 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 					sprintf(szFilename, "roi_image%d.png", nTick);
 					sprintf(szOriFilename, "image%d.png", nTick);
 					try {
-						cv::drawContours(roiImg, contours, nMaxAreaContourIndex, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
+						
 						//cv::imwrite(szFilename, roiImg);
 						//cv::imwrite(szOriFilename, image);
 #if PRESERVEROI
-						sprintf(szOriROIFilename, "ori_roi_image%d.png", nTick);
-						cv::imwrite(szOriROIFilename, roiImgPreserve);
-#endif						
+						//sprintf(szOriROIFilename, "ori_roi_image%d.png", nTick);
+						//cv::imwrite(szOriROIFilename, roiImgPreserve);
 						//cv::imshow("LineFollower", roiImg);
 						{
+							cv::drawContours(roiImgPreserve, contours, nMaxAreaContourIndex, cv::Scalar(255, 0, 0), 2, 8, hierarchy, 0, cv::Point());
+							sensor_msgs::ImagePtr imgmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", roiImgPreserve).toImageMsg();
+							PublishDebugImage(imgmsg);
+						}						
+#else
+						//cv::imshow("LineFollower", roiImg);
+						{
+							cv::drawContours(roiImg, contours, nMaxAreaContourIndex, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
 							sensor_msgs::ImagePtr imgmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", roiImg).toImageMsg();
 							PublishDebugImage(imgmsg);
 						}
+#endif						
+
 					} catch (cv::Exception& e)
 					{
 						const char* err_msg = e.what();

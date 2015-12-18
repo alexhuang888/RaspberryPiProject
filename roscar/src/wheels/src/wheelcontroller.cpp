@@ -16,12 +16,12 @@ CWheelController::CWheelController(std::string name) :
     m_strAction_Name(name)
 {
 	// here, we would like to access GPIO Pin from parameter server, or from default value
-	int nLA = 5, nLB = 6, nRA = 2, nRB = 3;
+	int nLA = 2, nLB = 3, nRA = 5, nRB = 6;
 	
-	m_nNodeHandle.param<int>(WCLR_PARAM_MPINLA, nLA, 5);
-	m_nNodeHandle.param<int>(WCLR_PARAM_MPINLB, nLB, 6);
-	m_nNodeHandle.param<int>(WCLR_PARAM_MPINRA, nRA, 2);
-	m_nNodeHandle.param<int>(WCLR_PARAM_MPINRB, nRB, 3);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINLA, nLA, 2);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINLB, nLB, 3);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINRA, nRA, 5);
+	m_nNodeHandle.param<int>(WCLR_PARAM_MPINRB, nRB, 6);
 	
 	m_pGlobalCarController = new CTwoWheelsController(nLA, nLB, nRA, nRB);
 

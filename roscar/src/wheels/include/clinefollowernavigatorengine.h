@@ -11,12 +11,12 @@ namespace yisys_roswheels
  * for the wheel
  */
 #define TESTROI 0
-#define PRESERVEROI 0
+#define PRESERVEROI 1
 #define THRESHOLDIMAGE 1
 
 #define CAMERA_IMG_WIDTH 640
 #define CAMERA_IMG_HEIGHT 480
-#define IMGTHRESHOLD 127
+#define IMGTHRESHOLD 80
 #define MAXAREATHRESHOLD 1000
 
 #define WEID_LINEFOLLOWERENGINE 1
