@@ -365,9 +365,9 @@ int32_t CLaneFinder::ProcessFrame(IplImage *pFrame, float &fAngle, CvPoint &vani
 	cvShowImage("Edges", m_pEdgesImage);
 	cvShowImage("Color", m_pWorkingImage);
 
-	cvMoveWindow("Grey", 0, 0); 
-	cvMoveWindow("Edges", 0, m_HalfFrameSize.height + 25);
-	cvMoveWindow("Color", 0, 2*(m_HalfFrameSize.height + 25)); 
+	//cvMoveWindow("Grey", 0, 0); 
+	//cvMoveWindow("Edges", 0, m_HalfFrameSize.height + 25);
+	//cvMoveWindow("Color", 0, 2*(m_HalfFrameSize.height + 25)); 
 err_out:
 	return nRet;
 }

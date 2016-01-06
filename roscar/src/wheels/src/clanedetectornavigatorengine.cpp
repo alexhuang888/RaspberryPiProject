@@ -1,51 +1,50 @@
 #include "clanedetectornavigatorengine.h"
-#include <sensor_msgs/image_encodings.h>
-#include <sensor_msgs/Image.h>
-#include <sensor_msgs/CameraInfo.h>
-#include <geometry_msgs/PoseStamped.h>
-#include "cv_bridge/cv_bridge.h"
+//#include <sensor_msgs/image_encodings.h>
+//#include <sensor_msgs/Image.h>
+//#include <sensor_msgs/CameraInfo.h>
+//#include <geometry_msgs/PoseStamped.h>
+//#include "cv_bridge/cv_bridge.h"
 #include "vector"
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 namespace yisys_roswheels
 {
-CLaneDetectorNavigatorEngine::CLaneDetectorNavigatorEngine() :
-								CNavigatorEngineWithImageSource()
-{	
+CLaneDetectorNavigatorEngine::CLaneDetectorNavigatorEngine()
+{
 	m_bPaused = true;
 	m_pHoughStorage = NULL;
 	m_FrameSize.width = 0;
 	m_FrameSize.height = 0;
 	m_HalfFrameSize.width = 0;
 	m_HalfFrameSize.height = 0;
-	
+
 	cvInitFont(&m_Font, CV_FONT_VECTOR0, 0.5f, 0.5f);
 	m_pWorkingImage = NULL;
 	m_pGreyImage = NULL;
 	m_pEdgesImage = NULL;
-	
+
 	m_bShowLine = false;
-	
+
 	m_fTurnAngle = 0.f;
 	m_VanishingPoint.x = 0;
-	m_VanishingPoint.y = 0;	
+	m_VanishingPoint.y = 0;
 }
 
 CLaneDetectorNavigatorEngine::~CLaneDetectorNavigatorEngine()
 {
 	if (m_pHoughStorage != NULL)
 		cvReleaseMemStorage(&m_pHoughStorage);
-		
+
 	if (m_pGreyImage != NULL)
 		cvReleaseImage(&m_pGreyImage);
-		
+
 	if (m_pEdgesImage != NULL)
 		cvReleaseImage(&m_pEdgesImage);
-		
+
 	if (m_pWorkingImage != NULL)
-		cvReleaseImage(&m_pWorkingImage);		
+		cvReleaseImage(&m_pWorkingImage);
 }
-	
+
 int32_t CLaneDetectorNavigatorEngine::Init(void)
 {
 	return 1;
@@ -61,63 +60,6 @@ int32_t CLaneDetectorNavigatorEngine::Pause(void)
 {
 	m_bPaused = true;
 	return 1;
-}
-
-int32_t CLaneDetectorNavigatorEngine::ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage)
-{
-	int nRet = 0;
-	float fAngle = 0.f;
-	CvPoint vanishPoint;
-	geometry_msgs::Twist vel_msg;
-	float fDir = 1.;
-	float fAngleRatio = 0;
-	
-	SetDebugDisplayImage(bDisplayImage);// = bDisplayImage;
-	
-	if (m_bPaused == true)
-	{
-		nRet = 1;
-		return nRet;
-	}
-	cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::BGR8);
-	//cv::Mat workingCVMat;
-	IplImage WorkingImage = cv_ptr->image;//sensor_msgs::CvBridge::imgMsgToCv(img, "passthrough");
-	/*
-	if (m_pUndistorter != 0)
-	{
-		assert(m_pUndistorter->isValid());
-		m_pUndistorter->undistort(cv_ptr->image, workingCVMat);
-	}
-*/
-	nRet = ProcessFrame(&WorkingImage, fAngle, vanishPoint);
-	if (nRet <= 0)
-	{
-		printf("Fail to find lane center\n");
-		goto err_out;
-	}	
-	printf("Lane center: fAngle=%f, center(%d, %d)\n", fAngle, vanishPoint.x, vanishPoint.y);
-	
-
-
-	
-	if (fAngle > 0)
-		fDir = 1;	// turn right
-	else
-		fDir = -1;	// turn left
-	fAngleRatio = fAngle / 90.f;
-	
-	//if (fabs(fAngleRatio) < 0.2)
-	//	fDir = 0;
-		
-	vel_msg.angular.z = (fAngleRatio);
-	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
-	
-	//vel_msg.angular.z *= fDir;	
-	
-	ProcessCmdVels(vel_msg);
-	
-err_out:
-	return nRet;
 }
 
 void CLaneDetectorNavigatorEngine::FindResponses(IplImage *pImage, int startX, int endX, int y, std::vector<int>& list)
@@ -169,8 +111,8 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 
 	// show responses
 	int* votes = new int[lanes.size()];
-	
-	for (int i = 0; i < lanes.size(); i++) 
+
+	for (int i = 0; i < lanes.size(); i++)
 		votes[i++] = 0;
 
 	for (int y = ENDY; y >= BEGINY; y -= SCAN_STEP)
@@ -178,20 +120,20 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 		std::vector<int> rsp;
 		FindResponses(pEdges, midx, ENDX, y, rsp);
 
-		if (rsp.size() > 0) 
+		if (rsp.size() > 0)
 		{
 			int response_x = rsp[0]; // use first reponse (closest to screen center)
 
 			float dmin = 9999999;
 			float xmin = 9999999;
 			int match = -1;
-			
-			for (int j = 0; j < lanes.size(); j++) 
+
+			for (int j = 0; j < lanes.size(); j++)
 			{
 				// compute response point distance to current line
 				float d = dist2line(
-							cvPoint2D32f(lanes[j].m_p0.x, lanes[j].m_p0.y), 
-							cvPoint2D32f(lanes[j].m_p1.x, lanes[j].m_p1.y), 
+							cvPoint2D32f(lanes[j].m_p0.x, lanes[j].m_p0.y),
+							cvPoint2D32f(lanes[j].m_p1.x, lanes[j].m_p1.y),
 							cvPoint2D32f(response_x, y));
 
 				// point on line at current y line
@@ -199,7 +141,7 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 				int dist_mid = abs(midx - xline); // distance to midpoint
 
 				// pick the best closest match to line & to screen center
-				if (match == -1 || (d <= dmin && dist_mid < xmin)) 
+				if (match == -1 || (d <= dmin && dist_mid < xmin))
 				{
 					dmin = d;
 					match = j;
@@ -209,7 +151,7 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 			}
 
 			// vote for each line
-			if (match != -1) 
+			if (match != -1)
 			{
 				votes[match] += 1;
 			}
@@ -218,20 +160,20 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 
 	int bestMatch = -1;
 	int mini = 9999999;
-	
-	for (int i = 0; i < lanes.size(); i++) 
+
+	for (int i = 0; i < lanes.size(); i++)
 	{
 		int xline = (midy - lanes[i].m_b) / lanes[i].m_k;
 		int dist = abs(midx - xline); // distance to midpoint
 
-		if (bestMatch == -1 || (votes[i] > votes[bestMatch] && dist < mini)) 
+		if (bestMatch == -1 || (votes[i] > votes[bestMatch] && dist < mini))
 		{
 			bestMatch = i;
 			mini = dist;
 		}
 	}
 
-	if (bestMatch != -1) 
+	if (bestMatch != -1)
 	{
 		CLaneInfo* best = &lanes[bestMatch];
 		float k_diff = fabs(best->m_k - pLaneStatus->k.get());
@@ -239,33 +181,33 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 
 		bool update_ok = (k_diff <= K_VARY_FACTOR && b_diff <= B_VARY_FACTOR) || pLaneStatus->reset;
 
-		printf("pLaneStatus: %s, k vary: %-9.2f, b vary: %-9.2f, lost: %s\n", 
+		printf("pLaneStatus: %s, k vary: %-9.2f, b vary: %-9.2f, lost: %s\n",
 			(bRightLane ? "RIGHT":"LEFT "), k_diff, b_diff, (update_ok?"no ":"yes"));
-		
-		if (update_ok) 
+
+		if (update_ok)
 		{
 			// update is in valid bounds
 			pLaneStatus->k.add(best->m_k);
 			pLaneStatus->b.add(best->m_b);
 			pLaneStatus->reset = false;
 			pLaneStatus->lost = 0;
-		} 
+		}
 		else
 		{
 			// can't update, lanes flicker periodically, start counter for partial reset!
 			pLaneStatus->lost++;
-			if (pLaneStatus->lost >= MAX_LOST_FRAMES && !pLaneStatus->reset) 
+			if (pLaneStatus->lost >= MAX_LOST_FRAMES && !pLaneStatus->reset)
 			{
 				pLaneStatus->reset = true;
 			}
 		}
 
-	} 
-	else 
+	}
+	else
 	{
 		printf("no lanes detected - lane tracking lost! counter increased\n");
 		pLaneStatus->lost++;
-		if (pLaneStatus->lost >= MAX_LOST_FRAMES && !pLaneStatus->reset) 
+		if (pLaneStatus->lost >= MAX_LOST_FRAMES && !pLaneStatus->reset)
 		{
 			// do full reset when lost for more than N frames
 			pLaneStatus->reset = true;
@@ -273,11 +215,11 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 			pLaneStatus->b.clear();
 		}
 	}
- 
+
 	delete[] votes;
 }
 
-void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, IplImage *pWorkingImage, bool bShowHoughLine)
+void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, IplImage *pWorkingImage, bool bShowHoughLine, bool bDisplayImage)
 {
 	// classify lines to left/right pLaneStatus
 	std::vector<CLaneInfo> left, right;
@@ -289,25 +231,25 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 		int dy = line[1].y - line[0].y;
 		float angle = atan2f(dy, dx) * 180 / CV_PI;
 
-		if (fabs(angle) <= LINE_REJECT_DEGREES) 
+		if (fabs(angle) <= LINE_REJECT_DEGREES)
 		{ // reject near horizontal lines
 			continue;
 		}
 
 		// assume that vanishing point is close to the image horizontal center
 		// calculate line parameters: y = kx + b;
-		dx = (dx == 0) ? 1 : dx; // prevent DIV/0!  
+		dx = (dx == 0) ? 1 : dx; // prevent DIV/0!
 		float k = dy / (float)dx;
 		float b = line[0].y - k * line[0].x;
 
-		// assign lane's pLaneStatus based by its midpoint position 
+		// assign lane's pLaneStatus based by its midpoint position
 		int midx = (line[0].x + line[1].x) / 2;
-		
-		if (midx < pWorkingImage->width / 2) 
+
+		if (midx < pWorkingImage->width / 2)
 		{
 			left.push_back(CLaneInfo(line[0], line[1], angle, k, b));
-		} 
-		else 
+		}
+		else
 		{
 			right.push_back(CLaneInfo(line[0], line[1], angle, k, b));
 		}
@@ -315,12 +257,12 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	if (bShowHoughLine)
 	{
 		// show Hough lines
-		for	(int i=0; i<right.size(); i++) 
+		for	(int i=0; i<right.size(); i++)
 		{
 			cvLine(pWorkingImage, right[i].m_p0, right[i].m_p1, CV_RGB(0, 0, 255), 2);
 		}
 
-		for	(int i=0; i<left.size(); i++) 
+		for	(int i=0; i<left.size(); i++)
 		{
 			cvLine(pWorkingImage, left[i].m_p0, left[i].m_p1, CV_RGB(255, 0, 0), 2);
 		}
@@ -331,32 +273,32 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	// show computed lanes
 
 	CvPoint lt, lb, rt, rb;
-	
+
 	rt.x = pWorkingImage->width * 0.65f;//(rt.y - laneR.b.get()) / laneR.k.get();//temp_frame->width * 0.65f;
 	rt.y = m_LaneR.k.get() * rt.x + m_LaneR.b.get();
-	
+
 	rb.x = pWorkingImage->width;//(rb.y - laneR.b.get()) / laneR.k.get();//temp_frame->width;
 	rb.y = m_LaneR.k.get() * rb.x + m_LaneR.b.get();
-	
+
 	lt.x = (rt.y - m_LaneL.b.get()) / m_LaneL.k.get();//temp_frame->width * 0;
 	lt.y = rt.y;//laneL.k.get() * lt.x + laneL.b.get();
-	
+
 	lb.x = (rb.y - m_LaneL.b.get()) / m_LaneL.k.get();//temp_frame->width * 0.45f;
 	lb.y = rb.y;//laneL.k.get() * lb.x + laneL.b.get();
-	if (IsDebugDisplayImage())	
+	if (bDisplayImage)
 	{
 		cvLine(pWorkingImage, rt, rb, CV_RGB(255, 0, 255), 2);
 		cvLine(pWorkingImage, lt, lb, CV_RGB(255, 0, 255), 2);
 		cvLine(pWorkingImage, lt, rt, CV_RGB(128, 0, 128), 2);
-		cvLine(pWorkingImage, lb, rb, CV_RGB(128, 0, 128), 2);	
+		cvLine(pWorkingImage, lb, rb, CV_RGB(128, 0, 128), 2);
 	}
 	//CvPoint vanishingPoint;
-	
+
 	m_VanishingPoint.x = -(m_LaneR.b.get() - m_LaneL.b.get()) / (m_LaneR.k.get() - m_LaneL.k.get());	// x coordinate
 	m_VanishingPoint.y = m_LaneR.k.get() * m_VanishingPoint.x + m_LaneR.b.get();
-	if (IsDebugDisplayImage())
+	if (bDisplayImage)
 	{
-		cvLine(pWorkingImage, cvPoint(m_VanishingPoint.x, 0), 
+		cvLine(pWorkingImage, cvPoint(m_VanishingPoint.x, 0),
 							cvPoint(m_VanishingPoint.x, pWorkingImage->height), CV_RGB(255, 255, 255), 2);
 	}
 	// find out the turn angle
@@ -366,29 +308,29 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	pivotT.y = (lt.y + rt.y) / 2;
 	pivotB.x = (lb.x + rb.x) / 2;
 	pivotB.y = (lb.y + rb.y) / 2;
-	if (IsDebugDisplayImage())
+	if (bDisplayImage)
 	{
-		cvLine(pWorkingImage, pivotT, pivotB, CV_RGB(0, 255, 255), 2);	
+		cvLine(pWorkingImage, pivotT, pivotB, CV_RGB(0, 255, 255), 2);
 	}
 	// find the angle
 
 	m_fTurnAngle = 90 - atan2(pivotB.y - pivotT.y, pivotB.x - pivotT.x) * 180 / CV_PI;
 	printf("Angle: %4.2f\n", m_fTurnAngle);
-#if DEBUGIMG	
+#if DEBUGIMG
 	char szOut[100];
-	
+
 	sprintf(szOut, "Angle: %4.2f", m_fTurnAngle);
 	cvPutText(pWorkingImage, szOut, pivotT, &m_Font, CV_RGB(0, 255, 255));
 #endif
 }
-
-int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAngle, CvPoint &vanishingPoint)
+int32_t CLaneDetectorNavigatorEngine::ProcessImage(IplImage *pFrame, bool bDisplayImage, float &fAngle, CvPoint &vanishingPoint)
+//int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAngle, CvPoint &vanishingPoint)
 {
 	int32_t nRet = -1;
 	double rho = 1;
-	double theta = CV_PI / 180;	
+	double theta = CV_PI / 180;
 	CvSeq* pLines = NULL;
-	
+
 	if (pFrame == NULL)
 	{
 		goto err_out;
@@ -397,10 +339,10 @@ int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAng
 	{
 		m_FrameSize.width = pFrame->width;
 		m_FrameSize.height = pFrame->height;
-		
+
 		m_HalfFrameSize.width = pFrame->width;
 		m_HalfFrameSize.height = pFrame->height / 2;
-		
+
 		m_ROI = cvRect(0, m_HalfFrameSize.height, m_HalfFrameSize.width, m_HalfFrameSize.height);
 	}
 	else
@@ -410,22 +352,22 @@ int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAng
 			goto err_out;
 		}
 	}
-	
+
 	if (m_pHoughStorage == NULL)
 	{
 		m_pHoughStorage = cvCreateMemStorage(0);
 	}
-	
+
 	if (m_pWorkingImage == NULL)
 	{
 		m_pWorkingImage = cvCreateImage(m_HalfFrameSize, IPL_DEPTH_8U, 3);
 	}
-	
+
 	if (m_pGreyImage == NULL)
 	{
 		m_pGreyImage = cvCreateImage(m_HalfFrameSize, IPL_DEPTH_8U, 1);
 	}
-	
+
 	if (m_pEdgesImage == NULL)
 	{
 		m_pEdgesImage = cvCreateImage(m_HalfFrameSize, IPL_DEPTH_8U, 1);
@@ -441,15 +383,15 @@ int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAng
 
 	// do Hough transform to find lanes
 
-	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC, 
+	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
 									rho, theta, HOUGH_TRESHOLD, HOUGH_MIN_LINE_LENGTH, HOUGH_MAX_LINE_GAP);
 
-	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine);
-	
+	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine, bDisplayImage);
+
 	fAngle = m_fTurnAngle;
 	vanishingPoint = m_VanishingPoint;
-	
-	if (IsDebugDisplayImage())
+
+	if (bDisplayImage)
 	{
 		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
 		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
@@ -459,14 +401,14 @@ int32_t CLaneDetectorNavigatorEngine::ProcessFrame(IplImage *pFrame, float &fAng
 		cvDestroyWindow("Lane-Detector::Edges");
 		cvDestroyWindow("Lane-Detector::ColorImage");
 	}
-#if DEBUGIMG	
+#if DEBUGIMG
 	cvShowImage("Grey", m_pGreyImage);
 	cvShowImage("Edges", m_pEdgesImage);
 	cvShowImage("Color", m_pWorkingImage);
 
-	cvMoveWindow("Grey", 0, 0); 
+	cvMoveWindow("Grey", 0, 0);
 	cvMoveWindow("Edges", 0, m_HalfFrameSize.height + 25);
-	cvMoveWindow("Color", 0, 2*(m_HalfFrameSize.height + 25)); 
+	cvMoveWindow("Color", 0, 2*(m_HalfFrameSize.height + 25));
 #endif
 err_out:
 	return nRet;

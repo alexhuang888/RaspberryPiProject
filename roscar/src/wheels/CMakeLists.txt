@@ -1,6 +1,21 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(wheels)
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
 
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -12,8 +27,8 @@ find_package(catkin REQUIRED COMPONENTS
 	std_msgs
 	sensor_msgs
 	message_generation
-	genmsg 
-	actionlib_msgs 
+	genmsg
+	actionlib_msgs
 	actionlib
 	tf2
 	tf
@@ -204,9 +219,9 @@ catkin_package(
 # catkin_add_nosetests(test)
 
 include_directories(
-	include 
+	include
 	${catkin_INCLUDE_DIRS}
-	../include 
+	../include
 	../../wiringPi/wiringPi
 	${PROJECT_SOURCE_DIR}/src
 	${Boost_INCLUDE_DIRS}
@@ -228,7 +243,7 @@ target_link_libraries(wheel_controller ${catkin_LIBRARIES} wiringPi pthread)
 add_dependencies(wheel_controller wheels_generate_messages_cpp)
 
 # navigator engine, will get image from image_raw, process them, then convert to wheel_cmd_vel msg
-add_executable(wheel_navigator src/wheelnavigatornode.cpp src/wheelnavigator.cpp src/myutil.cpp src/clinefollowernavigatorengine.cpp src/clanedetectornavigatorengine.cpp src/cnavigatorenginebase.cpp)
+add_executable(wheel_navigator src/wheelnavigatornode.cpp src/wheelnavigator.cpp src/myutil.cpp src/clinefollowernavigatorengine.cpp src/clanedetectornavigatorengine.cpp src/cnavigatorenginebase.cpp src/clinefollowernavigatorengine2.cpp)
 target_link_libraries(wheel_navigator ${catkin_LIBRARIES})
 add_dependencies(wheel_navigator wheels_generate_messages_cpp)
 
@@ -236,3 +251,7 @@ add_dependencies(wheel_navigator wheels_generate_messages_cpp)
 add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
 target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
 add_dependencies(wheel_manual_console wheels_generate_messages_cpp)
+
+# the manual override console of the robot-car, it will listen to cmd_vel and send message to motor controller
+add_executable(testlinefollowing2 src/myutil.cpp src/clinefollowernavigatorengine2.cpp src/cnavigatorenginebase.cpp src/test/testlinefollower2.cpp)
+target_link_libraries(testlinefollowing2 ${catkin_LIBRARIES})

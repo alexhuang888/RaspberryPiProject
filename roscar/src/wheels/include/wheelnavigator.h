@@ -18,9 +18,9 @@
 
 namespace yisys_roswheels
 {
-typedef std::pair<uint32_t, CNavigatorEngineBase *> EnginePoolPairType;
-typedef std::map<uint32_t, CNavigatorEngineBase *> EnginePoolType;
-typedef std::map<uint32_t, CNavigatorEngineBase *>::iterator EnginePoolIteratorType;
+typedef std::pair<uint32_t, CNavigatorEngineImplementationBase *> EngineImpPoolPairType;
+typedef std::map<uint32_t, CNavigatorEngineImplementationBase *> EngineImpPoolType;
+typedef std::map<uint32_t, CNavigatorEngineImplementationBase *>::iterator EngineImpPoolIteratorType;
 
 
 class CWheelNavigator : public CNavigatorCallback
@@ -31,26 +31,26 @@ public:
 
 	int32_t SetTrackingEngine(uint32_t nEngineID);
 	uint32_t GetTrackingEngineID(void);
-	
+
 	int32_t Init(void);
 	int32_t StopAll(void) { return SetTrackingEngine(0); };
-	
+
 	bool cbSetEngine(wheels::cmd_set_navigator_engineRequest &req,
 							wheels::cmd_set_navigator_engineResponse &res);
-	
+
 	bool cbGetEngineStatus(wheels::cmd_get_navigator_engine_statusRequest &req,
 								wheels::cmd_get_navigator_engine_statusResponse &res);
-								
+
 	void PublishEngineStatus(void);
-	
+
 public:
 	virtual int32_t ProcessCmdVels(const geometry_msgs::Twist &velMsg);
 	virtual int32_t PublishDebugImage(const sensor_msgs::ImagePtr);
 protected:
-	EnginePoolType m_EnginePool;
+	EngineImpPoolType m_EnginePool;
 	uint32_t m_ActiveEngineID;
-	CNavigatorEngineBase *m_pTrackingEngine;
-	
+	CNavigatorEngineWithImageSource m_TrackingEngine;
+
 	ros::NodeHandle m_nNodeHandle;
 	ros::Publisher m_EngineStatusPublisher;
 	ros::ServiceServer m_SetNavigatorEngineService;

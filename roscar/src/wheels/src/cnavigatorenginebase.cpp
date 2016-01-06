@@ -12,12 +12,23 @@
 using namespace cv;
 namespace yisys_roswheels
 {
+int32_t CNavigatorEngineBase::PublishDebugImage(std::string encoding, cv::Mat image)
+{
+    //if (pImage != NULL)
+    {
+        sensor_msgs::ImagePtr imgmsg = cv_bridge::CvImage(std_msgs::Header(), encoding, image).toImageMsg();
+        return PublishDebugImage(imgmsg);
+    }
+
+    return 0;
+}
+
 CNavigatorEngineWithImageSource::CNavigatorEngineWithImageSource()
 {
 	// subscribe
 	m_strVidChannel = m_nImageBaseNodeHandle.resolveName("image");
 	printf("Resolve name for image=%s\n", m_strVidChannel.c_str());
-	
+
 	m_VidSubscriber = m_nImageBaseNodeHandle.subscribe(m_strVidChannel, 1, &CNavigatorEngineWithImageSource::vidCb, this);
 
 
@@ -29,7 +40,9 @@ CNavigatorEngineWithImageSource::CNavigatorEngineWithImageSource()
 	//m_pUndistorter = NULL;
 	//m_nLastSEQ = 0;
 
-	m_bHaveCalibration = false;	
+	m_bHaveCalibration = false;
+
+	m_pNavEngineImpl = NULL;
 }
 
 CNavigatorEngineWithImageSource::~CNavigatorEngineWithImageSource()
@@ -37,17 +50,125 @@ CNavigatorEngineWithImageSource::~CNavigatorEngineWithImageSource()
 	//if (m_pUndistorter != NULL)
 	//	delete m_pUndistorter;
 	//m_pUndistorter = NULL;
+
+	m_pNavEngineImpl = NULL;
 }
+int32_t CNavigatorEngineWithImageSource::SetNavEngineImplementation(CNavigatorEngineImplementationBase *pNavImpl)
+{
+    m_pNavEngineImpl = pNavImpl;
+    if (m_pNavEngineImpl != NULL)
+    {
+        m_pNavEngineImpl->SetNavigatorEngineCB(this);
+    }
+    return 1;
+}
+uint32_t CNavigatorEngineWithImageSource::GetEngineID(void)
+{
+    if (m_pNavEngineImpl != NULL)
+        return m_pNavEngineImpl->GetEngineID();
 
+    return 0;
+}
+std::string CNavigatorEngineWithImageSource::GetEngineDescription(void)
+{
+    if (m_pNavEngineImpl != NULL)
+        return m_pNavEngineImpl->GetEngineDescription();
 
+    return "";
+}
+int32_t CNavigatorEngineWithImageSource::Init(void)
+{
+    if (m_pNavEngineImpl != NULL)
+        return m_pNavEngineImpl->Init();
+
+    return 0;
+}
+int32_t CNavigatorEngineWithImageSource::Start(void)
+{
+    if (m_pNavEngineImpl != NULL)
+        return m_pNavEngineImpl->Start();
+
+    return 0;
+}
+int32_t CNavigatorEngineWithImageSource::Pause(void)
+{
+    if (m_pNavEngineImpl != NULL)
+        return m_pNavEngineImpl->Pause();
+
+    return 0;
+}
+bool CNavigatorEngineWithImageSource::IsPaused(void)
+{
+    if (m_pNavEngineImpl != NULL)
+        return m_pNavEngineImpl->IsPaused();
+
+    return true;
+}
+int32_t CNavigatorEngineWithImageSource::ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage)
+{
+	int nRet = 0;
+	float fAngle = 0.f;
+	CvPoint vanishPoint;
+	geometry_msgs::Twist vel_msg;
+	float fDir = 1.;
+	float fAngleRatio = 0;
+
+	SetDebugDisplayImage(bDisplayImage);// = bDisplayImage;
+
+	if (IsPaused() == true)
+	{
+		nRet = 1;
+		return nRet;
+	}
+	cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::BGR8);
+	//cv::Mat workingCVMat;
+	IplImage WorkingImage = cv_ptr->image;//sensor_msgs::CvBridge::imgMsgToCv(img, "passthrough");
+	/*
+	if (m_pUndistorter != 0)
+	{
+		assert(m_pUndistorter->isValid());
+		m_pUndistorter->undistort(cv_ptr->image, workingCVMat);
+	}
+*/
+    if (m_pNavEngineImpl != NULL)
+        nRet = m_pNavEngineImpl->ProcessImage(&WorkingImage, IsDebugDisplayImage(), fAngle, vanishPoint);
+    else
+        nRet = -100;
+
+	if (nRet <= 0)
+	{
+		printf("Fail to ProcessImage\n");
+		goto err_out;
+	}
+	//printf("Lane center: fAngle=%f, center(%d, %d)\n", fAngle, vanishPoint.x, vanishPoint.y);
+
+	if (fAngle > 0)
+		fDir = 1;	// turn right
+	else
+		fDir = -1;	// turn left
+	fAngleRatio = fAngle / 90.f;
+
+	//if (fabs(fAngleRatio) < 0.2)
+	//	fDir = 0;
+
+	vel_msg.angular.z = (fAngleRatio);
+	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
+
+	//vel_msg.angular.z *= fDir;
+
+	ProcessCmdVels(vel_msg);
+
+err_out:
+	return nRet;
+}
 int32_t CNavigatorEngineWithImageSource::setCalibration(std::string file)
 {
 	int32_t nRet = 0;
-	
+
 	if (file == "")
 	{
 		ros::Subscriber info_sub = m_nImageBaseNodeHandle.subscribe(m_nImageBaseNodeHandle.resolveName("camera_info"),
-															1, 
+															1,
 															&CNavigatorEngineWithImageSource::infoCb, this);
 
 		printf("WAITING for ROS camera calibration!\n");
@@ -83,7 +204,7 @@ int32_t CNavigatorEngineWithImageSource::setCalibration(std::string file)
 	}
 	nRet = 1;
 	m_bHaveCalibration = true;
-	
+
 err_out:
 	return nRet;
 }
@@ -95,9 +216,9 @@ void CNavigatorEngineWithImageSource::vidCb(const sensor_msgs::ImageConstPtr img
 	if (!m_bHaveCalibration)
 		return;
 	#endif
-	
+
 	bool bDisplayImage = false;
-	
+
 	m_nImageBaseNodeHandle.param<bool>(WGP_DEBUG_SHOWIMAGE, bDisplayImage, false);
 	//printf("Show Debug Image=%s\n", bDisplayImage ? "Yes" : "No");
 	ProcessImageData(img, bDisplayImage);
@@ -128,7 +249,7 @@ void CNavigatorEngineWithImageSource::vidCb(const sensor_msgs::ImageConstPtr img
 		bufferItem.data = cv_ptr->image;
 	}
 
-	m_pImageBuffer->pushBack(bufferItem);	
+	m_pImageBuffer->pushBack(bufferItem);
 */
 }
 
@@ -154,6 +275,6 @@ void CNavigatorEngineWithImageSource::infoCb(const sensor_msgs::CameraInfoConstP
 		m_nHeight = info->height;
 
 		printf("Received ROS Camera Calibration: fx: %f, fy: %f, cx: %f, cy: %f @ %dx%d\n",m_fx,m_fy,m_cx,m_cy,m_nWidth,m_nHeight);
-	}	
+	}
 }
 }

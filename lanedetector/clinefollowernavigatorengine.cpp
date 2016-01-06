@@ -293,7 +293,7 @@ int32_t CLineFollowerNavigatorEngine::OffsetNavigator(float fXOffset)
 	
 	//m_WheelCmdVelPublisher.publish(vel_msg);
 	//ProcessCmdVels(vel_msg);
-	printf("Publish: z=%f, x=%f\n", fZ, fX);
+	printf("Publish: z=%f, x=%f, fXOffset=%f\n", fZ, fX, fXOffset);
 	nRet = 1;
 	return nRet;	
 }

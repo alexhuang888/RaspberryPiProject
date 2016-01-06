@@ -9,7 +9,7 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Twist.h>
 //#include "Undistorter.h"
-
+#include "cnavigatorengineimplementationbase.h"
 namespace yisys_roswheels
 {
 class CNavigatorCallback
@@ -18,21 +18,26 @@ public:
 	virtual int32_t ProcessCmdVels(const geometry_msgs::Twist &velMsg) = 0;
 	virtual int32_t PublishDebugImage(const sensor_msgs::ImagePtr) = 0;
 };
+
 // a virtual class for navigator engien
-class CNavigatorEngineBase
+class CNavigatorEngineBase : public CNavigatorEngineCB
 {
 public:
 	CNavigatorEngineBase() { m_pNavigatorCB = NULL;  m_bDebugDisplayImage = false; };
 	virtual ~CNavigatorEngineBase() {m_pNavigatorCB = NULL;};
-	
+
 	virtual int32_t Init(void) = 0;
 	virtual int32_t Start(void) = 0;
 	virtual int32_t Pause(void) = 0;
-	
+    virtual bool IsPaused(void) = 0;
 	virtual uint32_t GetEngineID(void) = 0;
+
 	virtual std::string GetEngineDescription(void) = 0;
+
 	void SetDebugDisplayImage(bool bShow) { m_bDebugDisplayImage = bShow; }
+
 	bool IsDebugDisplayImage(void) { return m_bDebugDisplayImage; }
+
 	virtual int32_t ProcessCmdVels(const geometry_msgs::Twist &velMsg)
 	{
 		if (m_pNavigatorCB != NULL)
@@ -41,6 +46,7 @@ public:
 		}
 		return 0;
 	};
+
 	virtual int32_t PublishDebugImage(const sensor_msgs::ImagePtr imgptr)
 	{
 		if (m_pNavigatorCB != NULL)
@@ -48,12 +54,15 @@ public:
 			return m_pNavigatorCB->PublishDebugImage(imgptr);
 		}
 		return 0;
-	};	
+	};
+
 	int32_t SetNavigatorCallback(CNavigatorCallback *pCB)
 	{
 		m_pNavigatorCB = pCB;
 		return 1;
 	};
+
+	virtual int32_t PublishDebugImage(std::string encoding, cv::Mat image);
 protected:
 	CNavigatorCallback *m_pNavigatorCB;
 	bool m_bDebugDisplayImage;
@@ -64,17 +73,19 @@ class CNavigatorEngineWithImageSource : public CNavigatorEngineBase
 public:
 	CNavigatorEngineWithImageSource();
 	virtual ~CNavigatorEngineWithImageSource();
-	
-	virtual int32_t Init(void) = 0;
-	virtual int32_t Start(void) = 0;
-	virtual int32_t Pause(void) = 0;
-	virtual uint32_t GetEngineID(void) = 0;
-	virtual std::string GetEngineDescription(void) = 0;
-	
+
+	virtual int32_t Init(void);
+	virtual int32_t Start(void);
+	virtual int32_t Pause(void);
+	virtual bool IsPaused(void);
+	virtual uint32_t GetEngineID(void);
+	virtual std::string GetEngineDescription(void);
+
 	virtual int32_t setCalibration(std::string file);
 
-	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage) { return 1; };
+	virtual int32_t ProcessImageData(const sensor_msgs::ImageConstPtr img, bool bDisplayImage);
 
+    virtual int32_t SetNavEngineImplementation(CNavigatorEngineImplementationBase *pNavImpl);
 	// get called on ros-message callbacks
 	virtual void vidCb(const sensor_msgs::ImageConstPtr img);
 	virtual void infoCb(const sensor_msgs::CameraInfoConstPtr info);
@@ -87,7 +98,7 @@ public:
 	inline float cy() {return m_cy;}
 	inline int width() {return m_nWidth;}
 	inline int height() {return m_nHeight;}
-	
+
 protected:
 
 	float m_fx, m_fy, m_cx, m_cy;
@@ -99,8 +110,8 @@ protected:
 
 
 	std::string m_strVidChannel;
-	ros::Subscriber m_VidSubscriber;	
-	
+	ros::Subscriber m_VidSubscriber;
+	CNavigatorEngineImplementationBase *m_pNavEngineImpl;
 private:
 	ros::NodeHandle m_nImageBaseNodeHandle;
 };
