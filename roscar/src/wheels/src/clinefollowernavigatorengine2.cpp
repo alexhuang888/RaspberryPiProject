@@ -263,6 +263,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	{
 		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
 		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
+		PublishDebugImage("mono8", m_pWorkingImage);
 	}
 	else
 	{
