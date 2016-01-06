@@ -400,6 +400,18 @@ ros/message_operations.h
 std_msgs/Header.h
 -
 
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/AbstractModel.hpp
+iostream
+-
+stdexcept
+-
+vector
+-
+array
+-
+memory
+-
+
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/clanedetectornavigatorengine.h
 opencv2/imgproc/imgproc.hpp
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/opencv2/imgproc/imgproc.hpp
@@ -421,6 +433,20 @@ opencv2/imgproc/imgproc.hpp
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/clinefollowernavigatorengine.h
 opencv2/imgproc/imgproc.hpp
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/opencv2/imgproc/imgproc.hpp
+cnavigatorengineimplementationbase.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/cnavigatorengineimplementationbase.h
+
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/clinefollowernavigatorengine2.h
+opencv2/imgproc/imgproc.hpp
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/opencv2/imgproc/imgproc.hpp
+opencv2/core/core.hpp
+-
+myutil.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/myutil.h
+claneinfo.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/claneinfo.h
+AbstractModel.hpp
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/AbstractModel.hpp
 cnavigatorengineimplementationbase.h
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/cnavigatorengineimplementationbase.h
 
@@ -493,6 +519,8 @@ wheels/cmd_set_navigator_engine.h
 /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheels/cmd_set_navigator_engine.h
 clinefollowernavigatorengine.h
 /home/alex/RaspberryPiProject/roscar/src/wheels/src/clinefollowernavigatorengine.h
+clinefollowernavigatorengine2.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/clinefollowernavigatorengine2.h
 clanedetectornavigatorengine.h
 /home/alex/RaspberryPiProject/roscar/src/wheels/src/clanedetectornavigatorengine.h
 globalinc.h

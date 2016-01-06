@@ -85,8 +85,6 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
         std::vector<std::shared_ptr<GRANSAC::AbstractParameter>> CandLines;
         GRANSAC::RANSAC<MyLine2DModel, 1> Estimator;
         GRANSAC::InlinerListType BestInliers;
-        // classify lines to left/right pLaneStatus
-        //std::vector<CLaneInfo> left, right;
 
         for (int i = 0; i < lines->total; i++)
         {
@@ -106,7 +104,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
         {
             std::shared_ptr<yisys_roswheels::MyLine2D> CandLine = std::dynamic_pointer_cast<MyLine2D>(*itLine);
 
-            printf("CanLine: angle=%f, length=%f, slope=%f, compared_angle=%f, (%d, %d), (%d, %d)\n", CandLine->m_fAngle, CandLine->m_fLength, CandLine->m_Slope, CandLine->m_fDistanceComparedAngle, CandLine->m_Point1.x, CandLine->m_Point1.y, CandLine->m_Point2.x, CandLine->m_Point2.y);
+            printf("CanLine: angle=%f, length=%f, slope=%f (%d, %d), (%d, %d)\n", CandLine->m_fAngle, CandLine->m_fLength, CandLine->m_Slope, CandLine->m_Point1.x, CandLine->m_Point1.y, CandLine->m_Point2.x, CandLine->m_Point2.y);
         }
         #endif
         Estimator.Initialize(10, 100); // Threshold, iterations
@@ -121,19 +119,23 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 // here, we found several line with similar slope.
                 // from those lines, we need to get vanishing point and turn angle
                 GRANSAC::InlinerListType::iterator itInLiner;
-
+                m_fTurnAngle = 0;
+                m_VanishingPoint.x = 0;
+                m_VanishingPoint.y = 0;
                 for (itInLiner = BestInliers.begin(); itInLiner != BestInliers.end(); itInLiner++)
                 {
                     std::shared_ptr<yisys_roswheels::MyLine2D> RPt = std::dynamic_pointer_cast<MyLine2D>(*itInLiner);
                     //cv::Point Pt(floor(RPt->m_Point2D[0]), floor(RPt->m_Point2D[1]));
                     //cv::circle(Canvas, Pt, floor(Side / 100), cv::Scalar(0, 255, 0), -1);
-                    m_fTurnAngle = RPt->m_fAngle;//-atan2(RPt->m_Point2.y - RPt->m_Point1.y, RPt->m_Point2.x - RPt->m_Point1.x) * 180 / CV_PI;
-                    m_VanishingPoint = RPt->m_Point1;
+                    m_fTurnAngle += RPt->m_fAngle;
+                    m_VanishingPoint.x += (RPt->m_Point1.x + RPt->m_Point2.x) / 2;
+                    m_VanishingPoint.y += (RPt->m_Point1.y + RPt->m_Point2.y) / 2;
+
                     if (bShowHoughLine)
                     {
                         cvLine(pWorkingImage, RPt->m_Point1, RPt->m_Point2, CV_RGB(0, 0, 255), 2);
                     }
-                    printf("angle:%f, (%d, %d), dist=%f, dist_angle=%f, angle=%f, compared_angle=%f\n", m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y, RPt->m_fDistance, RPt->m_fDistanceAngle, RPt->m_fAngle, RPt->m_fDistanceComparedAngle);
+                    printf("Inliner: angle:%f, (%d, %d)\n", RPt->m_fAngle, RPt->m_Point1.x, RPt->m_Point1.y);
                 }
 
                 std::shared_ptr<MyLine2DModel> bestmodel = Estimator.GetBestModel();
@@ -146,6 +148,27 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                     std::shared_ptr<yisys_roswheels::MyLine2D> param = std::dynamic_pointer_cast<MyLine2D>(*itparam);
 
                     printf("best model param: slope=%f, length=%f, angle=%f, (%d, %d) (%d, %d)\n", param->m_Slope, param->m_fLength, param->m_fAngle, param->m_Point1.x, param->m_Point1.y, param->m_Point2.x, param->m_Point2.y);
+                }
+
+                m_fTurnAngle /= BestInliers.size();
+                m_VanishingPoint.x /= BestInliers.size();
+                m_VanishingPoint.y /= BestInliers.size();
+
+                float dY = -(m_VanishingPoint.y - m_HalfFrameSize.height);
+                float dX = -(m_VanishingPoint.x - m_HalfFrameSize.width / 2);
+
+                float dShiftAngle = atan2(dY, dX) * 180 / CV_PI - 90;
+
+                float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
+                printf("turn angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
+
+                if (bShowHoughLine)
+                {
+                    CvPoint basePt;
+                    basePt.x = m_HalfFrameSize.width / 2;
+                    basePt.y = m_HalfFrameSize.height;
+                    cvCircle(pWorkingImage, m_VanishingPoint, 4, CV_RGB(255, 0, 0));
+                    cvLine(pWorkingImage, m_VanishingPoint, basePt, CV_RGB(255, 255, 0), 1);
                 }
             }
 

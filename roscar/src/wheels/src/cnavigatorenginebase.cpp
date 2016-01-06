@@ -110,7 +110,6 @@ int32_t CNavigatorEngineWithImageSource::ProcessImageData(const sensor_msgs::Ima
 	float fAngle = 0.f;
 	CvPoint vanishPoint;
 	geometry_msgs::Twist vel_msg;
-	float fDir = 1.;
 	float fAngleRatio = 0;
 
 	SetDebugDisplayImage(bDisplayImage);// = bDisplayImage;
@@ -142,19 +141,10 @@ int32_t CNavigatorEngineWithImageSource::ProcessImageData(const sensor_msgs::Ima
 	}
 	//printf("Lane center: fAngle=%f, center(%d, %d)\n", fAngle, vanishPoint.x, vanishPoint.y);
 
-	if (fAngle > 0)
-		fDir = 1;	// turn right
-	else
-		fDir = -1;	// turn left
 	fAngleRatio = fAngle / 90.f;
-
-	//if (fabs(fAngleRatio) < 0.2)
-	//	fDir = 0;
 
 	vel_msg.angular.z = (fAngleRatio);
 	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
-
-	//vel_msg.angular.z *= fDir;
 
 	ProcessCmdVels(vel_msg);
 

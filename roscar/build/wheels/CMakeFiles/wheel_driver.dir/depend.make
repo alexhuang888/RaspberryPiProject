@@ -27,9 +27,11 @@ wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPi
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedGoal.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedResult.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/devel/include/wheels/wheels_status.h
+wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/AbstractModel.hpp
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/clanedetectornavigatorengine.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/claneinfo.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/clinefollowernavigatorengine.h
+wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/clinefollowernavigatorengine2.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/cnavigatorengineimplementationbase.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/globalinc.h
 wheels/CMakeFiles/wheel_driver.dir/src/wheeldriver.cpp.o: /home/alex/RaspberryPiProject/roscar/src/wheels/include/myutil.h

@@ -17,33 +17,15 @@ class MyLine2D
     : public GRANSAC::AbstractParameter
 {
 public:
+
     MyLine2D()
     {
     };
-	MyLine2D(MyLine2D &in)
-	{
-		m_Point1 = in.m_Point1;
-		m_Point2 = in.m_Point2;
 
-		m_a = in.m_a;
-		m_b = in.m_b;
-		m_c = in.m_c;
-
-		m_Slope = in.m_Slope;
-		m_B = in.m_B;
-
-		//m_nSeqIndex_0B = in.m_nSeqIndex_0B;
-		m_fAngle = in.m_fAngle;
-		m_fDistance = in.m_fDistance;
-		m_fDistanceAngle = in.m_fDistanceAngle;
-		m_fDistanceComparedAngle = in.m_fDistanceComparedAngle;
-		m_fLength = in.m_fLength;
-	};
     MyLine2D(CvPoint p1, CvPoint p2)
     {
 		m_Point1 = p1;
 		m_Point2 = p2;
-
 
 		// Compute the line parameters
 		float diffX = p2.x - p1.x;
@@ -60,33 +42,16 @@ public:
 			m_Slope = 0;
 
 		m_B = p1.y - m_Slope * p1.x; // Intercept
-		// m_d = Point2->m_Point2D[1] - m_m * Point2->m_Point2D[0]; // Intercept - alternative should be the same as above
-
-		// mx - y + d = 0
-		m_a = m_Slope;
-		m_b = -1.0;
-		m_c = m_B;
 
 		m_fLength = sqrt(diffX * diffX + diffY * diffY);
-        m_fAngle = atan2(diffY, diffX) * 180 / CV_PI;
-
-		m_fDistance = 0;
-		m_fDistanceAngle = 0;
-		m_fDistanceComparedAngle = 0;
+        m_fAngle = atan2(diffY, diffX) * 180 / CV_PI - 90;
     };
 
     CvPoint m_Point1;
     CvPoint m_Point2;
-
-    float m_a, m_b, m_c;
-    float m_Slope, m_B;
-    //int m_nSeqIndex_0B;
     float m_fLength;
     float m_fAngle;
-    float m_fDistance;
-
-    float m_fDistanceAngle;
-    float m_fDistanceComparedAngle;
+    float m_Slope, m_B;
 };
 
 class MyLine2DModel
@@ -105,14 +70,12 @@ protected:
 
         // distance 0 - 180
         //printf("ext_angle=%f, param_angle=%f\n", ExtLine2D->m_fAngle, m_Params.m_fAngle);
-		GRANSAC::VPFloat fAngle = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);//fabs((atan(d3) * 180 / CV_PI));
+		GRANSAC::VPFloat fAngle = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);
         float lengthdiff = fabs(ExtLine2D->m_fLength - m_Params.m_fLength) / m_Params.m_fLength;
-        ExtLine2D->m_fDistanceComparedAngle = m_Params.m_fAngle;
-        ExtLine2D->m_fDistanceAngle = fAngle;
-        ExtLine2D->m_fDistance = fAngle / 90 * 5 + lengthdiff * 5;
+        float fDist = fAngle / 90 * 5 + lengthdiff * 5;
         if (fAngle > 10)
-            ExtLine2D->m_fDistance += 100;
-		return ExtLine2D->m_fDistance;
+            fDist += 100;
+		return fDist;
     };
 
 public:
@@ -123,14 +86,14 @@ public:
 
     virtual void Initialize(std::vector<std::shared_ptr<GRANSAC::AbstractParameter>> InputParams)
     {
-		//if (InputParams.size() != 1)
-		//	throw std::runtime_error("Line2DModel - Number of input parameters does not match minimum number required for this model.");
+		if (InputParams.size() != 1)
+			throw std::runtime_error("Line2DModel - Number of input parameters does not match minimum number required for this model.");
 
 		// Check for AbstractParamter types
 		std::shared_ptr<yisys_roswheels::MyLine2D> ExtLine = std::dynamic_pointer_cast<MyLine2D>(InputParams[0]);
-		//MyPoint2D * Point2 = std::dynamic_pointer_cast<MyPoint2D>(InputParams[1]);
-		//if (ExtLine == NULL)
-		//	throw std::runtime_error("Line2DModel - InputParams type mismatch. It is not a MyPoint2D.");
+
+		if (ExtLine == NULL)
+			throw std::runtime_error("Line2DModel - InputParams type mismatch. It is not a MyPoint2D.");
 
 		std::copy(InputParams.begin(), InputParams.end(), m_MinModelParams.begin());
 
@@ -151,7 +114,6 @@ public:
             float fMeasure = ComputeDistanceMeasure(*itParam);
 			if (fMeasure < Threshold)
 			{
-                //printf("fMeasure=%f, Threshold=%f\n", fMeasure, Threshold);
 				Inliers.push_back(*itParam);
 				nInliers++;
 			}

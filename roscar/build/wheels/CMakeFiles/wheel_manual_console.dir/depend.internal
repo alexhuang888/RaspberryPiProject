@@ -28,9 +28,11 @@ wheels/CMakeFiles/wheel_manual_console.dir/src/wheeldriver.cpp.o
  /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedGoal.h
  /home/alex/RaspberryPiProject/roscar/devel/include/wheels/set_car_direction_speedResult.h
  /home/alex/RaspberryPiProject/roscar/devel/include/wheels/wheels_status.h
+ /home/alex/RaspberryPiProject/roscar/src/wheels/include/AbstractModel.hpp
  /home/alex/RaspberryPiProject/roscar/src/wheels/include/clanedetectornavigatorengine.h
  /home/alex/RaspberryPiProject/roscar/src/wheels/include/claneinfo.h
  /home/alex/RaspberryPiProject/roscar/src/wheels/include/clinefollowernavigatorengine.h
+ /home/alex/RaspberryPiProject/roscar/src/wheels/include/clinefollowernavigatorengine2.h
  /home/alex/RaspberryPiProject/roscar/src/wheels/include/cnavigatorengineimplementationbase.h
  /home/alex/RaspberryPiProject/roscar/src/wheels/include/globalinc.h
  /home/alex/RaspberryPiProject/roscar/src/wheels/include/myutil.h
