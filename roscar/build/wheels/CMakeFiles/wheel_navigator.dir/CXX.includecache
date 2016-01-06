@@ -134,6 +134,26 @@ array
 memory
 -
 
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/GRANSAC.hpp
+iostream
+-
+cmath
+-
+string
+-
+random
+-
+memory
+-
+algorithm
+-
+vector
+-
+omp.h
+-
+AbstractModel.hpp
+/home/alex/RaspberryPiProject/roscar/src/wheels/include/AbstractModel.hpp
+
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/clanedetectornavigatorengine.h
 opencv2/imgproc/imgproc.hpp
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/opencv2/imgproc/imgproc.hpp
@@ -217,6 +237,16 @@ sensor_msgs/image_encodings.h
 -
 map
 /home/alex/RaspberryPiProject/roscar/src/wheels/include/map
+
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/clinefollowernavigatorengine2.cpp
+clinefollowernavigatorengine2.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/clinefollowernavigatorengine2.h
+vector
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/vector
+opencv2/highgui/highgui.hpp
+-
+GRANSAC.hpp
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/GRANSAC.hpp
 
 /home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelnavigator.cpp
 wheelnavigator.h

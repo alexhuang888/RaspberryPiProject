@@ -73,7 +73,7 @@ protected:
 		GRANSAC::VPFloat fAngle = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);
         float lengthdiff = fabs(ExtLine2D->m_fLength - m_Params.m_fLength) / m_Params.m_fLength;
         float fDist = fAngle / 90 * 5 + lengthdiff * 5;
-        if (fAngle > 10)
+        if (fAngle > 30)
             fDist += 100;
 		return fDist;
     };
@@ -148,8 +148,8 @@ enum{
     L2_BORDERX = 10,			  // px, skip this much from left & right borders
 	L2_MAX_RESPONSE_DIST = 5,	  // px
 
-	L2_CANNY_MIN_TRESHOLD = 1,	  // edge detector minimum hysteresis threshold
-	L2_CANNY_MAX_TRESHOLD = 100, // edge detector maximum hysteresis threshold
+	L2_CANNY_MIN_TRESHOLD = 80,	  // edge detector minimum hysteresis threshold
+	L2_CANNY_MAX_TRESHOLD = 240, // edge detector maximum hysteresis threshold
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold

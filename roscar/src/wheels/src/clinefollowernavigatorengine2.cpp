@@ -162,6 +162,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
                 printf("turn angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
 
+                m_fTurnAngle = fFinalAngle;
                 if (bShowHoughLine)
                 {
                     CvPoint basePt;
@@ -245,13 +246,13 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	cvCvtColor(m_pWorkingImage, m_pGreyImage, CV_BGR2GRAY); // convert to grayscale
 
 	// Perform a Gaussian blur ( Convolving with 5 X 5 Gaussian) & detect edges
-	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 5, 5);
-	cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD);
+	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 9, 9);
+	cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
 
 	// do Hough transform to find lanes
 
 	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
-									rho, theta, m_HalfFrameSize.height / 3, m_HalfFrameSize.height / 3, L2_HOUGH_MAX_LINE_GAP);
+									rho, theta, m_HalfFrameSize.height / 2, m_HalfFrameSize.height / 2, L2_HOUGH_MAX_LINE_GAP);
 
 	// here, we prefer
 	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine, 0, 0);
@@ -264,13 +265,16 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
 		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
 
-		PublishDebugImage("mono8", m_pWorkingImage);
+        PublishDebugImage("mono8", m_pEdgesImage);
+
+		PublishDebugImage("bgr8", m_pWorkingImage);
 	}
 	else
 	{
 		cvDestroyWindow("Lane-Detector::Edges");
 		cvDestroyWindow("Lane-Detector::ColorImage");
 	}
+	nRet = 1;
 #if DEBUGIMG
 	cvShowImage("Grey", m_pGreyImage);
 	cvShowImage("Edges", m_pEdgesImage);
