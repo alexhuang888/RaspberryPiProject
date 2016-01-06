@@ -263,7 +263,7 @@ Project_BINARY_DIR:STATIC=/home/alex/RaspberryPiProject/roscar/build
 Project_SOURCE_DIR:STATIC=/home/alex/RaspberryPiProject/roscar/src
 
 //Path to a library.
-RT_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/librt.so
+RT_LIBRARY:FILEPATH=/usr/lib/arm-linux-gnueabihf/librt.so
 
 //Enable debian style python package layout
 SETUPTOOLS_DEB_LAYOUT:BOOL=ON
@@ -345,7 +345,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 image_transport_DIR:PATH=/opt/ros/jade/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/usr/lib/x86_64-linux-gnu/libdl.so
+lib:FILEPATH=/usr/lib/arm-linux-gnueabihf/libdl.so
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/jade/share/message_filters/cmake
