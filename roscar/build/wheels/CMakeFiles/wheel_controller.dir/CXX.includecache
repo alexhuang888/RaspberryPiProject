@@ -322,6 +322,16 @@ sstream
 termios.h
 -
 
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelmotorengine.cpp
+stdlib.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/stdlib.h
+wheelmotorengine.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelmotorengine.h
+wiringPi.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wiringPi.h
+softPwm.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/softPwm.h
+
 /opt/ros/jade/include/XmlRpcDecl.h
 ros/macros.h
 -

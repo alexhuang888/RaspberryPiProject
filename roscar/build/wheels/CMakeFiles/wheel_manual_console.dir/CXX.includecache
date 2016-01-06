@@ -526,6 +526,16 @@ clanedetectornavigatorengine.h
 globalinc.h
 /home/alex/RaspberryPiProject/roscar/src/wheels/src/globalinc.h
 
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheelmanualconsole.cpp
+ros/ros.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/ros/ros.h
+sstream
+-
+termios.h
+-
+wheeldriver.h
+/home/alex/RaspberryPiProject/roscar/src/wheels/src/wheeldriver.h
+
 /opt/ros/jade/include/XmlRpcDecl.h
 ros/macros.h
 -
