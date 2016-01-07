@@ -73,7 +73,7 @@ protected:
 		GRANSAC::VPFloat fAngle = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);
         float lengthdiff = fabs(ExtLine2D->m_fLength - m_Params.m_fLength) / m_Params.m_fLength;
         float fDist = fAngle / 90 * 5 + lengthdiff * 5;
-        if (fAngle > 30)
+        if (fAngle > 30 || (lengthdiff >= 0.5))
             fDist += 100;
 		return fDist;
     };
