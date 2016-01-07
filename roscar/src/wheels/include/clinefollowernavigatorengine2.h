@@ -148,12 +148,12 @@ enum{
     L2_BORDERX = 10,			  // px, skip this much from left & right borders
 	L2_MAX_RESPONSE_DIST = 5,	  // px
 
-	L2_CANNY_MIN_TRESHOLD = 80,	  // edge detector minimum hysteresis threshold
-	L2_CANNY_MAX_TRESHOLD = 240, // edge detector maximum hysteresis threshold
+	L2_CANNY_MIN_TRESHOLD = 50,	  // edge detector minimum hysteresis threshold
+	L2_CANNY_MAX_TRESHOLD = 100, // edge detector maximum hysteresis threshold
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold
-	L2_HOUGH_MAX_LINE_GAP = 10,   // join lines to one with smaller than this gaps
+	L2_HOUGH_MAX_LINE_GAP = 5,   // join lines to one with smaller than this gaps
 
 	L2_CAR_DETECT_LINES = 4,    // minimum lines for a region to pass validation as a 'CAR'
 	L2_CAR_H_LINE_LENGTH = 10,  // minimum horizontal line length from car body in px

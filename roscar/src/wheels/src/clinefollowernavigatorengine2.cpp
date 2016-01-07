@@ -72,8 +72,12 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
     else if (lines->total == 1)
     {
         CvPoint* line = (CvPoint*)cvGetSeqElem(lines, 0);
-        m_fTurnAngle = 90 - atan2(line[1].y - line[0].y, line[1].x - line[0].x) * 180 / CV_PI;
-        m_VanishingPoint = line[1];
+        MyLine2D myline(line[1], line[0]);
+
+        m_fTurnAngle = myline.m_fAngle;//90 - atan2(line[1].y - line[0].y, line[1].x - line[0].x) * 180 / CV_PI;
+        m_VanishingPoint.x = (myline.m_Point1.x + myline.m_Point2.x) / 2;
+        m_VanishingPoint.y = (myline.m_Point1.y + myline.m_Point2.y) / 2;
+
         if (bShowHoughLine)
         {
             cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 0, 255), 2);
@@ -115,6 +119,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
 
             if (BestInliers.size() > 0)
             {
+                int nTotalCounts = 0;
                 printf("Total inliner: %lu\n", BestInliers.size());
                 // here, we found several line with similar slope.
                 // from those lines, we need to get vanishing point and turn angle
@@ -136,6 +141,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                         cvLine(pWorkingImage, RPt->m_Point1, RPt->m_Point2, CV_RGB(0, 0, 255), 2);
                     }
                     printf("Inliner: angle:%f, (%d, %d)\n", RPt->m_fAngle, RPt->m_Point1.x, RPt->m_Point1.y);
+                    nTotalCounts++;
                 }
 
                 std::shared_ptr<MyLine2DModel> bestmodel = Estimator.GetBestModel();
@@ -148,11 +154,18 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                     std::shared_ptr<yisys_roswheels::MyLine2D> param = std::dynamic_pointer_cast<MyLine2D>(*itparam);
 
                     printf("best model param: slope=%f, length=%f, angle=%f, (%d, %d) (%d, %d)\n", param->m_Slope, param->m_fLength, param->m_fAngle, param->m_Point1.x, param->m_Point1.y, param->m_Point2.x, param->m_Point2.y);
-                }
 
-                m_fTurnAngle /= BestInliers.size();
-                m_VanishingPoint.x /= BestInliers.size();
-                m_VanishingPoint.y /= BestInliers.size();
+                    m_fTurnAngle += param->m_fAngle;
+                    m_VanishingPoint.x += (param->m_Point1.x + param->m_Point2.x) / 2;
+                    m_VanishingPoint.y += (param->m_Point1.y + param->m_Point2.y) / 2;
+                    nTotalCounts++;
+                }
+                if (nTotalCounts > 0)
+                {
+                    m_fTurnAngle /= nTotalCounts;
+                    m_VanishingPoint.x /= nTotalCounts;
+                    m_VanishingPoint.y /= nTotalCounts;
+                }
 
                 float dY = -(m_VanishingPoint.y - m_HalfFrameSize.height);
                 float dX = -(m_VanishingPoint.x - m_HalfFrameSize.width / 2);
