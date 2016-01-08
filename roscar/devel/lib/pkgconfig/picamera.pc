@@ -1,8 +1,0 @@
-prefix=/home/alex/RaspberryPiProject/roscar/devel
-
-Name: picamera
-Description: Description of picamera
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/alex/RaspberryPiProject/roscar/devel/lib 
-Requires: 

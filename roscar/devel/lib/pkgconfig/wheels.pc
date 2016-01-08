@@ -1,8 +1,0 @@
-prefix=/home/alex/RaspberryPiProject/roscar/devel
-
-Name: wheels
-Description: Description of wheels
-Version: 0.1.0
-Cflags: -I/home/alex/RaspberryPiProject/roscar/devel/include
-Libs: -L/home/alex/RaspberryPiProject/roscar/devel/lib 
-Requires: message_runtime

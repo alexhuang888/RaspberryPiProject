@@ -2,10 +2,7 @@
 #define __CLINEFOLLOWERNAVIGATORENGINE2_H__
 
 #pragma once
-#include "opencv2/imgproc/imgproc.hpp"
 #include <opencv2/core/core.hpp>
-#include "myutil.h"
-#include "claneinfo.h"
 #include "AbstractModel.hpp"
 #include "cnavigatorengineimplementationbase.h"
 
@@ -198,12 +195,10 @@ protected:
     void ProcessLanes(CvSeq* lines, IplImage* pEdges, IplImage *pWorkingImage, bool bShowHoughLine, float fLastSlope, float fLastB);
 protected:
 	// left and right lane
-	//CLaneStatus m_LaneR, m_LaneL;
 	CvMemStorage* m_pHoughStorage;
 	CvSize m_FrameSize;
 	CvSize m_HalfFrameSize;
 	CvRect m_ROI;
-	//CvFont m_Font;
 	IplImage *m_pWorkingImage, *m_pGreyImage, *m_pEdgesImage;
 	bool m_bShowLine;
 	float m_fTurnAngle;
