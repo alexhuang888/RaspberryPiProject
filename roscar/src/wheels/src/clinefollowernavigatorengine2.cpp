@@ -14,7 +14,6 @@ CLineFollowerNavigatorEngine2::CLineFollowerNavigatorEngine2()
 	m_HalfFrameSize.width = 0;
 	m_HalfFrameSize.height = 0;
 
-	//cvInitFont(&m_Font, CV_FONT_VECTOR0, 0.5f, 0.5f);
 	m_pWorkingImage = NULL;
 	m_pGreyImage = NULL;
 	m_pEdgesImage = NULL;
@@ -82,6 +81,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
         {
             cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 0, 255), 2);
         }
+        printf("turn angle:%f, (%d, %d)\n", m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
         return;
     }
     else
@@ -98,7 +98,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
             CandLines.push_back(CandLine);
             if (bShowHoughLine)
             {
-                cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 255, 0), 2);
+                cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 255, 0), 1);
             }
         }
         #if 1
@@ -108,7 +108,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
         {
             std::shared_ptr<yisys_roswheels::MyLine2D> CandLine = std::dynamic_pointer_cast<MyLine2D>(*itLine);
 
-            printf("CanLine: angle=%f, length=%f, slope=%f (%d, %d), (%d, %d)\n", CandLine->m_fAngle, CandLine->m_fLength, CandLine->m_Slope, CandLine->m_Point1.x, CandLine->m_Point1.y, CandLine->m_Point2.x, CandLine->m_Point2.y);
+            printf("HoughLine: ang=%f, len=%f, m=%f, b=%f (%d, %d), (%d, %d)\n", CandLine->m_fAngle, CandLine->m_fLength, CandLine->m_Slope, CandLine->m_B, CandLine->m_Point1.x, CandLine->m_Point1.y, CandLine->m_Point2.x, CandLine->m_Point2.y);
         }
         #endif
         Estimator.Initialize(10, 100); // Threshold, iterations
@@ -130,17 +130,16 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 for (itInLiner = BestInliers.begin(); itInLiner != BestInliers.end(); itInLiner++)
                 {
                     std::shared_ptr<yisys_roswheels::MyLine2D> RPt = std::dynamic_pointer_cast<MyLine2D>(*itInLiner);
-                    //cv::Point Pt(floor(RPt->m_Point2D[0]), floor(RPt->m_Point2D[1]));
-                    //cv::circle(Canvas, Pt, floor(Side / 100), cv::Scalar(0, 255, 0), -1);
+
                     m_fTurnAngle += RPt->m_fAngle;
                     m_VanishingPoint.x += (RPt->m_Point1.x + RPt->m_Point2.x) / 2;
                     m_VanishingPoint.y += (RPt->m_Point1.y + RPt->m_Point2.y) / 2;
 
                     if (bShowHoughLine)
                     {
-                        cvLine(pWorkingImage, RPt->m_Point1, RPt->m_Point2, CV_RGB(0, 0, 255), 2);
+                        cvLine(pWorkingImage, RPt->m_Point1, RPt->m_Point2, CV_RGB(0, 0, 255), 1);
                     }
-                    printf("Inliner: angle:%f, (%d, %d)\n", RPt->m_fAngle, RPt->m_Point1.x, RPt->m_Point1.y);
+                    printf("Inliner: ang:%f, m=%f, b=%f, (%d, %d)\n", RPt->m_fAngle, RPt->m_Slope, RPt->m_B, RPt->m_Point1.x, RPt->m_Point1.y);
                     nTotalCounts++;
                 }
 
@@ -153,12 +152,16 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 {
                     std::shared_ptr<yisys_roswheels::MyLine2D> param = std::dynamic_pointer_cast<MyLine2D>(*itparam);
 
-                    printf("best model param: slope=%f, length=%f, angle=%f, (%d, %d) (%d, %d)\n", param->m_Slope, param->m_fLength, param->m_fAngle, param->m_Point1.x, param->m_Point1.y, param->m_Point2.x, param->m_Point2.y);
+                    printf("best model param: ang=%f, m=%f, b=%f, (%d, %d) (%d, %d)\n", param->m_fAngle, param->m_Slope, param->m_B, param->m_Point1.x, param->m_Point1.y, param->m_Point2.x, param->m_Point2.y);
 
                     m_fTurnAngle += param->m_fAngle;
                     m_VanishingPoint.x += (param->m_Point1.x + param->m_Point2.x) / 2;
                     m_VanishingPoint.y += (param->m_Point1.y + param->m_Point2.y) / 2;
                     nTotalCounts++;
+                    if (bShowHoughLine)
+                    {
+                        cvLine(pWorkingImage, param->m_Point1, param->m_Point2, CV_RGB(255, 0, 0), 1);
+                    }
                 }
                 if (nTotalCounts > 0)
                 {
@@ -170,8 +173,10 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 float dY = -(m_VanishingPoint.y - m_HalfFrameSize.height);
                 float dX = -(m_VanishingPoint.x - m_HalfFrameSize.width / 2);
 
+                // angle by vanishing point
                 float dShiftAngle = atan2(dY, dX) * 180 / CV_PI - 90;
 
+                // median of inliners and shift-angle
                 float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
                 printf("turn angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
 
@@ -185,27 +190,10 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                     cvLine(pWorkingImage, m_VanishingPoint, basePt, CV_RGB(255, 255, 0), 1);
                 }
             }
-
         }
     }
-    /*
-	if (bShowHoughLine)
-	{
-		// show Hough lines
-		for	(int i=0; i<right.size(); i++)
-		{
-			cvLine(pWorkingImage, right[i].m_p0, right[i].m_p1, CV_RGB(0, 0, 255), 2);
-		}
-
-		for	(int i=0; i<left.size(); i++)
-		{
-			cvLine(pWorkingImage, left[i].m_p0, left[i].m_p1, CV_RGB(255, 0, 0), 2);
-		}
-	}
-	*/
 }
 int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisplayImage, float &fAngle, CvPoint &vanishingPoint)
-//int32_t CLineFollowerNavigatorEngine2::ProcessFrame(IplImage *pFrame, float &fAngle, CvPoint &vanishingPoint)
 {
 	int32_t nRet = -1;
 	double rho = 1;
@@ -257,17 +245,17 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	// we're interested only in road below horizont - so crop top image portion off
 	crop(pFrame, m_pWorkingImage, m_ROI);
 	cvCvtColor(m_pWorkingImage, m_pGreyImage, CV_BGR2GRAY); // convert to grayscale
-
 	// Perform a Gaussian blur ( Convolving with 5 X 5 Gaussian) & detect edges
-	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 9, 9);
+	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 5, 5);
 	cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
 
-	// do Hough transform to find lanes
-
+	// do Hough transform to find lines
 	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
-									rho, theta, m_HalfFrameSize.height / 2, m_HalfFrameSize.height / 2, L2_HOUGH_MAX_LINE_GAP);
+									rho, theta, m_HalfFrameSize.height * 0.5,
+									m_HalfFrameSize.height * 0.5,
+									L2_HOUGH_MAX_LINE_GAP);
 
-	// here, we prefer
+	// here, we prefer some lines
 	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine, 0, 0);
 
 	fAngle = m_fTurnAngle;
@@ -278,7 +266,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
 		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
 
-        PublishDebugImage("mono8", m_pEdgesImage);
+        //PublishDebugImage("mono8", m_pEdgesImage);
 
 		PublishDebugImage("bgr8", m_pWorkingImage);
 	}
@@ -288,15 +276,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 		cvDestroyWindow("Lane-Detector::ColorImage");
 	}
 	nRet = 1;
-#if DEBUGIMG
-	cvShowImage("Grey", m_pGreyImage);
-	cvShowImage("Edges", m_pEdgesImage);
-	cvShowImage("Color", m_pWorkingImage);
 
-	cvMoveWindow("Grey", 0, 0);
-	cvMoveWindow("Edges", 0, m_HalfFrameSize.height + 25);
-	cvMoveWindow("Color", 0, 2*(m_HalfFrameSize.height + 25));
-#endif
 err_out:
 	return nRet;
 }

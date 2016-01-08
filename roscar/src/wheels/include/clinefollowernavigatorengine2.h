@@ -70,11 +70,27 @@ protected:
 
         // distance 0 - 180
         //printf("ext_angle=%f, param_angle=%f\n", ExtLine2D->m_fAngle, m_Params.m_fAngle);
-		GRANSAC::VPFloat fAngle = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);
+		GRANSAC::VPFloat fAngleDiff = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);
         float lengthdiff = fabs(ExtLine2D->m_fLength - m_Params.m_fLength) / m_Params.m_fLength;
-        float fDist = fAngle / 90 * 5 + lengthdiff * 5;
-        if (fAngle > 30 || (lengthdiff >= 0.5))
+        float fDist = fAngleDiff / 90 * 5 + lengthdiff * 5;
+        float fLineDistance = 0;
+        float fSlopeDiff = fabs(m_Params.m_Slope) - fabs(ExtLine2D->m_Slope);
+
+        // if two lines are not from the same "line band" or
+        // if two lines has big length difference, or
+        // if input line is almost horizontal
+        if (fAngleDiff > 30 || (lengthdiff >= 0.5) || fabs(ExtLine2D->m_fAngle) > 80)
             fDist += 100;
+
+        if (fAngleDiff < 5)   // treat it as parallel lines (angle difference less than 5 degrees)
+        {
+            fLineDistance = fabs(ExtLine2D->m_B - m_Params.m_B) / sqrt(ExtLine2D->m_Slope * ExtLine2D->m_Slope + 1);
+            if (fLineDistance < 30 || fLineDistance > 240)
+            {
+                // to eliminate two close parallel lines. or if two lines are too far-away
+                fDist += 100;
+            }
+        }
 		return fDist;
     };
 
@@ -149,7 +165,7 @@ enum{
 	L2_MAX_RESPONSE_DIST = 5,	  // px
 
 	L2_CANNY_MIN_TRESHOLD = 50,	  // edge detector minimum hysteresis threshold
-	L2_CANNY_MAX_TRESHOLD = 100, // edge detector maximum hysteresis threshold
+	L2_CANNY_MAX_TRESHOLD = 150, // edge detector maximum hysteresis threshold
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold
