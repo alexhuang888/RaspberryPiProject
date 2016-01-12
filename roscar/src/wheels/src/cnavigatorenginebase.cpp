@@ -142,10 +142,14 @@ int32_t CNavigatorEngineWithImageSource::ProcessImageData(const sensor_msgs::Ima
 	//printf("Lane center: fAngle=%f, center(%d, %d)\n", fAngle, vanishPoint.x, vanishPoint.y);
 
 	fAngleRatio = fAngle / 90.f;
+#if 1
+#define DIVRANGE 6.f
 
+	fAngleRatio = ((int32_t)(fAngleRatio * DIVRANGE)) / DIVRANGE;
+#endif 
 	vel_msg.angular.z = (fAngleRatio);
 	vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
-
+	printf("adjust angle=%f\n", fAngleRatio);
 	ProcessCmdVels(vel_msg);
 
 err_out:

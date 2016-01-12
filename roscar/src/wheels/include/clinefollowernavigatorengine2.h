@@ -82,7 +82,7 @@ protected:
         if (fAngleDiff < 5)   // treat it as parallel lines (angle difference less than 5 degrees)
         {
             fLineDistance = fabs(ExtLine2D->m_B - m_Params.m_B) / sqrt(ExtLine2D->m_Slope * ExtLine2D->m_Slope + 1);
-            if (fLineDistance < 30 || fLineDistance > 240)
+            if (fLineDistance < 40 || fLineDistance > 240)
             {
                 // to eliminate two close parallel lines. or if two lines are too far-away
                 fDist += 100;
@@ -162,7 +162,7 @@ enum{
 	L2_MAX_RESPONSE_DIST = 5,	  // px
 
 	L2_CANNY_MIN_TRESHOLD = 50,	  // edge detector minimum hysteresis threshold
-	L2_CANNY_MAX_TRESHOLD = 150, // edge detector maximum hysteresis threshold
+	L2_CANNY_MAX_TRESHOLD = 100, // edge detector maximum hysteresis threshold
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold

@@ -41,6 +41,7 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_fKp = WHEELPIDMAXSPEED;
 	m_fKi = 0.01f;
 	m_fKd = m_fKp / 2;
+	m_fRightWheelAdjustRatio = RIGHTWHEELADJUSTRATIO;
 }
 
 bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
@@ -57,7 +58,49 @@ void CWheelDriver::wheels_CmdVelCallback(const geometry_msgs::Twist::ConstPtr& m
 	//printf("CWheelDriver: z=%f, x=%f\n", msg->angular.z, msg->linear.x);
 	CmdVelToWheelController(msg->angular.z, msg->linear.x);
 }
+int32_t CWheelDriver::_SetInternalSpeed(int32_t nSpeed)
+{
+	int32_t nRet = 0;
 
+	wheels::cmd_set_car_direction_speed srv2;
+
+	if (m_bManualStop)
+	{
+		nRet = 1;
+		goto err_out;
+	}
+
+	if (nSpeed > FULLSPEED)
+		nSpeed = FULLSPEED;
+
+	if (nSpeed < 0)
+		nSpeed = 0;
+		
+	m_nCurrentUserSpeed = nSpeed;
+	//m_nCurrentUserDirection = nDirection;		
+#if 0
+	srv2.request.nNewSpeed = nSpeed;
+	srv2.request.nNewDirection = nDirection;
+	//printf("New Speed=%d, New Dir = %d\n", nSpeed, nDirection);
+	if (m_SetSpeedClient.call(srv2))
+	{
+		m_nCurrentUserSpeed = nSpeed;
+		m_nCurrentUserDirection = nDirection;
+
+		if (nSpeed == 0 || m_nCurrentUserDirection == WCLR_STOP)
+		{
+			m_bCarStopped = true;
+		}
+		nRet = 1;
+	}
+	else
+	{
+		ROS_ERROR("Failed to call service set_direction_speed");
+	}
+#endif
+err_out:
+	return nRet;
+}
 int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 {
 	int32_t nRet = 0;
@@ -75,7 +118,10 @@ int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 
 	if (nSpeed < 0)
 		nSpeed = 0;
-
+		
+	m_nCurrentUserSpeed = nSpeed;
+	m_nCurrentUserDirection = nDirection;		
+#if 1
 	srv2.request.nNewSpeed = nSpeed;
 	srv2.request.nNewDirection = nDirection;
 	//printf("New Speed=%d, New Dir = %d\n", nSpeed, nDirection);
@@ -84,10 +130,6 @@ int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 		m_nCurrentUserSpeed = nSpeed;
 		m_nCurrentUserDirection = nDirection;
 
-		//ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
-		//ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
-		//nRet = 1;
-		//ROS_INFO("Cannot receive cmd_vel, stop the car");
 		if (nSpeed == 0 || m_nCurrentUserDirection == WCLR_STOP)
 		{
 			m_bCarStopped = true;
@@ -98,6 +140,7 @@ int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 	{
 		ROS_ERROR("Failed to call service set_direction_speed");
 	}
+#endif
 err_out:
 	return nRet;
 }
@@ -112,69 +155,6 @@ void CWheelDriver::Checklongpause(void)
 	}
 }
 
-// fAngular: angular direction and speed
-//				fAngular value: positive: right turn, negative: left turn. value is from 0-90 or 0 to -90
-//											when fabs(fAngular) is over tolerance, then it is decide to turn
-// fLinear: linear direction and speed (Positive: forward, negative: backward)
-//			fLinear value: normalized (0..1), mapping from 0 to 100 for wheel speed
-/*
-int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
-{
-	int32_t nRet = 0;
-	int32_t nNewSpeed = 0;
-	int32_t nNewDirection = WCLR_STOP;
-
-	wheels::cmd_set_car_direction_speed srv2;
-
-	float fXOffset = fabs(fAngular);
-
-
-	if (fLinear == 0)
-	{
-		nNewDirection = WCLR_STOP;
-	}
-	else
-	{
-		if (fabs(fAngular) > WHEELANGULAR_TOLERANCE)
-		{
-			// could be run and turn
-			if (fAngular > 0)
-			{
-				if (fLinear > 0)
-					nNewDirection = WCLR_FORWARDRIGHTTURN;	// turn right
-				else
-					nNewDirection = WCLR_BACKWARDRIGHTTURN;	// turn right
-			}
-			else
-			{
-				if (fLinear > 0)
-					nNewDirection = WCLR_FORWARDLEFTTURN;	// turn left
-				else
-					nNewDirection = WCLR_BACKWARDLEFTTURN;	// turn left
-			}
-		}
-		else
-		{
-			// check if forward or backward
-			if (fLinear > 0)
-				nNewDirection = WCLR_FORWARD;	// forward
-			else
-				nNewDirection = WCLR_BACKWARD;	// backward
-
-		}
-	}
-
-	nNewSpeed = (fabs(fLinear) * 100.);	// max speed;
-	//printf("fAngular=%f, fLinear=%f, nNewDirection=%d\n", fAngular, fLinear, nNewDirection);
-	//else
-	{
-		nRet = _SetSpeedDirection(m_nCurrentUserSpeed, nNewDirection);
-	}
-
-
-	return nRet;
-}
-*/
 int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 {
 	int32_t nRet = 0;
@@ -193,25 +173,30 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 
 	m_fLastShiftError = m_fThisShiftError;
 
-	int nNewRightSpeed, nNewLeftSpeed, nNewRightDirection, nNewLeftDirection;
+	float nNewRightSpeed, nNewLeftSpeed;
+	int32_t nNewRightDirection, nNewLeftDirection;
 
+	int32_t nDir = CMC_MOTORFORWARD;
+	if (fLinear < 0)
+		nDir = CMC_MOTORBACKWARD;
+		
 	if (nNewSpeed < 0) // left turn
 	{
 		nNewRightSpeed = -nNewSpeed;
-		nNewRightDirection = CMC_MOTORFORWARD;
+		nNewRightDirection = nDir;
 
 		//nNewLeftSpeed = WHEELPIDMAXSPEED - nNewRightSpeed;
 		nNewLeftSpeed = nNewSpeed;
-		nNewLeftDirection = CMC_MOTORFORWARD;
+		nNewLeftDirection = nDir;
 	}
 	else
 	{
 		nNewLeftSpeed = nNewSpeed;
-		nNewLeftDirection = CMC_MOTORFORWARD;
+		nNewLeftDirection = nDir;
 
 		//nNewRightSpeed = WHEELPIDMAXSPEED - nNewLeftSpeed;
 		nNewRightSpeed = -nNewSpeed;
-		nNewRightDirection = CMC_MOTORFORWARD;
+		nNewRightDirection = nDir;
 	}
 	if (m_nCurrentUserSpeed == 0)	// users prefer to stop
 	{
@@ -223,6 +208,9 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 		nNewRightSpeed += m_nCurrentUserSpeed;
 		nNewLeftSpeed += m_nCurrentUserSpeed;
 	}
+	
+	nNewRightSpeed *= m_fRightWheelAdjustRatio;
+	
 	if (nNewRightSpeed > FULLSPEED)
 		nNewRightSpeed = FULLSPEED;
 	if (nNewRightSpeed < 0)
@@ -232,6 +220,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 		nNewLeftSpeed = FULLSPEED;
 	if (nNewLeftSpeed < 0)
 		nNewLeftSpeed = 0;
+		
 	if (m_bManualStop)
 	{
 		nRet = 1;
@@ -244,16 +233,9 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	srv2.request.nNewRightSpeed = nNewRightSpeed;
 	srv2.request.nNewRightDirection = nNewRightDirection;
 
-	printf("New two wheels (%f, %f, %f)(Speed, Dir) Left(%d, %d), right(%d, %d)\n", fAngular, nNewSpeed, fErrorDiff, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
+	printf("Set wheel speed (%f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
 	if (m_SetTwoWheelsSpeedClient.call(srv2))
 	{
-		//m_nCurrentUserSpeed = nSpeed;
-		//m_nCurrentUserDirection = nDirection;
-
-		//ROS_INFO("Set New Car direction=%d speed=%d", srv2.request.nNewDirection, srv2.request.nNewSpeed);
-		//ROS_INFO("Last car status: RetCode=%d: last_dir=%d, last_speed=%d", srv2.response.nRetCode, srv2.response.nLastDirection, srv2.response.nLastSpeed);
-		//nRet = 1;
-		//ROS_INFO("Cannot receive cmd_vel, stop the car");
 		if (srv2.response.nNewLeftSpeed == 0 && srv2.response.nNewRightSpeed == 0)
 		{
 			m_bCarStopped = true;
@@ -315,7 +297,8 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				//printf("Before +, speed=%d, dir=%d\n", nNewSpeed, nNewDirection);
 				nNewSpeed += 5;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = _SetInternalSpeed(nNewSpeed);
+				//nRet = CmdVelToWheelController(0, 0);
 				//ROS_INFO("Accelerate.");
 			}
 			break;
@@ -323,49 +306,56 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			if (!m_bManualStop)
 			{
 				nNewSpeed -= 5;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = _SetInternalSpeed(nNewSpeed);
+				//nRet = CmdVelToWheelController(0, 0);
 			}
 			break;
 		case 'u':
 			if (!m_bManualStop)
 			{
 				nNewDirection = WCLR_FORWARD;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = CmdVelToWheelController(0, 0);
 			}
 			break;
 		case 'd':
 			if (!m_bManualStop)
 			{
 				nNewDirection = WCLR_BACKWARD;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
-			}
-			break;
-		case 'l':
-			if (!m_bManualStop)
-			{
-				nNewDirection = WCLR_FORWARDRIGHTTURN;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = CmdVelToWheelController(0, -1);
 			}
 			break;
 		case 'r':
 			if (!m_bManualStop)
 			{
+				nNewDirection = WCLR_FORWARDRIGHTTURN;
+				//nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = CmdVelToWheelController(0.5, 0);
+			}
+			break;
+		case 'l':
+			if (!m_bManualStop)
+			{
 				nNewDirection = WCLR_FORWARDLEFTTURN;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = CmdVelToWheelController(-0.5, 0);
 			}
 			break;
 		case 'w':
 			if (!m_bManualStop)
 			{
 				nNewDirection = WCLR_BACKWARDRIGHTTURN;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = CmdVelToWheelController(0.5, -1);
 			}
 			break;
 		case 'z':
 			if (!m_bManualStop)
 			{
 				nNewDirection = WCLR_BACKWARDLEFTTURN;
-				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				//nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
+				nRet = CmdVelToWheelController(-0.5, -1);
 			}
 			break;
 		case 'i':
@@ -403,8 +393,17 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				ROS_INFO("Debug image is off");
 			}
+			ROS_INFO("Right Wheel adjustment ratio=%f\n", m_fRightWheelAdjustRatio);
 			break;
 		}
+		case '.':	// right wheel ratio + 0.01
+			m_fRightWheelAdjustRatio += 0.01;
+			nRet = CmdVelToWheelController(0, 0);
+			break;
+		case ',':
+			m_fRightWheelAdjustRatio -= 0.01;
+			nRet = CmdVelToWheelController(0, 0);
+			break;
 		case '0':	// disable all navigator engine
 		{
 			wheels::cmd_set_navigator_engine engset;
@@ -412,7 +411,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				nNewSpeed = 0;
 				nNewDirection = WCLR_STOP;
-				_SetSpeedDirection(nNewSpeed, nNewDirection);
+				_SetInternalSpeed(nNewSpeed);
 			}
 			//m_bManualStop = true;
 			engset.request.nNewEngineID = 0;

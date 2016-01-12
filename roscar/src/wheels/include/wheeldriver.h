@@ -12,6 +12,7 @@ namespace yisys_roswheels
 {
 #define WHEELANGULAR_TOLERANCE (0.4)	
 #define WHEELPIDMAXSPEED (10)
+#define RIGHTWHEELADJUSTRATIO 1.2
 // it accept several msg and decide how the wheels works.
 // cmd_vel: wheels direction and velocity
 // ???: sign
@@ -39,6 +40,7 @@ public:
 	int32_t GetWheelStatus(uint32_t nWheelID, wheels::cmd_get_one_wheel_status &Status);
 protected:
 	int32_t _SetSpeedDirection(int32_t nSpeed, int32_t nDirection);
+	int32_t _SetInternalSpeed(int32_t nSpeed);
 protected:
 	ros::NodeHandle m_nNodeHandle;
 	std::string m_strNode_Name;
@@ -67,6 +69,7 @@ protected:
 	float m_fKp;
 	float m_fKi;
 	float m_fKd;
+	float m_fRightWheelAdjustRatio;
 };
 };
 #endif
