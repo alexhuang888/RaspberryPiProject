@@ -1,2 +1,0 @@
-picamera:wheels
--DCATKIN_DEVEL_PREFIX=/home/alex/RaspberryPiProject/roscar/devel -DCMAKE_INSTALL_PREFIX=/home/alex/RaspberryPiProject/roscar/install -G Unix Makefiles

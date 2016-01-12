@@ -1,8 +1,0 @@
-(cl:in-package wheels-msg)
-(cl:export '(HEADER-VAL
-          HEADER
-          NACTIVEENGINEID-VAL
-          NACTIVEENGINEID
-          STRACTIVEENGINEDESCRIPTION-VAL
-          STRACTIVEENGINEDESCRIPTION
-))
