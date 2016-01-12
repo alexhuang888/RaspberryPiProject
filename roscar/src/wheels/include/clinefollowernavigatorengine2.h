@@ -176,7 +176,7 @@ enum{
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold
-	L2_HOUGH_MAX_LINE_GAP = 5,   // join lines to one with smaller than this gaps
+	L2_HOUGH_MAX_LINE_GAP = 50,   // join lines to one with smaller than this gaps
 
 	L2_CAR_DETECT_LINES = 4,    // minimum lines for a region to pass validation as a 'CAR'
 	L2_CAR_H_LINE_LENGTH = 10,  // minimum horizontal line length from car body in px

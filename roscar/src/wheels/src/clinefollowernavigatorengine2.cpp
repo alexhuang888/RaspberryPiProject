@@ -139,6 +139,10 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
             if (BestInliers.size() > 0)
             {
                 int nTotalCounts = 0;
+                int nVXMin = m_ROIFrameSize.width;
+                int nVXMax = 0;
+                int nVYMin = m_ROIFrameSize.height;
+                int nVYMax = 0;
 #if _CL2_SHOWDEBUGMSG
                 printf("Total inliner: %zu\n", BestInliers.size());
 #endif
@@ -153,15 +157,18 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                     std::shared_ptr<yisys_roswheels::MyLine2D> RPt = std::dynamic_pointer_cast<MyLine2D>(*itInLiner);
 
                     m_fTurnAngle += RPt->m_fAngle;
-                    m_VanishingPoint.x += (RPt->m_Point1.x + RPt->m_Point2.x) / 2;
-                    m_VanishingPoint.y += (RPt->m_Point1.y + RPt->m_Point2.y) / 2;
+                    nVXMin = std::min(nVXMin, int((RPt->m_Point1.x + RPt->m_Point2.x) / 2));
+                    nVXMax = std::max(nVXMax, int((RPt->m_Point1.x + RPt->m_Point2.x) / 2));
+
+                    nVYMin = std::min(nVYMin, int((RPt->m_Point1.y + RPt->m_Point2.y) / 2));
+                    nVYMax = std::max(nVYMax, int((RPt->m_Point1.y + RPt->m_Point2.y) / 2));
 
                     if (bShowHoughLine)
                     {
                         cvLine(pWorkingImage, RPt->m_Point1, RPt->m_Point2, CV_RGB(0, 0, 255), 1);
                     }
 #if _CL2_SHOWDEBUGMSG
-                    printf("Inliner: ang:%f, m=%f, b=%f, (%d, %d)\n", RPt->m_fAngle, RPt->m_Slope, RPt->m_B, RPt->m_Point1.x, RPt->m_Point1.y);
+                    printf("Inliner: ang:%f, m=%f, b=%f, (%d, %d)(%d, %d)\n", RPt->m_fAngle, RPt->m_Slope, RPt->m_B, RPt->m_Point1.x, RPt->m_Point1.y, RPt->m_Point2.x, RPt->m_Point2.y);
 #endif
                     nTotalCounts++;
                 }
@@ -178,8 +185,12 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                     printf("model: ang=%f, m=%f, b=%f, (%d, %d) (%d, %d)\n", param->m_fAngle, param->m_Slope, param->m_B, param->m_Point1.x, param->m_Point1.y, param->m_Point2.x, param->m_Point2.y);
 #endif
                     m_fTurnAngle += param->m_fAngle;
-                    m_VanishingPoint.x += (param->m_Point1.x + param->m_Point2.x) / 2;
-                    m_VanishingPoint.y += (param->m_Point1.y + param->m_Point2.y) / 2;
+
+                    nVXMin = std::min(nVXMin, int((param->m_Point1.x + param->m_Point2.x) / 2));
+                    nVXMax = std::max(nVXMax, int((param->m_Point1.x + param->m_Point2.x) / 2));
+
+                    nVYMin = std::min(nVYMin, int((param->m_Point1.y + param->m_Point2.y) / 2));
+                    nVYMax = std::max(nVYMax, int((param->m_Point1.y + param->m_Point2.y) / 2));
                     nTotalCounts++;
                     if (bShowHoughLine)
                     {
@@ -189,8 +200,8 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 if (nTotalCounts > 0)
                 {
                     m_fTurnAngle /= nTotalCounts;
-                    m_VanishingPoint.x /= nTotalCounts;
-                    m_VanishingPoint.y /= nTotalCounts;
+                    m_VanishingPoint.x = (nVXMin + nVXMax) / 2;
+                    m_VanishingPoint.y = (nVYMin + nVYMax) / 2;
                 }
 
                 float dY = -(m_VanishingPoint.y - m_ROIFrameSize.height);
@@ -227,6 +238,9 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	double dSigma = 0.33;
     int32_t canny_T_lower = 0;
 	int32_t canny_T_upper = 255;
+	int32_t nHoughThreshold = 100;
+	int32_t nHoughLines = 0;
+
 	if (pFrame == NULL)
 	{
 		goto err_out;
@@ -285,10 +299,20 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	cvCanny(m_pGreyImage, m_pEdgesImage, canny_T_lower, canny_T_upper, 3);
 
 	// do Hough transform to find lines
-	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
-									rho, theta, 20,
-									m_ROIFrameSize.height * 0.4,
-									L2_HOUGH_MAX_LINE_GAP);
+
+	nHoughLines = 0;
+	nHoughThreshold = 20;//m_ROIFrameSize.height * 0.4;
+
+	//while (nHoughLines < 5 && nHoughThreshold > 4)
+	{
+        pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
+                                        rho, theta, nHoughThreshold,
+                                        m_ROIFrameSize.height * 0.4,
+                                        L2_HOUGH_MAX_LINE_GAP);
+
+    }
+
+
 
 	// here, we prefer some lines
 	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine, 0, 0);
