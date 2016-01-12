@@ -213,9 +213,9 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 // average of inliners and shift-angle
                 float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
 #if 1
-                printf("turn angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
+                printf("proposed angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
 #endif
-                m_fTurnAngle = fFinalAngle;
+                //m_fTurnAngle = fFinalAngle;
                 if (bShowHoughLine)
                 {
                     CvPoint basePt;
@@ -327,7 +327,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 
         //PublishDebugImage("mono8", m_pEdgesImage);
 
-		PublishDebugImage("bgr8", m_pWorkingImage);
+		//PublishDebugImage("bgr8", m_pWorkingImage);
 	}
 	else
 	{

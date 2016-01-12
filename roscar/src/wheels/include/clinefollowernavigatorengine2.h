@@ -17,6 +17,7 @@ public:
 
     MyLine2D()
     {
+        m_bVertical = false;
     };
 
     MyLine2D(CvPoint p1, CvPoint p2)
@@ -34,21 +35,41 @@ public:
             diffY = p1.y - p2.y;
         }
 		if (diffX != 0)
+		{
 			m_Slope = diffY / diffX; // Slope
+			m_B = p1.y - m_Slope * p1.x; // Intercept
+			m_bVertical = false;
+        }
 		else
+		{
+            m_bVertical = true;
 			m_Slope = 0;
-
-		m_B = p1.y - m_Slope * p1.x; // Intercept
+            m_B = p1.y - m_Slope * p1.x; // Intercept
+		}
 
 		m_fLength = sqrt(diffX * diffX + diffY * diffY);
         m_fAngle = atan2(diffY, diffX) * 180 / CV_PI - 90;
     };
+
+    float FindX(float fY)
+    {
+        if (m_bVertical)
+        {
+            return m_Point1.x;
+        }
+        else
+        {
+            return m_Slope != 0 ? (fY - m_B) / m_Slope : 0;
+        }
+        return 0;
+    }
 
     CvPoint m_Point1;
     CvPoint m_Point2;
     float m_fLength;
     float m_fAngle;
     float m_Slope, m_B;
+    bool m_bVertical;
 };
 
 class MyLine2DModel
@@ -69,14 +90,14 @@ protected:
         //printf("ext_angle=%f, param_angle=%f\n", ExtLine2D->m_fAngle, m_Params.m_fAngle);
 		GRANSAC::VPFloat fAngleDiff = fabs(ExtLine2D->m_fAngle - m_Params.m_fAngle);
         float lengthdiff = fabs(ExtLine2D->m_fLength - m_Params.m_fLength) / m_Params.m_fLength;
-        float fDist = fAngleDiff / 90 * 5 + lengthdiff * 5;
+        float fDist = fAngleDiff / 90 * 7 + lengthdiff * 2;
         float fLineDistance = 0;
         //float fSlopeDiff = fabs(m_Params.m_Slope) - fabs(ExtLine2D->m_Slope);
 
         // if two lines are not from the same "line band" or
         // if two lines has big length difference, or
         // if input line is almost horizontal
-        if (fAngleDiff > 30 || (lengthdiff >= 0.5) || fabs(ExtLine2D->m_fAngle) > 80)
+        if (fAngleDiff > 30 || (lengthdiff >= 0.7) || fabs(ExtLine2D->m_fAngle) > 80)
             fDist += 100;
 
         //if (fAngleDiff < 5)   // treat it as parallel lines (angle difference less than 5 degrees)
@@ -85,13 +106,13 @@ protected:
             //fLineDistance = fabs(ExtLine2D->m_B - m_Params.m_B) / sqrt(ExtLine2D->m_Slope * ExtLine2D->m_Slope + 1);
             float fY = (ExtLine2D->m_Point1.y + ExtLine2D->m_Point2.y + m_Params.m_Point1.y + m_Params.m_Point2.y) / 4;
 
-            float fX1 = ExtLine2D->m_Slope != 0 ? (fY - ExtLine2D->m_B) / ExtLine2D->m_Slope : 0;
-            float fX2 = m_Params.m_Slope != 0 ? (fY - m_Params.m_B) / m_Params.m_Slope : 0;
+            float fX1 = ExtLine2D->FindX(fY);// != 0 ? (fY - ExtLine2D->m_B) / ExtLine2D->m_Slope : 0;
+            float fX2 = m_Params.FindX(fY);//m_Params.m_Slope != 0 ? (fY - m_Params.m_B) / m_Params.m_Slope : 0;
             float fD = fX2 - fX1;
 
             fLineDistance = sqrt((fD * fD));
 
-            //printf("m1=%f, m2=%f, distance=%f\n", ExtLine2D->m_Slope, m_Params.m_Slope, fLineDistance);
+            //printf("m1=%f, m2=%f, distance=%f, %f, %f, %f\n", ExtLine2D->m_Slope, m_Params.m_Slope, fLineDistance,fY, fX1, fX2);
             if (fLineDistance < 40 || fLineDistance > 240)
             {
                 // to eliminate two close parallel lines. or if two lines are too far-away
