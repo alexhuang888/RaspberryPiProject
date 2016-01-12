@@ -13,8 +13,8 @@ CLineFollowerNavigatorEngine2::CLineFollowerNavigatorEngine2()
 	m_pHoughStorage = NULL;
 	m_FrameSize.width = 0;
 	m_FrameSize.height = 0;
-	m_HalfFrameSize.width = 0;
-	m_HalfFrameSize.height = 0;
+	m_ROIFrameSize.width = 0;
+	m_ROIFrameSize.height = 0;
 
 	m_pWorkingImage = NULL;
 	m_pGreyImage = NULL;
@@ -110,14 +110,14 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 CandLines.push_back(CandLine);
                 if (bShowHoughLine)
                 {
-                    cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 255, 0), 2);
+                    cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 255, 0), 3);
                 }
             }
             else
             {
                 if (bShowHoughLine)
                 {
-                    cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 0, 0), 2);
+                    cvLine(pWorkingImage, line[0], line[1], CV_RGB(0, 0, 0), 3);
                 }
 #if _CL2_SHOWDEBUGMSG
                 printf("*");
@@ -128,7 +128,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
 #endif
         }
 #if _CL2_SHOWDEBUGMSG
-        printf("Total Candidate line before RANSAC:%d\n", CandLines.size());
+        printf("Total Candidate line before RANSAC:%zu\n", CandLines.size());
 #endif
         Estimator.Initialize(10, 100); // Threshold, iterations
         Estimator.Estimate(CandLines);
@@ -140,7 +140,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
             {
                 int nTotalCounts = 0;
 #if _CL2_SHOWDEBUGMSG
-                printf("Total inliner: %lu\n", BestInliers.size());
+                printf("Total inliner: %zu\n", BestInliers.size());
 #endif
                 // here, we found several line with similar slope.
                 // from those lines, we need to get vanishing point and turn angle
@@ -193,13 +193,13 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                     m_VanishingPoint.y /= nTotalCounts;
                 }
 
-                float dY = -(m_VanishingPoint.y - m_HalfFrameSize.height);
-                float dX = -(m_VanishingPoint.x - m_HalfFrameSize.width / 2);
+                float dY = -(m_VanishingPoint.y - m_ROIFrameSize.height);
+                float dX = -(m_VanishingPoint.x - m_ROIFrameSize.width / 2);
 
                 // angle by vanishing point
                 float dShiftAngle = atan2(dY, dX) * 180 / CV_PI - 90;
 
-                // median of inliners and shift-angle
+                // average of inliners and shift-angle
                 float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
 #if 1
                 printf("turn angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
@@ -208,8 +208,8 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
                 if (bShowHoughLine)
                 {
                     CvPoint basePt;
-                    basePt.x = m_HalfFrameSize.width / 2;
-                    basePt.y = m_HalfFrameSize.height;
+                    basePt.x = m_ROIFrameSize.width / 2;
+                    basePt.y = m_ROIFrameSize.height;
                     cvCircle(pWorkingImage, m_VanishingPoint, 4, CV_RGB(255, 0, 0));
                     cvLine(pWorkingImage, m_VanishingPoint, basePt, CV_RGB(255, 255, 0), 1);
                 }
@@ -223,20 +223,25 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	double rho = 1;
 	double theta = CV_PI / 180;
 	CvSeq* pLines = NULL;
-
+	double dMedian = 128;
+	double dSigma = 0.33;
+    int32_t canny_T_lower = 0;
+	int32_t canny_T_upper = 255;
 	if (pFrame == NULL)
 	{
 		goto err_out;
 	}
+
+#define ROIRATIO 2
 	if (m_FrameSize.width == 0 || m_FrameSize.height == 0)
 	{
 		m_FrameSize.width = pFrame->width;
 		m_FrameSize.height = pFrame->height;
 
-		m_HalfFrameSize.width = pFrame->width;
-		m_HalfFrameSize.height = pFrame->height / 2;
+		m_ROIFrameSize.width = pFrame->width;
+		m_ROIFrameSize.height = pFrame->height / ROIRATIO;
 
-		m_ROI = cvRect(0, m_HalfFrameSize.height, m_HalfFrameSize.width, m_HalfFrameSize.height);
+		m_ROI = cvRect(0, m_FrameSize.height * (ROIRATIO - 1) / ROIRATIO, m_ROIFrameSize.width, m_ROIFrameSize.height);
 	}
 	else
 	{
@@ -253,30 +258,36 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 
 	if (m_pWorkingImage == NULL)
 	{
-		m_pWorkingImage = cvCreateImage(m_HalfFrameSize, IPL_DEPTH_8U, 3);
+		m_pWorkingImage = cvCreateImage(m_ROIFrameSize, IPL_DEPTH_8U, 3);
 	}
 
 	if (m_pGreyImage == NULL)
 	{
-		m_pGreyImage = cvCreateImage(m_HalfFrameSize, IPL_DEPTH_8U, 1);
+		m_pGreyImage = cvCreateImage(m_ROIFrameSize, IPL_DEPTH_8U, 1);
 	}
 
 	if (m_pEdgesImage == NULL)
 	{
-		m_pEdgesImage = cvCreateImage(m_HalfFrameSize, IPL_DEPTH_8U, 1);
+		m_pEdgesImage = cvCreateImage(m_ROIFrameSize, IPL_DEPTH_8U, 1);
 	}
 
 	// we're interested only in road below horizont - so crop top image portion off
 	crop(pFrame, m_pWorkingImage, m_ROI);
 	cvCvtColor(m_pWorkingImage, m_pGreyImage, CV_BGR2GRAY); // convert to grayscale
-	// Perform a Gaussian blur ( Convolving with 5 X 5 Gaussian) & detect edges
-	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 5, 5);
-	cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
+	// Perform a Gaussian blur ( Convolving with 3 X 3 Gaussian) & detect edges
+	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 9, 9);
+
+	dMedian = medianIplImage(m_pGreyImage, 256);
+	dSigma = 0.33;
+    canny_T_lower = int32_t(std::max(0., (1.0 - dSigma) * dMedian));
+	canny_T_upper = int32_t(std::min(255., (1.0 + dSigma) * dMedian));
+	//cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
+	cvCanny(m_pGreyImage, m_pEdgesImage, canny_T_lower, canny_T_upper, 3);
 
 	// do Hough transform to find lines
 	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
 									rho, theta, 20,
-									m_HalfFrameSize.height * 0.4,
+									m_ROIFrameSize.height * 0.4,
 									L2_HOUGH_MAX_LINE_GAP);
 
 	// here, we prefer some lines
@@ -292,7 +303,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 
         //PublishDebugImage("mono8", m_pEdgesImage);
 
-		PublishDebugImage("bgr8", m_pWorkingImage);
+		//PublishDebugImage("bgr8", m_pWorkingImage);
 	}
 	else
 	{

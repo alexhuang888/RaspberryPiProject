@@ -40,8 +40,8 @@ namespace GRANSAC
 	    //std::cout << "[ INFO ]: Maximum usable threads: " << nThreads << std::endl;
 	    for(int i = 0; i < nThreads; ++i)
 	    {
-		std::random_device SeedDevice;
-		m_RandEngines.push_back(std::mt19937(SeedDevice()));
+            std::random_device SeedDevice;
+            m_RandEngines.push_back(std::mt19937(SeedDevice()));
 	    }
 
 	    Reset();

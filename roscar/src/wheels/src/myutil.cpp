@@ -1,4 +1,5 @@
 #include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 
 CvPoint2D32f sub(CvPoint2D32f b, CvPoint2D32f a) { return cvPoint2D32f(b.x-a.x, b.y-a.y); }
@@ -32,10 +33,45 @@ void crop(IplImage* src, IplImage* dest, CvRect rect)
 {
 	if (src != NULL && dest != NULL)
 	{
-		cvSetImageROI(src, rect); 
+		cvSetImageROI(src, rect);
 		//printf("crop source (%d, %d), target(%d,%d)\n", src->width, src->height, dest->width, dest->height);
-		cvCopy(src, dest); 
+		cvCopy(src, dest);
 		cvResetImageROI(src);
-	} 
+	}
+}
+
+double medianIplImage(IplImage* pSrc, int32_t nVals)
+{
+    // COMPUTE HISTOGRAM OF SINGLE CHANNEL MATRIX
+    float range[] = { 0, nVals };
+    const float* histRange = { range };
+    bool uniform = true;
+    bool accumulate = false;
+    cv::Mat hist;
+    cv::Mat Input(pSrc);
+
+    cv::calcHist(&Input, 1, 0, cv::Mat(), hist, 1, &nVals, &histRange, uniform, accumulate);
+
+    // COMPUTE CUMULATIVE DISTRIBUTION FUNCTION (CDF)
+    cv::Mat cdf;
+    hist.copyTo(cdf);
+
+    for (int i = 1; i <= nVals - 1; i++)
+    {
+        cdf.at<float>(i) += cdf.at<float>(i - 1);
+    }
+    cdf /= Input.total();
+
+    // COMPUTE MEDIAN
+    double medianVal;
+    for (int i = 0; i <= nVals-1; i++)
+    {
+        if (cdf.at<float>(i) >= 0.5)
+        {
+            medianVal = i;
+            break;
+        }
+    }
+    return medianVal / nVals;
 }
 

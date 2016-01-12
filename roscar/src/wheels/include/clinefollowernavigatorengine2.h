@@ -71,7 +71,7 @@ protected:
         float lengthdiff = fabs(ExtLine2D->m_fLength - m_Params.m_fLength) / m_Params.m_fLength;
         float fDist = fAngleDiff / 90 * 5 + lengthdiff * 5;
         float fLineDistance = 0;
-        float fSlopeDiff = fabs(m_Params.m_Slope) - fabs(ExtLine2D->m_Slope);
+        //float fSlopeDiff = fabs(m_Params.m_Slope) - fabs(ExtLine2D->m_Slope);
 
         // if two lines are not from the same "line band" or
         // if two lines has big length difference, or
@@ -79,9 +79,19 @@ protected:
         if (fAngleDiff > 30 || (lengthdiff >= 0.5) || fabs(ExtLine2D->m_fAngle) > 80)
             fDist += 100;
 
-        if (fAngleDiff < 5)   // treat it as parallel lines (angle difference less than 5 degrees)
+        //if (fAngleDiff < 5)   // treat it as parallel lines (angle difference less than 5 degrees)
+        if (fDist < 100)
         {
-            fLineDistance = fabs(ExtLine2D->m_B - m_Params.m_B) / sqrt(ExtLine2D->m_Slope * ExtLine2D->m_Slope + 1);
+            //fLineDistance = fabs(ExtLine2D->m_B - m_Params.m_B) / sqrt(ExtLine2D->m_Slope * ExtLine2D->m_Slope + 1);
+            float fY = (ExtLine2D->m_Point1.y + ExtLine2D->m_Point2.y + m_Params.m_Point1.y + m_Params.m_Point2.y) / 4;
+
+            float fX1 = ExtLine2D->m_Slope != 0 ? (fY - ExtLine2D->m_B) / ExtLine2D->m_Slope : 0;
+            float fX2 = m_Params.m_Slope != 0 ? (fY - m_Params.m_B) / m_Params.m_Slope : 0;
+            float fD = fX2 - fX1;
+
+            fLineDistance = sqrt((fD * fD));
+
+            //printf("m1=%f, m2=%f, distance=%f\n", ExtLine2D->m_Slope, m_Params.m_Slope, fLineDistance);
             if (fLineDistance < 40 || fLineDistance > 240)
             {
                 // to eliminate two close parallel lines. or if two lines are too far-away
@@ -197,7 +207,7 @@ protected:
 	// left and right lane
 	CvMemStorage* m_pHoughStorage;
 	CvSize m_FrameSize;
-	CvSize m_HalfFrameSize;
+	CvSize m_ROIFrameSize;
 	CvRect m_ROI;
 	IplImage *m_pWorkingImage, *m_pGreyImage, *m_pEdgesImage;
 	bool m_bShowLine;

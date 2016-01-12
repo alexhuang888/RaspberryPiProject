@@ -15,4 +15,6 @@ CvPoint2D32f point_on_segment(CvPoint2D32f line0, CvPoint2D32f line1, CvPoint2D3
 float dist2line(CvPoint2D32f line0, CvPoint2D32f line1, CvPoint2D32f pt);
 
 void crop(IplImage* src, IplImage* dest, CvRect rect);
+
+double medianIplImage(IplImage* src, int32_t nVals);
 #endif
