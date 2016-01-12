@@ -172,7 +172,7 @@ enum{
 	L2_MAX_RESPONSE_DIST = 5,	  // px
 
 	L2_CANNY_MIN_TRESHOLD = 50,	  // edge detector minimum hysteresis threshold
-	L2_CANNY_MAX_TRESHOLD = 100, // edge detector maximum hysteresis threshold
+	L2_CANNY_MAX_TRESHOLD = 150, // edge detector maximum hysteresis threshold
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold

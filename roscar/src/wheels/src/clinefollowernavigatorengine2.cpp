@@ -291,17 +291,17 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	// Perform a Gaussian blur ( Convolving with 3 X 3 Gaussian) & detect edges
 	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 9, 9);
 
-	dMedian = medianIplImage(m_pGreyImage, 256);
+	//dMedian = medianIplImage(m_pGreyImage, 256);
 	dSigma = 0.33;
     canny_T_lower = int32_t(std::max(0., (1.0 - dSigma) * dMedian));
 	canny_T_upper = int32_t(std::min(255., (1.0 + dSigma) * dMedian));
-	//cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
-	cvCanny(m_pGreyImage, m_pEdgesImage, canny_T_lower, canny_T_upper, 3);
+	cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
+	//cvCanny(m_pGreyImage, m_pEdgesImage, canny_T_lower, canny_T_upper, 3);
 
 	// do Hough transform to find lines
 
 	nHoughLines = 0;
-	nHoughThreshold = 20;//m_ROIFrameSize.height * 0.4;
+	nHoughThreshold = 40;//m_ROIFrameSize.height * 0.4;
 
 	//while (nHoughLines < 5 && nHoughThreshold > 4)
 	{
@@ -327,7 +327,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 
         //PublishDebugImage("mono8", m_pEdgesImage);
 
-		//PublishDebugImage("bgr8", m_pWorkingImage);
+		PublishDebugImage("bgr8", m_pWorkingImage);
 	}
 	else
 	{
