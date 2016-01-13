@@ -6,7 +6,7 @@
 
 namespace yisys_roswheels
 {
-#define _CL2_SHOWDEBUGMSG 1
+#define _CL2_SHOWDEBUGMSG 0
 CLineFollowerNavigatorEngine2::CLineFollowerNavigatorEngine2()
 {
 	m_bPaused = true;
@@ -20,7 +20,7 @@ CLineFollowerNavigatorEngine2::CLineFollowerNavigatorEngine2()
 	m_pGreyImage = NULL;
 	m_pEdgesImage = NULL;
 
-	m_bShowLine = true;
+	m_bShowLine = false;
 
 	m_fTurnAngle = 0.f;
 	m_VanishingPoint.x = 0;
@@ -214,7 +214,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
 
                 // average of inliners and shift-angle
                 float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
-#if 1
+#if _CL2_SHOWDEBUGMSG
                 printf("proposed angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
 #endif
                 m_fTurnAngle = fFinalAngle;
@@ -234,7 +234,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 {
 	int32_t nRet = -1;
 	double rho = 1;
-	double theta = CV_PI / 180;
+	double theta = 1 * CV_PI / 180;
 	CvSeq* pLines = NULL;
 	double dMedian = 128;
 	double dSigma = 0.33;
@@ -247,7 +247,7 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	{
 		goto err_out;
 	}
-
+    m_bShowLine = bDisplayImage;
     if (m_bToSaveImage)
     {
         cvSaveImage(m_strFilePath.c_str(), pFrame);
@@ -286,53 +286,50 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 	{
 		m_pGreyImage = cvCreateImage(m_ROIFrameSize, IPL_DEPTH_8U, 1);
 	}
-
+#if 0
 	if (m_pEdgesImage == NULL)
 	{
 		m_pEdgesImage = cvCreateImage(m_ROIFrameSize, IPL_DEPTH_8U, 1);
 	}
-
+#endif
 	// we're interested only in road below horizont - so crop top image portion off
 	crop(pFrame, m_pWorkingImage, m_ROI);
 	cvCvtColor(m_pWorkingImage, m_pGreyImage, CV_BGR2GRAY); // convert to grayscale
-	// Perform a Gaussian blur ( Convolving with 3 X 3 Gaussian) & detect edges
-	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 9, 9);
 
-	//dMedian = medianIplImage(m_pGreyImage, 256);
-	dSigma = 0.33;
-    canny_T_lower = int32_t(std::max(0., (1.0 - dSigma) * dMedian));
-	canny_T_upper = int32_t(std::min(255., (1.0 + dSigma) * dMedian));
-	cvCanny(m_pGreyImage, m_pEdgesImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);
+	// Perform a Gaussian blur ( Convolving with 3 X 3 Gaussian) & detect edges
+	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 5, 5);    // 25/30 (CV_MEDIA=15/30, CV_BLUR=22/30)
+    // till here, it consume 8/30 frame
+
+	cvCanny(m_pGreyImage, m_pGreyImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);  // 15/30 (src=dest is faster 17/30)
 	//cvCanny(m_pGreyImage, m_pEdgesImage, canny_T_lower, canny_T_upper, 3);
 
 	// do Hough transform to find lines
-
+    // till here, it consume 15/30 frame
 	nHoughLines = 0;
 	nHoughThreshold = 40;//m_ROIFrameSize.height * 0.4;
 
 	//while (nHoughLines < 5 && nHoughThreshold > 4)
 	{
-        pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
+        // 6.5/30
+        pLines = cvHoughLines2(m_pGreyImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
                                         rho, theta, nHoughThreshold,
                                         m_ROIFrameSize.height * 0.4,
-                                        L2_HOUGH_MAX_LINE_GAP);
+                                        L2_HOUGH_MAX_LINE_GAP); // reduce MAX_LINE_GAP will improve a bit (10 -> 7/30)
 
     }
 
-
-
 	// here, we prefer some lines
-	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine, 0, 0);
+	ProcessLanes(pLines, m_pGreyImage, m_pWorkingImage, m_bShowLine, 0, 0);
 
 	fAngle = m_fTurnAngle;
 	vanishingPoint = m_VanishingPoint;
 
 	if (bDisplayImage)
 	{
-		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
+		cvShowImage("Lane-Detector::Edges", m_pGreyImage);
 		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
 
-        //PublishDebugImage("mono8", m_pEdgesImage);
+        //PublishDebugImage("mono8", m_pGreyImage);
 
 		PublishDebugImage("bgr8", m_pWorkingImage);
 

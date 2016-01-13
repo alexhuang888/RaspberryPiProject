@@ -70,10 +70,10 @@ namespace GRANSAC
 
 	bool Estimate(std::vector<std::shared_ptr<AbstractParameter>> Data)
 	{
-	    if(Data.size() <= t_NumParams)
+	    if (Data.size() <= t_NumParams)
 	    {
-		std::cout << "[ WARN ]: RANSAC - Number of data points is too less. Not doing anything." << std::endl;
-		return false;
+            std::cout << "[ WARN ]: RANSAC - Number of data points is too less. Not doing anything." << std::endl;
+            return false;
 	    }
 
 	    m_Data = Data;
@@ -111,13 +111,13 @@ namespace GRANSAC
 
 	    for(int i = 0; i < m_MaxIterations; ++i)
 	    {
-		if(InlierFractionAccum[i] > m_BestModelScore)
-		{
-		    m_BestModelScore = InlierFractionAccum[i];
-		    m_BestModelIdx = m_SampledModels.size() - 1;
-		    m_BestModel = m_SampledModels[i];
-		    m_BestInliers = InliersAccum[i];
-		}
+            if (InlierFractionAccum[i] > m_BestModelScore)
+            {
+                m_BestModelScore = InlierFractionAccum[i];
+                m_BestModelIdx = m_SampledModels.size() - 1;
+                m_BestModel = m_SampledModels[i];
+                m_BestInliers = InliersAccum[i];
+            }
 	    }
 
 	    // std::cout << "BestInlierFraction: " << m_BestModelScore << std::endl;
