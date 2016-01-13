@@ -525,10 +525,11 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			wheels::cmd_ask_navigator_saveimage engsave;
             char szFile[200];
 
-            sprintf(szFile, "~/Documents/img_%d.jpg", m_nFileSaveCounter);
+            sprintf(szFile, "/home/alex/RaspberryPiProject/imgout/img_%d.jpg", m_nFileSaveCounter);
 			engsave.request.nModeFlags = 0;
 			engsave.request.strNewImageFilename = std::string(szFile);
             m_nFileSaveCounter++;
+            //printf("Ask to save file to %s\n", engsave.request.strNewImageFilename.c_str());
 			if (m_AskNavigatorEngineSaveImage.call(engsave))
 			{
 				if (engsave.response.nRetCode <= 0)
@@ -540,6 +541,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				ROS_INFO("Fail to set navigator engine");
 			}
+			break;
 		}
 		case 'h':
 			printf("Input instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");

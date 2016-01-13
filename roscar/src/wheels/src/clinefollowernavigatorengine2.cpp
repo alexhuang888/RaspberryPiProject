@@ -107,7 +107,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
 
             std::shared_ptr<yisys_roswheels::MyLine2D> checkLine = std::dynamic_pointer_cast<MyLine2D>(CandLine);
 
-            if (fabs(checkLine->m_fAngle) < 75)
+            if (fabs(checkLine->m_fAngle) < 80)
             {
                 CandLines.push_back(CandLine);
                 if (bShowHoughLine)
@@ -214,7 +214,7 @@ void CLineFollowerNavigatorEngine2::ProcessLanes(CvSeq* lines, IplImage* pEdges,
 
                 // average of inliners and shift-angle
                 float fFinalAngle = (m_fTurnAngle + dShiftAngle) / 2;
-#if _CL2_SHOWDEBUGMSG
+#if 1
                 printf("proposed angle:%f, shift-angle=%f, lineangle=%f, (%d, %d)\n", fFinalAngle, dShiftAngle, m_fTurnAngle, m_VanishingPoint.x, m_VanishingPoint.y);
 #endif
                 m_fTurnAngle = fFinalAngle;
@@ -250,8 +250,14 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
     m_bShowLine = bDisplayImage;
     if (m_bToSaveImage)
     {
-        cvSaveImage(m_strFilePath.c_str(), pFrame);
-        m_bToSaveImage = false;
+        try {
+            cvSaveImage(m_strFilePath.c_str(), pFrame);
+            m_bToSaveImage = false;
+            printf("Image saved to %s\n", m_strFilePath.c_str());
+        } catch(...)
+        {
+        printf("Image Failed to be saved to %s\n", m_strFilePath.c_str());
+        }
     }
 #define ROIRATIO 2
 	if (m_FrameSize.width == 0 || m_FrameSize.height == 0)
@@ -349,6 +355,7 @@ int32_t CLineFollowerNavigatorEngine2::SaveImage(uint32_t nModeFlags, std::strin
     m_bToSaveImage = true;
     m_strFilePath = strImagePath;
     m_nModeFlags = nModeFlags;
+
     return 1;
 }
 }

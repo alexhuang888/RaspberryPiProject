@@ -113,7 +113,7 @@ protected:
             fLineDistance = sqrt((fD * fD));
 
             //printf("m1=%f, m2=%f, distance=%f, %f, %f, %f\n", ExtLine2D->m_Slope, m_Params.m_Slope, fLineDistance,fY, fX1, fX2);
-            if (fLineDistance < 40 || fLineDistance > 240)
+            if (fLineDistance < 40 || fLineDistance > 160)
             {
                 // to eliminate two close parallel lines. or if two lines are too far-away
                 fDist += 100;
