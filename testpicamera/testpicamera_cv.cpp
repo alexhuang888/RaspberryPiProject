@@ -6,10 +6,10 @@
 #include <sstream>
 #include "raspicam/raspicam_cv.h"
 #include "opencv2/imgproc/imgproc.hpp"
-using namespace std; 
+using namespace std;
 #include "unistd.h"
 #include <termios.h>
-int mygetch ( void ) 
+int mygetch ( void )
 {
   int ch;
   struct termios oldt, newt;
@@ -98,7 +98,7 @@ int main ( int argc,char **argv )
     raspicam::RaspiCam_Cv Camera;
     Camera.set ( CV_CAP_PROP_FORMAT, CV_8UC1 );
 	Camera.set ( CV_CAP_PROP_FRAME_WIDTH, 640);
-    Camera.set ( CV_CAP_PROP_FRAME_HEIGHT, 480);   
+    Camera.set ( CV_CAP_PROP_FRAME_HEIGHT, 480);
     processCommandLine ( argc,argv,Camera );
     cout<<"Connecting to camera"<<endl;
     if ( !Camera.open() ) {
@@ -115,18 +115,18 @@ int main ( int argc,char **argv )
     double time_=cv::getTickCount();
 	char szFilename[100] = "";
 	char nkey = 0;
-    //for ( int i=0; i<nCount; i++ ) 
+    //for ( int i=0; i<nCount; i++ )
     cv::Rect roi(0, 190, 640, 100);
     cv::Mat roiImg, erodeElmt, dilateElmt;
     int thVal = 128;
     vector<vector<cv::Point> > contours;
     vector<cv::Vec4i> hierarchy;
-    do 
+    do
     {
 		try {
 			Camera.grab();
 			Camera.retrieve(image);
-			
+
 			image(roi).copyTo(roiImg);
 		} catch (...)
 		{
@@ -136,30 +136,30 @@ int main ( int argc,char **argv )
         cv::threshold(roiImg, roiImg, thVal, 255, 0);
         printf("bitwise_not image\n");
         cv::bitwise_not(roiImg, roiImg); // negative image
-        
+
 		erodeElmt = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
 		dilateElmt = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
 		printf("erode image\n");
 		cv::erode(roiImg, roiImg, erodeElmt);
 		printf("dilate image\n");
-		cv::dilate(roiImg, roiImg, dilateElmt);   
+		cv::dilate(roiImg, roiImg, dilateElmt);
 		contours.clear();
 		hierarchy.clear();
 		printf("findContours image\n");
 		cv::findContours(roiImg, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0,0));
-		
-		for (size_t s = 0; s < contours.size(); s++) 
+
+		for (size_t s = 0; s < contours.size(); s++)
 		{
 			float fArea = cv::contourArea(contours[s]);
-			
-			if (fArea > 2000) 
+
+			if (fArea > 2000)
 			{
 				cv::Moments mu;
 				mu = cv::moments(contours[s], false);
 				cv::Point2f center(mu.m10 / mu.m00, mu.m01 / mu.m00); // point in center (x only)
-				//cv::circle(camera, center, 5, Scalar(0, 255, 0), -1, 8, 0);   
+				//cv::circle(camera, center, 5, Scalar(0, 255, 0), -1, 8, 0);
 				printf("Find a region: Area=%f, center(%f, %f)\n", fArea, center.x, center.y);
-				
+
 				if (i % 50 == 0 && i != 0)
 				{
 					try {
@@ -170,12 +170,12 @@ int main ( int argc,char **argv )
 					}
 					sprintf(szFilename, "roi_image%d.jpg", i);
 					try {
-						cv::imwrite(szFilename, roiImg);
+						//cv::imwrite(szFilename, roiImg);
 					} catch (...)
 					{
 						printf("Fail to write out image\n");
 					}
-				}				
+				}
 			}
 		}
 
@@ -183,7 +183,7 @@ int main ( int argc,char **argv )
         nkey = cv::waitKey(10);
         //printf("Key press: %d %c\n", nkey, nkey);
     } while (nkey != 'q');
-    
+
     if ( !doTestSpeedOnly )  cout<<endl<<"Images saved in imagexx.jpg"<<endl;
     double secondsElapsed= double ( cv::getTickCount()-time_ ) /double ( cv::getTickFrequency() ); //time in second
     cout<< secondsElapsed<<" seconds for "<< nCount<<"  frames : FPS = "<< ( float ) ( ( float ) ( nCount ) /secondsElapsed ) <<endl;
