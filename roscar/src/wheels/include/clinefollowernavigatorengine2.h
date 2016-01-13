@@ -219,6 +219,8 @@ public:
     virtual int32_t ProcessImage(IplImage *pFrame, bool bDisplayImage, float &fAngle, CvPoint &vanishingPoint);
 	virtual uint32_t GetEngineID(void) { return WEID_LINEFOLLOWERENGINE2; };
 	virtual std::string GetEngineDescription(void) { return WESTR_LINEFOLLOWERENGINE2;} ;
+
+    int32_t SaveImage(uint32_t nModeFlags, std::string strImagePath);
 protected:
 	int32_t FindLineCenter(cv::Mat &InputImage, int32_t nTick, int32_t &nCenterX, int32_t &nCenterY);
 	int32_t FindOffset(int32_t nCenterX, int32_t nCenterY, float &fXOffset, float &fYOffset);
@@ -235,7 +237,9 @@ protected:
 	float m_fTurnAngle;
 	CvPoint m_VanishingPoint;
 protected:
-
+    bool m_bToSaveImage;
+    std::string m_strFilePath;
+    int32_t m_nModeFlags;
 	bool m_bPaused;
 };
 };

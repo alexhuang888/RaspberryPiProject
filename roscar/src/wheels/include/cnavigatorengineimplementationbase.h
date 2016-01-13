@@ -28,6 +28,7 @@ public:
             return m_pNavEngineCB->PublishDebugImage(encoding, image);
         return 0;
     }
+    virtual int32_t SaveImage(uint32_t nModeFlags, std::string strImagePath) {return 0;};
 protected:
     CNavigatorEngineCB *m_pNavEngineCB;
 };

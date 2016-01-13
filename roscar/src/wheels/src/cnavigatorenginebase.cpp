@@ -43,6 +43,8 @@ CNavigatorEngineWithImageSource::CNavigatorEngineWithImageSource()
 	m_bHaveCalibration = false;
 
 	m_pNavEngineImpl = NULL;
+	m_nLastTickCount = 0;
+	m_nFrameProcessedCount = 0;
 }
 
 CNavigatorEngineWithImageSource::~CNavigatorEngineWithImageSource()
@@ -52,6 +54,15 @@ CNavigatorEngineWithImageSource::~CNavigatorEngineWithImageSource()
 	//m_pUndistorter = NULL;
 
 	m_pNavEngineImpl = NULL;
+}
+
+int32_t CNavigatorEngineWithImageSource::SaveImage(uint32_t nModeFlags, std::string strImagePath)
+{
+    if (m_pNavEngineImpl != NULL)
+    {
+        return m_pNavEngineImpl->SaveImage(nModeFlags, strImagePath);
+    }
+    return 0;
 }
 int32_t CNavigatorEngineWithImageSource::SetNavEngineImplementation(CNavigatorEngineImplementationBase *pNavImpl)
 {
@@ -85,6 +96,9 @@ int32_t CNavigatorEngineWithImageSource::Init(void)
 }
 int32_t CNavigatorEngineWithImageSource::Start(void)
 {
+	m_nLastTickCount = cv::getTickCount();
+	m_nFrameProcessedCount = 0;
+
     if (m_pNavEngineImpl != NULL)
         return m_pNavEngineImpl->Start();
 
@@ -217,35 +231,14 @@ void CNavigatorEngineWithImageSource::vidCb(const sensor_msgs::ImageConstPtr img
 	m_nImageBaseNodeHandle.param<bool>(WGP_DEBUG_SHOWIMAGE, bDisplayImage, false);
 	//printf("Show Debug Image=%s\n", bDisplayImage ? "Yes" : "No");
 	ProcessImageData(img, bDisplayImage);
-/*
-	cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::MONO8);
 
-	if (img->header.seq < (unsigned int)m_nLastSEQ)
 	{
-		printf("Backward-Jump in SEQ detected, but ignoring for now.\n");
-		m_nLastSEQ = 0;
-		return;
+        // find frame rate
+        int64_t nThisTick = cv::getTickCount();
+        double dSecond = (double)(nThisTick - m_nLastTickCount) / (double)cv::getTickFrequency();
+        m_nFrameProcessedCount++;
+        printf("Frame rate: %f (%d, %f)\n", m_nFrameProcessedCount / dSecond, m_nFrameProcessedCount, dSecond);
 	}
-	m_nLastSEQ = img->header.seq;
-
-	TimestampedMat bufferItem;
-	if(img->header.stamp.toSec() != 0)
-		bufferItem.timestamp =  Timestamp(img->header.stamp.toSec());
-	else
-		bufferItem.timestamp =  Timestamp(ros::Time::now().toSec());
-
-	if(m_pUndistorter != 0)
-	{
-		assert(m_pUndistorter->isValid());
-		m_pUndistorter->undistort(cv_ptr->image,bufferItem.data);
-	}
-	else
-	{
-		bufferItem.data = cv_ptr->image;
-	}
-
-	m_pImageBuffer->pushBack(bufferItem);
-*/
 }
 
 void CNavigatorEngineWithImageSource::infoCb(const sensor_msgs::CameraInfoConstPtr info)

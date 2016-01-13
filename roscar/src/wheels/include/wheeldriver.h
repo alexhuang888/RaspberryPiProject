@@ -10,7 +10,7 @@
 #pragma once
 namespace yisys_roswheels
 {
-#define WHEELANGULAR_TOLERANCE (0.4)	
+#define WHEELANGULAR_TOLERANCE (0.4)
 #define WHEELPIDMAXSPEED (10)
 #define RIGHTWHEELADJUSTRATIO 1.2
 // it accept several msg and decide how the wheels works.
@@ -24,9 +24,9 @@ public:
 	virtual ~CWheelDriver() {};
 	void wheels_CmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg);
 	bool cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
-								wheels::cmd_send_manual_instructionResponse &res);	
+								wheels::cmd_send_manual_instructionResponse &res);
 	void Checklongpause(void);
-	
+
 	// fAngular: angular direction and speed
 	//				fAngular value: positive: right turn, negative: left turn. value is from 0-90 or 0 to -90
 	//											when fabs(fAngular) is over tolerance, then it is decide to turn
@@ -34,9 +34,9 @@ public:
 	//			fLinear value: normalized (0..1), mapping from 0 to 100 for wheel speed
 
 	int32_t CmdVelToWheelController(float fAngular, float fLinear);
-	
+
 	int32_t KeyCodeToWheelController(unsigned char cKeyCode);
-	
+
 	int32_t GetWheelStatus(uint32_t nWheelID, wheels::cmd_get_one_wheel_status &Status);
 protected:
 	int32_t _SetSpeedDirection(int32_t nSpeed, int32_t nDirection);
@@ -49,6 +49,7 @@ protected:
 	ros::ServiceClient m_SetSpeedClient;
 	ros::ServiceClient m_SetTwoWheelsSpeedClient;
 	ros::ServiceClient m_SetNavigatorEngine;
+	ros::ServiceClient m_AskNavigatorEngineSaveImage;
 	ros::ServiceServer m_SendManualInstructionService;
 	ros::Subscriber m_CmdVelSubscriber;
 	time_t m_LastMsgTime;
@@ -58,7 +59,7 @@ protected:
 	bool m_bManualStop;	// true: to prevent the car to run dis-regarding any input cmd_vels
 	bool m_bManualOverrideMode;	// true: only keyboard can do the driving, or navigator engine will do the job.
 	bool m_bDisplayDebugImage;
-	
+
 	/*
 	 * PID controller: speed = Kp * shift error + Ki * (accumulated error) + Kd * (d(Shift_Error) / dt)
 	 * Kp is supposed to be FULLSPEED / 0.5 = 200;
@@ -70,6 +71,7 @@ protected:
 	float m_fKi;
 	float m_fKd;
 	float m_fRightWheelAdjustRatio;
+	int32_t m_nFileSaveCounter;
 };
 };
 #endif

@@ -25,6 +25,7 @@ CLineFollowerNavigatorEngine2::CLineFollowerNavigatorEngine2()
 	m_fTurnAngle = 0.f;
 	m_VanishingPoint.x = 0;
 	m_VanishingPoint.y = 0;
+	m_bToSaveImage = false;
 }
 
 CLineFollowerNavigatorEngine2::~CLineFollowerNavigatorEngine2()
@@ -50,6 +51,7 @@ int32_t CLineFollowerNavigatorEngine2::Init(void)
 int32_t CLineFollowerNavigatorEngine2::Start(void)
 {
 	m_bPaused = false;
+
 	return 1;
 }
 
@@ -246,6 +248,11 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 		goto err_out;
 	}
 
+    if (m_bToSaveImage)
+    {
+        cvSaveImage(m_strFilePath.c_str(), pFrame);
+        m_bToSaveImage = false;
+    }
 #define ROIRATIO 2
 	if (m_FrameSize.width == 0 || m_FrameSize.height == 0)
 	{
@@ -340,5 +347,11 @@ int32_t CLineFollowerNavigatorEngine2::ProcessImage(IplImage *pFrame, bool bDisp
 err_out:
 	return nRet;
 }
-
+int32_t CLineFollowerNavigatorEngine2::SaveImage(uint32_t nModeFlags, std::string strImagePath)
+{
+    m_bToSaveImage = true;
+    m_strFilePath = strImagePath;
+    m_nModeFlags = nModeFlags;
+    return 1;
+}
 }

@@ -16,6 +16,8 @@ CWheelNavigator::CWheelNavigator() : m_ImageTransport(m_nNodeHandle)
 
 	m_SetNavigatorEngineService = m_nNodeHandle.advertiseService("set_navigator_engine", &CWheelNavigator::cbSetEngine, this);
 
+	m_AskNavigatorSaveImageService = m_nNodeHandle.advertiseService("ask_navigator_saveimage", &CWheelNavigator::cbAskEngineSaveImage, this);
+
 	m_GetNavigatorEngineService = m_nNodeHandle.advertiseService("get_navigator_engine_status", &CWheelNavigator::cbGetEngineStatus, this);
 
 	m_WheelCmdVelPublisher = m_nNodeHandle.advertise<geometry_msgs::Twist>("wheels_cmd_vel", 10);
@@ -126,6 +128,15 @@ bool CWheelNavigator::cbSetEngine(wheels::cmd_set_navigator_engineRequest &req,
 		//else
 		//	res.strActiveEngineDescription = "";
 	}
+	return true;
+}
+
+
+bool CWheelNavigator::cbAskEngineSaveImage(wheels::cmd_ask_navigator_saveimageRequest &req,
+									wheels::cmd_ask_navigator_saveimageResponse &res)
+{
+    res.nRetCode = m_TrackingEngine.SaveImage(req.nModeFlags, req.strNewImageFilename);
+
 	return true;
 }
 

@@ -5,6 +5,7 @@
 #include "wheelmotorengine.h"
 #include "wheels/cmd_get_navigator_engine_status.h"
 #include "wheels/cmd_set_navigator_engine.h"
+#include "wheels/cmd_ask_navigator_saveimage.h"
 #include "clinefollowernavigatorengine.h"
 #include "clinefollowernavigatorengine2.h"
 #include "clanedetectornavigatorengine.h"
@@ -24,6 +25,8 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 
 	m_SetNavigatorEngine = m_nNodeHandle.serviceClient <wheels::cmd_set_navigator_engine>("set_navigator_engine");
 
+    m_AskNavigatorEngineSaveImage = m_nNodeHandle.serviceClient <wheels::cmd_ask_navigator_saveimage>("ask_navigator_saveimage");
+
 	m_CmdVelSubscriber = m_nNodeHandle.subscribe<geometry_msgs::Twist>("wheels_cmd_vel", 1000,
 										boost::bind(&CWheelDriver::wheels_CmdVelCallback, this, _1));
 
@@ -42,6 +45,7 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_fKi = 0.01f;
 	m_fKd = m_fKp / 2;
 	m_fRightWheelAdjustRatio = RIGHTWHEELADJUSTRATIO;
+	m_nFileSaveCounter = 0;
 }
 
 bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRequest &req,
@@ -75,9 +79,9 @@ int32_t CWheelDriver::_SetInternalSpeed(int32_t nSpeed)
 
 	if (nSpeed < 0)
 		nSpeed = 0;
-		
+
 	m_nCurrentUserSpeed = nSpeed;
-	//m_nCurrentUserDirection = nDirection;		
+	//m_nCurrentUserDirection = nDirection;
 #if 0
 	srv2.request.nNewSpeed = nSpeed;
 	srv2.request.nNewDirection = nDirection;
@@ -118,9 +122,9 @@ int32_t CWheelDriver::_SetSpeedDirection(int32_t nSpeed, int32_t nDirection)
 
 	if (nSpeed < 0)
 		nSpeed = 0;
-		
+
 	m_nCurrentUserSpeed = nSpeed;
-	m_nCurrentUserDirection = nDirection;		
+	m_nCurrentUserDirection = nDirection;
 #if 1
 	srv2.request.nNewSpeed = nSpeed;
 	srv2.request.nNewDirection = nDirection;
@@ -179,7 +183,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	int32_t nDir = CMC_MOTORFORWARD;
 	if (fLinear < 0)
 		nDir = CMC_MOTORBACKWARD;
-		
+
 	if (nNewSpeed < 0) // left turn
 	{
 		nNewRightSpeed = -nNewSpeed;
@@ -208,9 +212,9 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 		nNewRightSpeed += m_nCurrentUserSpeed;
 		nNewLeftSpeed += m_nCurrentUserSpeed;
 	}
-	
+
 	nNewRightSpeed *= m_fRightWheelAdjustRatio;
-	
+
 	if (nNewRightSpeed > FULLSPEED)
 		nNewRightSpeed = FULLSPEED;
 	if (nNewRightSpeed < 0)
@@ -220,7 +224,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 		nNewLeftSpeed = FULLSPEED;
 	if (nNewLeftSpeed < 0)
 		nNewLeftSpeed = 0;
-		
+
 	if (m_bManualStop)
 	{
 		nRet = 1;
@@ -516,6 +520,27 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			}
 		}
 			break;
+		case 'x':	// save image
+		{
+			wheels::cmd_ask_navigator_saveimage engsave;
+            char szFile[200];
+
+            sprintf(szFile, "~/Documents/img_%d.jpg", m_nFileSaveCounter);
+			engsave.request.nModeFlags = 0;
+			engsave.request.strNewImageFilename = std::string(szFile);
+            m_nFileSaveCounter++;
+			if (m_AskNavigatorEngineSaveImage.call(engsave))
+			{
+				if (engsave.response.nRetCode <= 0)
+				{
+					ROS_INFO("fail to save image");
+				}
+			}
+			else
+			{
+				ROS_INFO("Fail to set navigator engine");
+			}
+		}
 		case 'h':
 			printf("Input instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
 			break;

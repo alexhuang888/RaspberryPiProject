@@ -89,6 +89,8 @@ public:
 	// get called on ros-message callbacks
 	virtual void vidCb(const sensor_msgs::ImageConstPtr img);
 	virtual void infoCb(const sensor_msgs::CameraInfoConstPtr info);
+
+	virtual int32_t SaveImage(uint32_t nModeFlags, std::string strImagePath);
 	/**
 	 * Gets the Camera Calibration. To avoid any dependencies, just as simple float / int's.
 	 */
@@ -112,6 +114,8 @@ protected:
 	std::string m_strVidChannel;
 	ros::Subscriber m_VidSubscriber;
 	CNavigatorEngineImplementationBase *m_pNavEngineImpl;
+	int64_t m_nLastTickCount;
+	int32_t m_nFrameProcessedCount;
 private:
 	ros::NodeHandle m_nImageBaseNodeHandle;
 };

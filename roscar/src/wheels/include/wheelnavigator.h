@@ -5,6 +5,7 @@
 #include "cnavigatorenginebase.h"
 #include "wheels/cmd_get_navigator_engine_status.h"
 #include "wheels/cmd_set_navigator_engine.h"
+#include "wheels/cmd_ask_navigator_saveimage.h"
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/image_encodings.h>
 // here, we would like to design a navigator fasade, which can include several
@@ -41,6 +42,9 @@ public:
 	bool cbGetEngineStatus(wheels::cmd_get_navigator_engine_statusRequest &req,
 								wheels::cmd_get_navigator_engine_statusResponse &res);
 
+	bool cbAskEngineSaveImage(wheels::cmd_ask_navigator_saveimageRequest &req,
+							wheels::cmd_ask_navigator_saveimageResponse &res);
+
 	void PublishEngineStatus(void);
 
 public:
@@ -54,6 +58,7 @@ protected:
 	ros::NodeHandle m_nNodeHandle;
 	ros::Publisher m_EngineStatusPublisher;
 	ros::ServiceServer m_SetNavigatorEngineService;
+	ros::ServiceServer m_AskNavigatorSaveImageService;
 	ros::ServiceServer m_GetNavigatorEngineService;
 	ros::Publisher m_WheelCmdVelPublisher;
 	image_transport::Publisher m_ImageMsgPublisher;
