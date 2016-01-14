@@ -3,6 +3,8 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include "clinefollowernavigatorengine.h"
+#include "myutil.h"
+
 namespace yisys_roswheels
 {
 CLineFollowerNavigatorEngine::CLineFollowerNavigatorEngine()
@@ -190,7 +192,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				fMaxArea = fArea;
 			}
 		}
-		printf("\033[3;1HFound Max Area=%f, area threshold=%d (total contour=%d)\n", fMaxArea, ContourAreaThreshold, contours.size());
+		myprintf(3, 1, "Found Max Area=%f, area threshold=%d (total contour=%d)\n", fMaxArea, ContourAreaThreshold, contours.size());
 		{
 			if (fMaxArea > ContourAreaThreshold && nMaxAreaContourIndex >= 0)
 			{

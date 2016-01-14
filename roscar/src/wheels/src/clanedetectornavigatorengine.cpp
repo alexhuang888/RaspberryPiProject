@@ -2,6 +2,8 @@
 #include "vector"
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
+#include "myutil.h"
+
 namespace yisys_roswheels
 {
 CLaneDetectorNavigatorEngine::CLaneDetectorNavigatorEngine()
@@ -176,7 +178,7 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 
 		bool update_ok = (k_diff <= K_VARY_FACTOR && b_diff <= B_VARY_FACTOR) || pLaneStatus->reset;
 
-		printf("\033[2;1HpLaneStatus: %s, k vary: %-9.2f, b vary: %-9.2f, lost: %s\n",
+		myprintf(2, 1, "pLaneStatus: %s, k vary: %-9.2f, b vary: %-9.2f, lost: %s\n",
 			(bRightLane ? "RIGHT":"LEFT "), k_diff, b_diff, (update_ok?"no ":"yes"));
 
 		if (update_ok)
@@ -200,7 +202,7 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 	}
 	else
 	{
-		printf("\033[2;1Hno lanes detected - lane tracking lost! counter increased\n");
+		myprintf(2, 1, "no lanes detected - lane tracking lost! counter increased\n");
 		pLaneStatus->lost++;
 		if (pLaneStatus->lost >= MAX_LOST_FRAMES && !pLaneStatus->reset)
 		{
@@ -310,7 +312,7 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	// find the angle
 
 	m_fTurnAngle = 90 - atan2(pivotB.y - pivotT.y, pivotB.x - pivotT.x) * 180 / CV_PI;
-	printf("\033[3;1HAngle: %4.2f\n", m_fTurnAngle);
+	myprintf(3, 1, "Angle: %4.2f\n", m_fTurnAngle);
 #if DEBUGIMG
 	char szOut[100];
 

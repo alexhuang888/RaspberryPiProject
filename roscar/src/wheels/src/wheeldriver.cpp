@@ -10,6 +10,7 @@
 #include "clinefollowernavigatorengine2.h"
 #include "clanedetectornavigatorengine.h"
 #include "globalinc.h"
+#include "myutil.h"
 namespace yisys_roswheels
 {
 CWheelDriver::CWheelDriver(std::string nodename) :
@@ -258,7 +259,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	srv2.request.nNewRightSpeed = nNewRightSpeed;
 	srv2.request.nNewRightDirection = nNewRightDirection;
 
-	printf("\033[18;1HSet wheel speed (%f, %f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, m_fAccumulatedShiftError, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
+	myprintf(18, 1, "Set wheel speed (%f, %f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, m_fAccumulatedShiftError, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
 	if (m_SetTwoWheelsSpeedClient.call(srv2))
 	{
 		if (srv2.response.nNewLeftSpeed == 0 && srv2.response.nNewRightSpeed == 0)
@@ -547,7 +548,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			break;
 		}
 		case 'h':
-			printf("\033[19;1HInput instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
+			myprintf(19, 1, "Input instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
 			break;
 	}
 

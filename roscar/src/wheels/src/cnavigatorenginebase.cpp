@@ -9,6 +9,8 @@
 #include <iostream>
 #include <fstream>
 #include "globalinc.h"
+#include "myutil.h"
+
 using namespace cv;
 namespace yisys_roswheels
 {
@@ -237,7 +239,7 @@ void CNavigatorEngineWithImageSource::vidCb(const sensor_msgs::ImageConstPtr img
         int64_t nThisTick = cv::getTickCount();
         double dSecond = (double)(nThisTick - m_nLastTickCount) / (double)cv::getTickFrequency();
         m_nFrameProcessedCount++;
-        printf("\033[2;1HFrame rate: %f (%d, %f)\n", m_nFrameProcessedCount / dSecond, m_nFrameProcessedCount, dSecond);
+        myprintf(2, 1, "Frame rate: %f (%d, %f)\n", m_nFrameProcessedCount / dSecond, m_nFrameProcessedCount, dSecond);
 	}
 #endif
 }

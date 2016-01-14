@@ -1,7 +1,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
-
+#include "stdarg.h"
 CvPoint2D32f sub(CvPoint2D32f b, CvPoint2D32f a) { return cvPoint2D32f(b.x-a.x, b.y-a.y); }
 CvPoint2D32f mul(CvPoint2D32f b, CvPoint2D32f a) { return cvPoint2D32f(b.x*a.x, b.y*a.y); }
 CvPoint2D32f add(CvPoint2D32f b, CvPoint2D32f a) { return cvPoint2D32f(b.x+a.x, b.y+a.y); }
@@ -73,5 +73,21 @@ double medianIplImage(IplImage* pSrc, int32_t nVals)
         }
     }
     return medianVal / nVals;
+}
+void myclearscreen(void)
+{
+    printf("\033[2J\n\033[0;0H");
+}
+void myprintf(int nRow, int nCol, const char *pFmt, ...)
+{
+    char szCode[100];
+    va_list args;
+    va_start (args, pFmt);
+
+    sprintf(szCode, "\\033[%d;%dH\\033[K\\033[%d;%dH", nRow, nCol, nRow, nCol);
+    printf("%s", szCode);
+
+    vprintf(pFmt, args);
+    va_end(args);
 }
 

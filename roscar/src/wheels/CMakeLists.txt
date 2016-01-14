@@ -229,17 +229,17 @@ include_directories(
 	)
 
 #to display wheel status
-add_executable(wheel_status_console src/wheelstatusconsole.cpp src/wheelstatusconsolenode.cpp)
+add_executable(wheel_status_console src/wheelstatusconsole.cpp src/wheelstatusconsolenode.cpp src/myutil.cpp )
 target_link_libraries(wheel_status_console ${catkin_LIBRARIES})
 add_dependencies(wheel_status_console wheels_generate_messages_cpp)
 
 # the driver of the robot-car, it will listen to cmd_vel and send message to motor controller
-add_executable(wheel_driver src/wheeldriver.cpp src/wheeldrivernode.cpp)
+add_executable(wheel_driver src/wheeldriver.cpp src/wheeldrivernode.cpp src/myutil.cpp )
 target_link_libraries(wheel_driver ${catkin_LIBRARIES})
 add_dependencies(wheel_driver wheels_generate_messages_cpp)
 
 # motor controller, will listen to message then call motor controller.
-add_executable(wheel_controller src/wheelmotorengine.cpp src/wheelcontroller.cpp src/wheelcontrollernode.cpp)
+add_executable(wheel_controller src/wheelmotorengine.cpp src/wheelcontroller.cpp src/wheelcontrollernode.cpp src/myutil.cpp )
 target_link_libraries(wheel_controller ${catkin_LIBRARIES} wiringPi pthread)
 add_dependencies(wheel_controller wheels_generate_messages_cpp)
 
@@ -249,7 +249,7 @@ target_link_libraries(wheel_navigator ${catkin_LIBRARIES})
 add_dependencies(wheel_navigator wheels_generate_messages_cpp)
 
 # the manual override console of the robot-car, it will listen to cmd_vel and send message to motor controller
-add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp)
+add_executable(wheel_manual_console src/wheeldriver.cpp src/wheelmanualconsole.cpp src/myutil.cpp )
 target_link_libraries(wheel_manual_console ${catkin_LIBRARIES})
 add_dependencies(wheel_manual_console wheels_generate_messages_cpp)
 
