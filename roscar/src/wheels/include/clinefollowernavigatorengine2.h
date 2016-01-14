@@ -174,15 +174,6 @@ public:
  * in this class, it will get camera data from image_raw message, then process it to get estimated speed and direction
  * for the wheel
  */
-#define TESTROI 0
-#define PRESERVEROI 1
-#define THRESHOLDIMAGE 1
-
-#define CAMERA_IMG_WIDTH 640
-#define CAMERA_IMG_HEIGHT 480
-#define IMGTHRESHOLD 127
-#define MAXAREATHRESHOLD 5000
-
 #define WEID_LINEFOLLOWERENGINE2 3
 #define WESTR_LINEFOLLOWERENGINE2 "Line Follower2"
 enum{
@@ -192,19 +183,12 @@ enum{
     L2_BORDERX = 10,			  // px, skip this much from left & right borders
 	L2_MAX_RESPONSE_DIST = 5,	  // px
 
-	L2_CANNY_MIN_TRESHOLD = 50,	  // edge detector minimum hysteresis threshold
+	L2_CANNY_MIN_TRESHOLD = 30,	  // edge detector minimum hysteresis threshold
 	L2_CANNY_MAX_TRESHOLD = 150, // edge detector maximum hysteresis threshold
 
 	L2_HOUGH_TRESHOLD = 50,		// line approval vote threshold
 	L2_HOUGH_MIN_LINE_LENGTH = 50,	// remove lines shorter than this treshold
 	L2_HOUGH_MAX_LINE_GAP = 50,   // join lines to one with smaller than this gaps
-
-	L2_CAR_DETECT_LINES = 4,    // minimum lines for a region to pass validation as a 'CAR'
-	L2_CAR_H_LINE_LENGTH = 10,  // minimum horizontal line length from car body in px
-
-	L2_MAX_VEHICLE_SAMPLES = 30,      // max vehicle detection sampling history
-	L2_CAR_DETECT_POSITIVE_SAMPLES = L2_MAX_VEHICLE_SAMPLES-2, // probability positive matches for valid car
-	L2_MAX_VEHICLE_NO_UPDATE_FREQ = 15 // remove car after this much no update frames
 };
 class CLineFollowerNavigatorEngine2 : public CNavigatorEngineImplementationBase
 {
@@ -232,7 +216,7 @@ protected:
 	CvSize m_FrameSize;
 	CvSize m_ROIFrameSize;
 	CvRect m_ROI;
-	IplImage *m_pWorkingImage, *m_pGreyImage, *m_pEdgesImage;
+	IplImage *m_pWorkingImage, *m_pGreyImage, *m_pEdgesImage, *m_pOTSU;
 	bool m_bShowLine;
 	float m_fTurnAngle;
 	CvPoint m_VanishingPoint;

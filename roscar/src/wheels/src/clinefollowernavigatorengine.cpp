@@ -1,13 +1,8 @@
-#include "clinefollowernavigatorengine.h"
 #include "iostream"
-//#include <sensor_msgs/image_encodings.h>
-//#include <sensor_msgs/Image.h>
-//#include <sensor_msgs/CameraInfo.h>
-//#include <geometry_msgs/PoseStamped.h>
-//#include "cv_bridge/cv_bridge.h"
 #include "vector"
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
+#include "clinefollowernavigatorengine.h"
 namespace yisys_roswheels
 {
 CLineFollowerNavigatorEngine::CLineFollowerNavigatorEngine()
@@ -95,7 +90,7 @@ int32_t CLineFollowerNavigatorEngine::ProcessImage(IplImage *pFrame, bool bDispl
 err_out:
 	return nRet;
 }
-
+#define ROIRATAIO 4
 int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_t nTick, int32_t &nCenterX, int32_t &nCenterY, bool bDisplayImage)
 {
 	char szFilename[100] = "";
@@ -107,17 +102,12 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 
 	m_nHeight = InputImage.rows;
 	m_nWidth = InputImage.cols;
-#if 0
-	int nROILeft = m_nWidth / 5;
-	int nROIWidth = m_nWidth * 3 / 5;
-	int nROITop = m_nHeight * 3 / 4;
-	int nROIHeight = m_nHeight / 4;
-#else
+
 	int nROILeft = 0;
 	int nROIWidth = m_nWidth;
-	int nROITop = m_nHeight * 3 / 4;
-	int nROIHeight = m_nHeight / 4;
-#endif
+	int nROITop = m_nHeight * (ROIRATAIO - 1) / ROIRATAIO;
+	int nROIHeight = m_nHeight / ROIRATAIO;
+
     cv::Rect roi(nROILeft, nROITop, nROIWidth, nROIHeight);
     cv::Mat roiImg, erodeElmt, dilateElmt;
     int thVal = IMGTHRESHOLD;
@@ -125,9 +115,10 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
     std::vector<cv::Vec4i> hierarchy;
 
 	int nRet = -1;
+	int ContourAreaThreshold = roi.width * roi.height / 6;
+
 	nCenterX = m_nWidth / 2;
 	nCenterY = m_nHeight / 2;
-
     {
 		try {
 			InputImage(roi).copyTo(roiImg);
@@ -143,8 +134,9 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 
 #if THRESHOLDIMAGE
 		try {
-			//printf("threshold image\n");
-
+            //printf("threshold image\n");
+            cv::cvtColor(roiImg, roiImg, CV_BGR2GRAY);
+            //printf("roimgtype=%d\n", roiImg.type());
 			//cv::blur( roiImg, roiImg, cv::Size( 5, 5 ), cv::Point(-1,-1) );
 			cv::threshold(roiImg, roiImg, thVal, 255, cv::THRESH_BINARY);
 			//printf("bitwise_not image\n");
@@ -198,9 +190,9 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				fMaxArea = fArea;
 			}
 		}
-		printf("Found Max Area=%f\n", fMaxArea);
+		printf("Found Max Area=%f, area threshold=%d\n", fMaxArea, ContourAreaThreshold);
 		{
-			if (fMaxArea > MAXAREATHRESHOLD && nMaxAreaContourIndex >= 0)
+			if (fMaxArea > ContourAreaThreshold && nMaxAreaContourIndex >= 0)
 			{
 				cv::Moments mu;
 				try {
@@ -229,8 +221,8 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 						const char* err_msg = e.what();
 						std::cout << "exception caught: " << err_msg << std::endl;
 					}
-					sprintf(szFilename, "roi_image%d.png", nTick);
-					sprintf(szOriFilename, "image%d.png", nTick);
+					//sprintf(szFilename, "roi_image%d.png", nTick);
+					//sprintf(szOriFilename, "image%d.png", nTick);
 					try {
 
 						//cv::imwrite(szFilename, roiImg);
@@ -294,40 +286,6 @@ int32_t CLineFollowerNavigatorEngine::OffsetNavigator(float fXOffset, float &fAn
 
     fAngle = fXOffset * 90.;
 
-	//geometry_msgs::Twist vel_msg;
-
-	//vel_msg.angular.z = (fXOffset);
-	//vel_msg.linear.x = _CNEWIS_DEFAULT_LINEARSPEED;
-
-	//vel_msg.angular.z *= fDir;
-
-/*
-	if (fabs(fXOffset) > 0.2 && fabs(fXOffset) < 0.4)	// If the offset is more than 30% on either side from the center of the image
-	{
-		srv2.request.nNewSpeed = 60;	// max speed;
-	}
-	else if(fabs(fXOffset) > 0.4 && fabs(fXOffset) < 0.6)	// If the offset is more than 50% on either side from the center of the image
-	{
-		srv2.request.nNewSpeed = 65;	// max speed;
-	}
-	else if(fabs(fXOffset) > 0.6 && fabs(fXOffset) < 0.8)	// If the offset is more than 70% on either side from the center of the image
-	{
-		srv2.request.nNewSpeed = 70;	// max speed;
-	}
-	else if(fabs(fXOffset) > 0.8)	// If the offset is more than 90% on either side from the center of the image
-	{
-		srv2.request.nNewSpeed = 75;	// max speed;
-	}
-	else	// Move forward with the specified speed by the user
-	{
-		srv2.request.nNewSpeed = 60;	// max speed;
-		srv2.request.nNewDirection = 1;	// forward
-	}
-	*/
-
-	//m_WheelCmdVelPublisher.publish(vel_msg);
-	//ProcessCmdVels(vel_msg);
-	//printf("Publish: z=%f, x=%f\n", vel_msg.angular.z, vel_msg.linear.x);
 	nRet = 1;
 	return nRet;
 }

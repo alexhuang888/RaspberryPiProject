@@ -9,13 +9,6 @@
         <param name="camera_frame_id" value="head_camera" />
         <param name="io_method" value="mmap"/>
     </node>
-    <!--
-    <node name="mapper" pkg="lsd_slam_core" type="live_slam" respawn="false" output="screen">
-        <remap from="image" to="/usb_cam/image_raw" />
-    </node>
-    <node name="viewer" pkg="lsd_slam_viewer" type="viewer" respawn="false" output="screen" />
-    -->
-
     <node name="wheel_navigator" pkg="wheels" type="wheel_navigator" respawn="false" output="screen">
 		<remap from="image" to="/camera1/image_raw" />
     </node>

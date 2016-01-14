@@ -2,8 +2,8 @@
 #define __CLINEFOLLOWERNAVIGATORENGINE_H__
 
 #pragma once
+
 #include "opencv2/imgproc/imgproc.hpp"
-//#include "cnavigatorenginebase.h"
 #include "cnavigatorengineimplementationbase.h"
 namespace yisys_roswheels
 {
@@ -12,13 +12,11 @@ namespace yisys_roswheels
  * for the wheel
  */
 #define TESTROI 0
-#define PRESERVEROI 1
+#define PRESERVEROI 0
 #define THRESHOLDIMAGE 1
 
-#define CAMERA_IMG_WIDTH 640
-#define CAMERA_IMG_HEIGHT 480
 #define IMGTHRESHOLD 127
-#define MAXAREATHRESHOLD 5000
+
 
 #define WEID_LINEFOLLOWERENGINE 1
 #define WESTR_LINEFOLLOWERENGINE "Line Follower"
