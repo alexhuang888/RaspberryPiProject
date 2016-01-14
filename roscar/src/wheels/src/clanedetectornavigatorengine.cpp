@@ -1,9 +1,4 @@
 #include "clanedetectornavigatorengine.h"
-//#include <sensor_msgs/image_encodings.h>
-//#include <sensor_msgs/Image.h>
-//#include <sensor_msgs/CameraInfo.h>
-//#include <geometry_msgs/PoseStamped.h>
-//#include "cv_bridge/cv_bridge.h"
 #include "vector"
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
@@ -181,7 +176,7 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 
 		bool update_ok = (k_diff <= K_VARY_FACTOR && b_diff <= B_VARY_FACTOR) || pLaneStatus->reset;
 
-		printf("pLaneStatus: %s, k vary: %-9.2f, b vary: %-9.2f, lost: %s\n",
+		printf("\033[2;1HpLaneStatus: %s, k vary: %-9.2f, b vary: %-9.2f, lost: %s\n",
 			(bRightLane ? "RIGHT":"LEFT "), k_diff, b_diff, (update_ok?"no ":"yes"));
 
 		if (update_ok)
@@ -205,7 +200,7 @@ void CLaneDetectorNavigatorEngine::ProcessSide(std::vector<CLaneInfo> lanes, Ipl
 	}
 	else
 	{
-		printf("no lanes detected - lane tracking lost! counter increased\n");
+		printf("\033[2;1Hno lanes detected - lane tracking lost! counter increased\n");
 		pLaneStatus->lost++;
 		if (pLaneStatus->lost >= MAX_LOST_FRAMES && !pLaneStatus->reset)
 		{
@@ -315,7 +310,7 @@ void CLaneDetectorNavigatorEngine::ProcessLanes(CvSeq* lines, IplImage* pEdges, 
 	// find the angle
 
 	m_fTurnAngle = 90 - atan2(pivotB.y - pivotT.y, pivotB.x - pivotT.x) * 180 / CV_PI;
-	printf("Angle: %4.2f\n", m_fTurnAngle);
+	printf("\033[3;1HAngle: %4.2f\n", m_fTurnAngle);
 #if DEBUGIMG
 	char szOut[100];
 
@@ -379,22 +374,35 @@ int32_t CLaneDetectorNavigatorEngine::ProcessImage(IplImage *pFrame, bool bDispl
 
 	// Perform a Gaussian blur ( Convolving with 5 X 5 Gaussian) & detect edges
 	cvSmooth(m_pGreyImage, m_pGreyImage, CV_GAUSSIAN, 5, 5);
-	cvCanny(m_pGreyImage, m_pEdgesImage, CANNY_MIN_TRESHOLD, CANNY_MAX_TRESHOLD);
+    // till here, it consume 8/30 frame
+    {
+        CvScalar mu, sigma;
+        cvAvgSdv(m_pGreyImage, &mu, &sigma);
+        //double otsu_thresh_val = cvThreshold(m_pGreyImage, m_pOTSU, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+
+        //cvCanny(m_pGreyImage, m_pGreyImage, L2_CANNY_MIN_TRESHOLD, L2_CANNY_MAX_TRESHOLD, 3);  // 15/30 (src=dest is faster 17/30)
+        cvCanny(m_pGreyImage, m_pGreyImage, mu.val[0] - sigma.val[0], mu.val[0] + sigma.val[0], 3);  // 15/30 (src=dest is faster 17/30)
+        //cvCanny(m_pGreyImage, m_pGreyImage, otsu_thresh_val * 0.5, otsu_thresh_val, 3);
+    }
+	//cvCanny(m_pGreyImage, m_pEdgesImage, CANNY_MIN_TRESHOLD, CANNY_MAX_TRESHOLD);
 
 	// do Hough transform to find lanes
-
-	pLines = cvHoughLines2(m_pEdgesImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
+	pLines = cvHoughLines2(m_pGreyImage, m_pHoughStorage, CV_HOUGH_PROBABILISTIC,
 									rho, theta, HOUGH_TRESHOLD, HOUGH_MIN_LINE_LENGTH, HOUGH_MAX_LINE_GAP);
 
-	ProcessLanes(pLines, m_pEdgesImage, m_pWorkingImage, m_bShowLine, bDisplayImage);
+	ProcessLanes(pLines, m_pGreyImage, m_pWorkingImage, m_bShowLine, bDisplayImage);
 
 	fAngle = m_fTurnAngle;
 	vanishingPoint = m_VanishingPoint;
 
 	if (bDisplayImage)
 	{
-		cvShowImage("Lane-Detector::Edges", m_pEdgesImage);
+		cvShowImage("Lane-Detector::Edges", m_pGreyImage);
 		cvShowImage("Lane-Detector::ColorImage", m_pWorkingImage);
+
+        //PublishDebugImage("mono8", m_pGreyImage);
+
+		PublishDebugImage("bgr8", m_pWorkingImage);
 	}
 	else
 	{

@@ -3,7 +3,6 @@
 
 #pragma once
 #include "opencv2/imgproc/imgproc.hpp"
-//#include "cnavigatorenginebase.h"
 #include <math.h>
 #include <list>
 #include "myutil.h"

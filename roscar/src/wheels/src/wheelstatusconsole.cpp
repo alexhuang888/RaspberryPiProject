@@ -22,7 +22,7 @@ namespace yisys_roswheels
 		} catch (...)
 		{
 		}
-		ROS_INFO("Broadcasted Wheel_Status (Dir, Speed, Health): Left[%d, %d, %d] Right[%d, %d, %d]", msg->nLeftWheelDirection, msg->nLeftWheelSpeed, msg->nLeftWheelHealthStatus, msg->nRightWheelDirection, msg->nRightWheelSpeed, msg->nRightWheelHealthStatus);
+		ROS_INFO("\033[15;1HBroadcasted Wheel_Status (Dir, Speed, Health): Left[%d, %d, %d] Right[%d, %d, %d]", msg->nLeftWheelDirection, msg->nLeftWheelSpeed, msg->nLeftWheelHealthStatus, msg->nRightWheelDirection, msg->nRightWheelSpeed, msg->nRightWheelHealthStatus);
 	}
 	void CWheelStatusConsole::navigator_engine_statusCallback(const wheels::navigator_engine_statusConstPtr& msg)
 	{
@@ -32,7 +32,7 @@ namespace yisys_roswheels
 		} catch (...)
 		{
 		}
-		ROS_INFO("Broadcasted Navigator_Engine_Status: Active Engine ID= %d [%s]", msg->nActiveEngineID, msg->strActiveEngineDescription.c_str());
+		ROS_INFO("\033[16;1HBroadcasted Navigator_Engine_Status: Active Engine ID= %d [%s]", msg->nActiveEngineID, msg->strActiveEngineDescription.c_str());
 	}
 	void CWheelStatusConsole::wheels_cmd_velCallback(const geometry_msgs::Twist::ConstPtr& msg)
 	{
@@ -42,7 +42,7 @@ namespace yisys_roswheels
 		} catch (...)
 		{
 		}
-		ROS_INFO("wheels_cmd_vels: z=%f, x=%f", msg->angular.z, msg->linear.x);
+		ROS_INFO("\033[17;1Hwheels_cmd_vels: z=%f, x=%f", msg->angular.z, msg->linear.x);
 
 	}
 }

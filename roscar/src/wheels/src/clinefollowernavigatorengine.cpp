@@ -137,8 +137,8 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
             //printf("threshold image\n");
             cv::cvtColor(roiImg, roiImg, CV_BGR2GRAY);
             //printf("roimgtype=%d\n", roiImg.type());
-			//cv::blur( roiImg, roiImg, cv::Size( 5, 5 ), cv::Point(-1,-1) );
-			cv::threshold(roiImg, roiImg, thVal, 255, cv::THRESH_BINARY);
+			cv::blur( roiImg, roiImg, cv::Size( 5, 5 ), cv::Point(-1,-1) );
+			cv::threshold(roiImg, roiImg, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
 			//printf("bitwise_not image\n");
 			//cv::bitwise_not(roiImg, roiImg); // negative image
 /*
@@ -190,7 +190,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 				fMaxArea = fArea;
 			}
 		}
-		printf("Found Max Area=%f, area threshold=%d\n", fMaxArea, ContourAreaThreshold);
+		printf("\033[3;1HFound Max Area=%f, area threshold=%d (total contour=%d)\n", fMaxArea, ContourAreaThreshold, contours.size());
 		{
 			if (fMaxArea > ContourAreaThreshold && nMaxAreaContourIndex >= 0)
 			{
@@ -240,7 +240,7 @@ int32_t CLineFollowerNavigatorEngine::FindLineCenter(cv::Mat &InputImage, int32_
 #else
 						//cv::imshow("LineFollower", roiImg);
 						{
-							//cv::drawContours(roiImg, contours, nMaxAreaContourIndex, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
+							cv::drawContours(roiImg, contours, nMaxAreaContourIndex, cv::Scalar(255, 255, 255), 2, 8, hierarchy, 0, cv::Point());
 							//sensor_msgs::ImagePtr imgmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", roiImg).toImageMsg();
 							//PublishDebugImage(imgmsg);
 							PublishDebugImage("mono8", roiImg);

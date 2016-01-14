@@ -231,13 +231,13 @@ void CNavigatorEngineWithImageSource::vidCb(const sensor_msgs::ImageConstPtr img
 	m_nImageBaseNodeHandle.param<bool>(WGP_DEBUG_SHOWIMAGE, bDisplayImage, false);
 	//printf("Show Debug Image=%s\n", bDisplayImage ? "Yes" : "No");
 	ProcessImageData(img, bDisplayImage);
-#if 0
+#if 1
 	{
         // find frame rate
         int64_t nThisTick = cv::getTickCount();
         double dSecond = (double)(nThisTick - m_nLastTickCount) / (double)cv::getTickFrequency();
         m_nFrameProcessedCount++;
-        printf("Frame rate: %f (%d, %f)\n", m_nFrameProcessedCount / dSecond, m_nFrameProcessedCount, dSecond);
+        printf("\033[2;1HFrame rate: %f (%d, %f)\n", m_nFrameProcessedCount / dSecond, m_nFrameProcessedCount, dSecond);
 	}
 #endif
 }

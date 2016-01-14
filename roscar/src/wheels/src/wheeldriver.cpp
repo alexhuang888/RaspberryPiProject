@@ -165,22 +165,33 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 
 	wheels::cmd_set_car_two_wheels_direction_speed srv2;
 
+	float fErrorDiff;
+	float nNewSpeed;
+	float nNewRightSpeed, nNewLeftSpeed;
+	int32_t nNewRightDirection, nNewLeftDirection;
+
+	int32_t nDir = CMC_MOTORFORWARD;
+
+	if (m_bManualStop || m_nCurrentUserSpeed == 0)
+	{
+        m_fLastShiftError = 0;
+        m_fAccumulatedShiftError = 0;
+		nRet = 1;
+		goto err_out;
+	}
 // fAngular: negative (target shift to left, turn left), or Positive (should turn right)
 	m_fThisShiftError = (fAngular);
 
 	m_fAccumulatedShiftError += m_fThisShiftError;
 
-	float fErrorDiff = (m_fThisShiftError - m_fLastShiftError);
+	fErrorDiff = (m_fThisShiftError - m_fLastShiftError);
 
 	//m_fKp = m_nCurrentUserSpeed;
-	float nNewSpeed = m_fKp * m_fThisShiftError + m_fKi * m_fAccumulatedShiftError + m_fKd * fErrorDiff;
+	nNewSpeed = m_fKp * m_fThisShiftError + m_fKi * m_fAccumulatedShiftError + m_fKd * fErrorDiff;
 
 	m_fLastShiftError = m_fThisShiftError;
 
-	float nNewRightSpeed, nNewLeftSpeed;
-	int32_t nNewRightDirection, nNewLeftDirection;
 
-	int32_t nDir = CMC_MOTORFORWARD;
 	if (fLinear < 0)
 		nDir = CMC_MOTORBACKWARD;
 
@@ -225,19 +236,13 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	if (nNewLeftSpeed < 0)
 		nNewLeftSpeed = 0;
 
-	if (m_bManualStop)
-	{
-		nRet = 1;
-		goto err_out;
-	}
-
 	srv2.request.nNewLeftSpeed = nNewLeftSpeed;
 	srv2.request.nNewLeftDirection = nNewLeftDirection;
 
 	srv2.request.nNewRightSpeed = nNewRightSpeed;
 	srv2.request.nNewRightDirection = nNewRightDirection;
 
-	printf("Set wheel speed (%f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
+	printf("\033[18;1HSet wheel speed (%f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
 	if (m_SetTwoWheelsSpeedClient.call(srv2))
 	{
 		if (srv2.response.nNewLeftSpeed == 0 && srv2.response.nNewRightSpeed == 0)
@@ -264,6 +269,12 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 	//printf("input=%d\n", nInput);
 	switch (nInput)
 	{
+        case 'c':
+            {
+                printf("\033[2J");
+                printf("\n");
+                break;
+            }
 		case 'y':	// display debug image
 		{
 			m_bDisplayDebugImage = !m_bDisplayDebugImage;
@@ -544,7 +555,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			break;
 		}
 		case 'h':
-			printf("Input instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
+			printf("\033[19;1HInput instruction (0: disable all navigator engine, 1: line-follower, 2: lane-detector, o: manual stop, k: manual restart, u: forward, d: backward, l: left, r: right, w: right-backward, z: left-backward, p: stop, i: wheel status\n");
 			break;
 	}
 
