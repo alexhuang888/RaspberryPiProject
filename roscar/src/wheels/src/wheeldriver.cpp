@@ -38,12 +38,11 @@ CWheelDriver::CWheelDriver(std::string nodename) :
 	m_bManualStop = false;
 	m_bDisplayDebugImage = false;
 
-	m_fThisShiftError = 0.f;
-	m_fLastShiftError = 0.f;
-	m_fAccumulatedShiftError = 0.f;
+    _ResetPIDParams();
+
 	m_fKp = WHEELPIDMAXSPEED;
-	m_fKi = 0.01f;
-	m_fKd = m_fKp / 2;
+	m_fKi = -0.0001f;
+	m_fKd = -m_fKp / 2;
 	m_fRightWheelAdjustRatio = RIGHTWHEELADJUSTRATIO;
 	m_nFileSaveCounter = 0;
 }
@@ -58,6 +57,8 @@ bool CWheelDriver::cbSendManualInstruction(wheels::cmd_send_manual_instructionRe
 
 void CWheelDriver::wheels_CmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg)
 {
+    Checklongpause();
+
 	m_LastMsgTime = time(NULL);
 	//printf("CWheelDriver: z=%f, x=%f\n", msg->angular.z, msg->linear.x);
 	CmdVelToWheelController(msg->angular.z, msg->linear.x);
@@ -152,13 +153,25 @@ void CWheelDriver::Checklongpause(void)
 {
 	time_t now = time(NULL);
 
-	if (difftime(now, m_LastMsgTime) > 1 && m_bCarStopped == false)
+	if (difftime(now, m_LastMsgTime) > LONGCMDVELSPAUSE && m_bCarStopped == false)
 	{
 		//_SetSpeedDirection(0, WCLR_STOP);
-		ROS_INFO("Does not receive nagivator cmd_vels for over 5 seconds. Stop the car.");
+		ROS_INFO("Does not receive nagivator cmd_vels for over %d seconds. Stop the car.", LONGCMDVELSPAUSE);
+		// we have to deal with something
+		// 1. pause the car
+		// 2. clear accumulated error
+		_ResetPIDParams();
+		m_nCurrentUserSpeed = 0;
+		m_nCurrentUserDirection = 0;
 	}
 }
-
+void CWheelDriver::_ResetPIDParams(void)
+{
+    m_fThisShiftError = 0;
+    m_fLastShiftError = 0;
+    m_fAccumulatedShiftError = 0;
+    m_bPIDReset = true;
+}
 int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 {
 	int32_t nRet = 0;
@@ -174,10 +187,13 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 
 	if (m_bManualStop || m_nCurrentUserSpeed == 0)
 	{
-        m_fLastShiftError = 0;
-        m_fAccumulatedShiftError = 0;
 		nRet = 1;
 		goto err_out;
+	}
+	if (m_bPIDReset)
+	{
+        m_fLastShiftError = fAngular;
+        m_bPIDReset = false;
 	}
 // fAngular: negative (target shift to left, turn left), or Positive (should turn right)
 	m_fThisShiftError = (fAngular);
@@ -242,7 +258,7 @@ int32_t CWheelDriver::CmdVelToWheelController(float fAngular, float fLinear)
 	srv2.request.nNewRightSpeed = nNewRightSpeed;
 	srv2.request.nNewRightDirection = nNewRightDirection;
 
-	printf("\033[18;1HSet wheel speed (%f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
+	printf("\033[18;1HSet wheel speed (%f, %f, %f, %f) Left(%f, %d), right(%f, %d)\n", fAngular, nNewSpeed, fErrorDiff, m_fAccumulatedShiftError, nNewLeftSpeed, nNewLeftDirection, nNewRightSpeed, nNewRightDirection);
 	if (m_SetTwoWheelsSpeedClient.call(srv2))
 	{
 		if (srv2.response.nNewLeftSpeed == 0 && srv2.response.nNewRightSpeed == 0)
@@ -276,14 +292,15 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
                 break;
             }
 		case 'y':	// display debug image
-		{
-			m_bDisplayDebugImage = !m_bDisplayDebugImage;
-			m_nNodeHandle.setParam(WGP_DEBUG_SHOWIMAGE, m_bDisplayDebugImage);
-		}
+            {
+                m_bDisplayDebugImage = !m_bDisplayDebugImage;
+                m_nNodeHandle.setParam(WGP_DEBUG_SHOWIMAGE, m_bDisplayDebugImage);
+            }
 			break;
 		case 'k':
 			if (m_bManualStop)
 			{
+                _ResetPIDParams();
 				m_bManualStop = false;
 				ROS_INFO("UnBlock all incoming cmd_vels.");
 			}
@@ -291,6 +308,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 		case 'o':
 			if (!m_bManualStop)
 			{
+                _ResetPIDParams();
 				nNewSpeed = 0;
 				nNewDirection = WCLR_STOP;
 				nRet = _SetSpeedDirection(nNewSpeed, nNewDirection);
@@ -426,7 +444,8 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				nNewSpeed = 0;
 				nNewDirection = WCLR_STOP;
-				_SetInternalSpeed(nNewSpeed);
+				_SetSpeedDirection(nNewSpeed, nNewDirection);
+				_ResetPIDParams();
 			}
 			//m_bManualStop = true;
 			engset.request.nNewEngineID = 0;
@@ -443,10 +462,7 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			{
 				ROS_INFO("Fail to set navigator engine");
 			}
-			if (m_bDisplayDebugImage)
-				ROS_INFO("Display Debug image.");
-			else
-				ROS_INFO("Hide Debug Image.");
+
 		}
 			break;
 		case '1':	// line follower
@@ -456,18 +472,10 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			engset.request.nNewEngineID = WEID_LINEFOLLOWERENGINE;
 			if (m_SetNavigatorEngine.call(engset))
 			{
+                _ResetPIDParams();
 				if (engset.response.nRetCode <= 0)
 				{
 					ROS_INFO("fail to set Line follower engine");
-				}
-				else
-				{
-					/*
-				ROS_INFO("Active Navigator Engine, ID=%d [%s], Old Navigator Engine ID=%d [%s]", engset.response.nActiveEngineID,
-																								engset.response.strActiveEngineDescription.c_str(),
-																								engset.response.nLastEngineID,
-																								engset.response.strLastEngineDescription.c_str());
-				*/
 				}
 			}
 			else
@@ -483,18 +491,10 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			engset.request.nNewEngineID = WEID_LANEDETECTORENGINE;
 			if (m_SetNavigatorEngine.call(engset))
 			{
+                _ResetPIDParams();
 				if (engset.response.nRetCode <= 0)
 				{
 					ROS_INFO("fail to set lane detector engine");
-				}
-				else
-				{
-					/*
-					ROS_INFO("Active Navigator Engine, ID=%d [%s], Old Navigator Engine ID=%d [%s]", engset.response.nActiveEngineID,
-																								engset.response.strActiveEngineDescription.c_str(),
-																								engset.response.nLastEngineID,
-																								engset.response.strLastEngineDescription.c_str());
-				*/
 				}
 			}
 			else
@@ -511,18 +511,10 @@ int32_t CWheelDriver::KeyCodeToWheelController(unsigned char nInput)
 			engset.request.nNewEngineID = WEID_LINEFOLLOWERENGINE2;
 			if (m_SetNavigatorEngine.call(engset))
 			{
+                _ResetPIDParams();
 				if (engset.response.nRetCode <= 0)
 				{
 					ROS_INFO("fail to set Line follower engine2");
-				}
-				else
-				{
-					/*
-				ROS_INFO("Active Navigator Engine, ID=%d [%s], Old Navigator Engine ID=%d [%s]", engset.response.nActiveEngineID,
-																								engset.response.strActiveEngineDescription.c_str(),
-																								engset.response.nLastEngineID,
-																								engset.response.strLastEngineDescription.c_str());
-				*/
 				}
 			}
 			else

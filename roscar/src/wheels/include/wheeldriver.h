@@ -13,6 +13,7 @@ namespace yisys_roswheels
 #define WHEELANGULAR_TOLERANCE (0.4)
 #define WHEELPIDMAXSPEED (10)
 #define RIGHTWHEELADJUSTRATIO 1.2
+#define LONGCMDVELSPAUSE 2 // seconds)
 // it accept several msg and decide how the wheels works.
 // cmd_vel: wheels direction and velocity
 // ???: sign
@@ -41,6 +42,7 @@ public:
 protected:
 	int32_t _SetSpeedDirection(int32_t nSpeed, int32_t nDirection);
 	int32_t _SetInternalSpeed(int32_t nSpeed);
+	void _ResetPIDParams(void);
 protected:
 	ros::NodeHandle m_nNodeHandle;
 	std::string m_strNode_Name;
@@ -57,13 +59,13 @@ protected:
 	int32_t m_nCurrentUserSpeed;
 	int32_t m_nCurrentUserDirection;
 	bool m_bManualStop;	// true: to prevent the car to run dis-regarding any input cmd_vels
-	bool m_bManualOverrideMode;	// true: only keyboard can do the driving, or navigator engine will do the job.
 	bool m_bDisplayDebugImage;
 
 	/*
 	 * PID controller: speed = Kp * shift error + Ki * (accumulated error) + Kd * (d(Shift_Error) / dt)
 	 * Kp is supposed to be FULLSPEED / 0.5 = 200;
 	 */
+    bool m_bPIDReset;
 	float m_fThisShiftError;
 	float m_fLastShiftError;
 	float m_fAccumulatedShiftError;
